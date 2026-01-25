@@ -3,377 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Vault v15.6 - Cinema Update</title>
+    <title>NEON VAULT v15.7 - Security & Drive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Segoe+UI&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg-dark: #01040a; --neon-red: #ff0000; --neon-blue: #0044ff; --neon-green: #39ff14; 
-            --neon-yellow: #ffff00; --neon-cyan: #00ffff; --neon-magenta: #ff00ff;
-            --neon-orange: #ffaa00; --neon-white: #ffffff; --neon-pink: #ff00ff; --neon-blue-ui: #00f2ff;
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff00ff;
+            --bg-dark: #050505;
+            --panel-bg: rgba(20, 20, 20, 0.9);
         }
-        
-        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Dancing+Script:wght@400;700&family=MedievalSharp&family=Press+Start+2P&family=Monoton&family=Orbitron:wght@400;900&display=swap');
 
-        body { background-color: var(--bg-dark); color: #d1d9e6; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
-        #lock-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .storage-container { width: 100%; max-width: 950px; margin-bottom: 25px; text-align: center; }
-        #storage-monitor { width: 100%; background: #000; border: 2px solid var(--neon-blue-ui); height: 20px; border-radius: 10px; overflow: hidden; margin-top: 8px; }
-        #storage-bar { height: 100%; width: 0%; transition: width 0.5s; background: var(--neon-blue-ui); box-shadow: 0 0 10px var(--neon-blue-ui); }
-        #storage-text { font-size: 18px; color: var(--neon-yellow); font-family: 'Orbitron'; font-weight: bold; }
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-        .container { width: 100%; max-width: 1000px; }
-        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        button { background: transparent; border: 2px solid var(--neon-pink); color: var(--neon-pink); padding: 8px 15px; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 4px; transition: 0.2s; font-family: 'Orbitron', sans-serif; font-size: 12px; }
-        button:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 15px var(--neon-pink); }
+        #lock-screen {
+            text-align: center;
+            z-index: 1000;
+        }
 
-        #search-input { background: #000; border: 2px solid var(--neon-green); color: var(--neon-green); padding: 8px; border-radius: 5px; font-family: 'Orbitron'; margin-bottom: 15px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 5px var(--neon-green); }
+        .neon-input {
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 10px;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 10px var(--neon-blue);
+            outline: none;
+            border-radius: 5px;
+        }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; width: 100%; }
-        .item-card { border: 3px solid; border-radius: 15px; cursor: pointer; text-align: center; background: rgba(0,0,0,0.85); position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; padding: 10px; overflow: hidden; }
-        
-        .card-micro { min-height: 50px; font-size: 0.8em; }
-        .card-tiny { min-height: 80px; }
-        .card-small { min-height: 130px; }
-        .card-normal { min-height: 190px; }
-        .card-medium-wide { min-height: 190px; grid-column: span 2; }
-        .card-large { min-height: 250px; grid-column: span 2; }
-        .card-huge { min-height: 380px; grid-column: span 2; grid-row: span 2; }
-        .card-panorama { min-height: 120px; grid-column: 1 / -1; }
-        .card-cinema { min-height: 160px; grid-column: 1 / -1; border-width: 5px; }
+        #main-content {
+            display: none;
+            width: 95%;
+            max-width: 900px;
+            padding: 20px;
+        }
 
-        .card-name { font-weight: 900; margin-top: 10px; word-break: break-all; line-height: 1.2; }
-        .card-date { font-size: 10px; opacity: 0.7; margin-top: 5px; color: #fff; font-family: sans-serif; }
-        .del-btn { position: absolute; top: 10px; right: 10px; color: #ff0000; font-weight: bold; cursor: pointer; z-index: 5; background: #000; padding: 2px 6px; border: 1px solid #ff0000; }
-        .open-folder-btn { margin-top: 10px; font-size: 9px; border-color: var(--neon-blue-ui); color: var(--neon-blue-ui); }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid var(--neon-blue);
+            background: rgba(0, 242, 255, 0.05);
+            border-radius: 10px;
+        }
 
-        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #050505; border: 4px solid var(--neon-pink); padding: 25px; z-index: 1000; border-radius: 15px; width: 85%; max-width: 750px; box-shadow: 0 0 60px #000; overflow-y: auto; max-height: 90vh; }
-        input, textarea, select { background: #111; border: 1px solid var(--neon-blue-ui); color: #fff; padding: 10px; margin-bottom: 10px; width: 100%; box-sizing: border-box; border-radius: 5px; }
-        
-        .file-item { display: flex; align-items: center; justify-content: space-between; background: #111; padding: 5px; border: 1px solid var(--neon-blue-ui); margin: 2px; border-radius: 4px; font-size: 11px; width: 100%; }
-        .preview-img { width: 45px; height: 45px; object-fit: cover; border: 1px solid var(--neon-blue-ui); }
-        .file-controls button { padding: 2px 5px; font-size: 10px; margin-left: 5px; }
-        
-        optgroup { background: #000; color: var(--neon-yellow); font-style: normal; }
-        option { background: #111; color: #fff; }
+        .note-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--neon-pink);
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
+            border-radius: 8px;
+            word-wrap: break-word;
+        }
+
+        .media-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--neon-blue);
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .media-container iframe {
+            width: 100%;
+            height: 450px;
+            border: 1px solid var(--neon-blue);
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Orbitron';
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: var(--neon-blue);
+            color: black;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        .delete-btn {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            margin-top: 10px;
+        }
+
+        .delete-btn:hover {
+            background: var(--neon-pink);
+            color: white;
+        }
     </style>
 </head>
 <body>
 
-    <div id="lock-screen">
-        <h1 style="color:var(--neon-blue-ui); font-family: 'Orbitron';">RENDSZER ZÁROLVA</h1>
-        <input type="password" id="pass-input" style="width: 200px; text-align: center;" placeholder="KÓD">
-        <button onclick="unlock()">BELÉPÉS</button>
-    </div>
+<div id="lock-screen">
+    <h1 style="font-family: 'Orbitron'; color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue);">NEON VAULT ACCESS</h1>
+    <input type="password" id="pin-input" class="neon-input" placeholder="CODE" maxlength="8">
+    <p id="error-msg" style="color: var(--neon-pink); margin-top: 15px; display: none; font-family: 'Orbitron';">ACCESS DENIED</p>
+</div>
 
-    <div class="storage-container">
-        <div id="storage-text">ADATBÁZIS ÁLLAPOT</div>
-        <div id="storage-monitor"><div id="storage-bar"></div></div>
-    </div>
-
-    <div class="container">
-        <input type="text" id="search-input" placeholder="KERESÉS..." oninput="render()">
-        
-        <div class="btn-group">
-            <button onclick="goBack()" id="back-btn" style="display:none; border-color:#fff; color:#fff;">← VISSZA</button>
-            <button onclick="openCreator('folder')" style="border-color:var(--neon-cyan); color:var(--neon-cyan);">+ ÚJ MAPPA</button>
-            <button onclick="openCreator('note')" style="border-color:var(--neon-magenta); color:var(--neon-magenta);">+ ÚJ JEGYZET</button>
-            <button onclick="exportData()" style="border-color:var(--neon-yellow); color:var(--neon-yellow);">📤 EXPORT (DÁTUMMAL)</button>
-            <button onclick="document.getElementById('import-file').click()" style="border-color:var(--neon-orange); color:var(--neon-orange);">📥 IMPORT</button>
-            <input type="file" id="import-file" style="display:none;" onchange="importData(event)">
+<div id="main-content">
+    <header>
+        <h1 style="font-family: 'Orbitron'; color: var(--neon-pink); margin-bottom: 20px;">STATION: NEON-VAULT v15.7</h1>
+        <div class="controls">
+            <button onclick="addNote()">+ Új Jegyzet / Drive Link</button>
+            <button onclick="changePin()" style="border-color: #ffea00; color: #ffea00;">🔑 Kód Módosítása</button>
+            <button onclick="location.reload()">🔒 Kijelentkezés</button>
         </div>
-        <div id="path-display" style="color:var(--neon-blue-ui); font-family: 'Orbitron'; font-size: 11px; margin-bottom: 10px;">GYÖKÉR</div>
-        <div id="display-grid" class="grid"></div>
-    </div>
+    </header>
+    <div id="notes-list"></div>
+</div>
 
-    <div id="editor-modal" class="modal">
-        <h2 id="modal-title" style="color:var(--neon-pink); font-family: 'Orbitron';">SZERKESZTÉS</h2>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-            <div>
-                <label style="font-size:10px; color:var(--neon-cyan)">8 SZÍN</label>
-                <select id="edit-color">
-                    <option value="var(--neon-cyan)">Cyán</option><option value="var(--neon-red)">Piros</option>
-                    <option value="var(--neon-blue)">Kék</option><option value="var(--neon-green)">Zöld</option>
-                    <option value="var(--neon-yellow)">Sárga</option><option value="var(--neon-magenta)">Magenta</option>
-                    <option value="var(--neon-orange)">Narancs</option><option value="var(--neon-white)">Fehér</option>
-                </select>
-            </div>
-            <div>
-                <label style="font-size:10px; color:var(--neon-cyan)">BETŰMÉRET</label>
-                <select id="edit-font-size"></select>
-            </div>
-            <div>
-                <label style="font-size:10px; color:var(--neon-cyan)">KÁRTYA MÉRET</label>
-                <select id="edit-card-size">
-                    <option value="card-micro">Ultra Kicsi</option>
-                    <option value="card-tiny">Extra Kicsi</option>
-                    <option value="card-small">Kicsi</option>
-                    <option value="card-normal" selected>Normál</option>
-                    <option value="card-medium-wide">Közepes-Széles</option>
-                    <option value="card-large">Széles</option>
-                    <option value="card-huge">Óriás</option>
-                    <option value="card-panorama">Panoráma</option>
-                    <option value="card-cinema">Mozi (Cinema)</option>
-                </select>
-            </div>
-        </div>
+<script>
+    // Adatok betöltése
+    let currentPin = localStorage.getItem('vault_pin') || "0000";
+    let notes = JSON.parse(localStorage.getItem('neon_notes')) || [];
 
-        <label style="font-size:10px; color:var(--neon-cyan)">STÍLUS / BETŰTÍPUS:</label>
-        <select id="edit-font-family" onchange="updateLiveStyle()">
-            <optgroup label="Alap stílusok">
-                <option value="Arial, sans-serif">Arial (Vékony alap)</option>
-                <option value="'Segoe UI', sans-serif">Segoe UI (Modern)</option>
-                <option value="Verdana, sans-serif">Verdana (Olvasható)</option>
-            </optgroup>
-            <optgroup label="Vastag & Mém">
-                <option value="Impact, Charcoal, sans-serif">Impact (Brutál vastag)</option>
-                <option value="'Arial Black', sans-serif">Arial Black (Tömör)</option>
-            </optgroup>
-            <optgroup label="Hacker & Retro">
-                <option value="'Courier New', Courier, monospace">Courier (Írógép)</option>
-                <option value="'Lucida Console', Monaco, monospace">Lucida (Terminál)</option>
-                <option value="'Trebuchet MS', sans-serif">Trebuchet (Gamer)</option>
-                <option value="'Press Start 2P', cursive">Retro 8-bit</option>
-                <option value="'Orbitron', sans-serif">Orbitron (Sci-fi)</option>
-            </optgroup>
-            <optgroup label="Díszes & Elegáns">
-                <option value="Georgia, serif">Georgia (Antik)</option>
-                <option value="'Times New Roman', Times, serif">Times (Hivatalos)</option>
-                <option value="'Palatino Linotype', serif">Palatino (Díszesebb)</option>
-                <option value="'Copperplate', serif">Copperplate (Nagybetűs)</option>
-            </optgroup>
-            <optgroup label="Különleges">
-                <option value="'Comic Sans MS', cursive">Comic Sans (Játékos)</option>
-                <option value="'Dancing Script', cursive">Kézírás jellegű</option>
-                <option value="'MedievalSharp', cursive">Fantasy stílus</option>
-                <option value="'Monoton', cursive">Neon Gázcső</option>
-            </optgroup>
-        </select>
+    const pinInput = document.getElementById('pin-input');
+    const lockScreen = document.getElementById('lock-screen');
+    const mainContent = document.getElementById('main-content');
+    const notesList = document.getElementById('notes-list');
 
-        <input type="text" id="edit-name" placeholder="Név..." oninput="updateLiveStyle()">
-
-        <div id="note-only-fields">
-            <textarea id="edit-content" style="height: 150px;" placeholder="Tartalom..." oninput="updateLiveStyle()"></textarea>
-            <button onclick="copyToClipboard()" style="width:100%; border-color:var(--neon-cyan); color:var(--neon-cyan); margin-bottom:10px;">📋 SZÖVEG MÁSOLÁSA</button>
-            <input type="file" id="edit-file" multiple>
-        </div>
-        <div id="file-download-zone" style="display: flex; flex-direction: column; margin-top: 10px;"></div>
-
-        <div style="display:flex; gap:10px; margin-top:15px;">
-            <button onclick="processSave()" style="flex:1; border-color:var(--neon-green); color:var(--neon-green);">MENTÉS</button>
-            <button onclick="closeModal()" style="flex:1; border-color:#444; color:#444;">MÉGSE</button>
-        </div>
-    </div>
-
-    <script>
-        const DB_NAME = "NeonVault_v15_3"; 
-        let db, vault = {id: "root", name: "Gyökér", type: "folder", children: [], pass: "0000"}, currentId = "root", pathStack = ["root"], editingItemId = null;
-
-        const fsS = document.getElementById('edit-font-size');
-        for(let i=8; i<=120; i+=2) {
-            let o = document.createElement('option'); o.value = i+"px"; o.innerText = i+"px";
-            if(i===18) o.selected = true; fsS.appendChild(o);
+    // Belépés figyelése
+    pinInput.addEventListener('input', () => {
+        if(pinInput.value === currentPin) {
+            lockScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+            renderNotes();
+        } else if (pinInput.value.length >= currentPin.length) {
+            document.getElementById('error-msg').style.display = 'block';
+            setTimeout(() => { 
+                pinInput.value = ''; 
+                document.getElementById('error-msg').style.display = 'none';
+            }, 800);
         }
+    });
 
-        const request = indexedDB.open(DB_NAME, 1);
-        request.onupgradeneeded = e => { e.target.result.createObjectStore("store"); };
-        request.onsuccess = e => { db = e.target.result; loadFromDB(); };
-
-        function loadFromDB() {
-            const trans = db.transaction("store", "readonly");
-            const req = trans.objectStore("store").get("main");
-            req.onsuccess = () => { if (req.result) { vault = req.result; render(); } };
-        }
-
-        function saveToDB(cb) {
-            const trans = db.transaction("store", "readwrite");
-            trans.objectStore("store").put(vault, "main").onsuccess = () => { updateMB(); if(cb) cb(); };
-        }
-
-        function unlock() {
-            if (document.getElementById('pass-input').value === vault.pass) document.getElementById('lock-screen').style.display = 'none';
-            else alert("HIBÁS KÓD!");
-        }
-
-        function render() {
-            const grid = document.getElementById('display-grid'); 
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            grid.innerHTML = "";
-            const current = findNode(currentId, vault);
-            document.getElementById('back-btn').style.display = currentId === "root" ? "none" : "inline-block";
-            document.getElementById('path-display').innerText = "ELÉRÉS: " + pathStack.map(id => findNode(id, vault).name.toUpperCase()).join(" / ");
-            
-            let itemsToDisplay = current.children;
-            if(searchTerm) { itemsToDisplay = itemsToDisplay.filter(i => i.name.toLowerCase().includes(searchTerm)); }
-
-            itemsToDisplay.sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0)).forEach(item => {
-                const card = document.createElement('div');
-                card.className = `item-card ${item.displaySize || 'card-normal'}`;
-                const color = item.color || 'var(--neon-cyan)';
-                card.style.borderColor = color; card.style.color = color;
-                
-                let icon = item.type === 'folder' ? 
-                    `<svg style="width:40px; height:40px;" viewBox="0 0 24 24" fill="${item.children.length?color:'none'}" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>` : 
-                    `<div style="font-size:25px;">📄</div>`;
-
-                let folderAction = item.type === 'folder' ? `<button class="open-folder-btn" onclick="event.stopPropagation(); enterFolder('${item.id}')">MEGNYITÁS</button>` : '';
-
-                card.innerHTML = `<div class="del-btn" onclick="deleteItem(event, '${item.id}')">X</div>${icon}<div class="card-name" style="font-family:${item.fontFamily}; font-size:${item.fontSize}">${item.name}</div><div class="card-date">${item.date || ""}</div>${folderAction}`;
-                
-                card.onclick = () => { openEditor(item.id); };
-                grid.appendChild(card);
-            });
-            updateMB();
-        }
-
-        function enterFolder(id) { pathStack.push(id); currentId = id; render(); }
-
-        function openCreator(type) {
-            editingItemId = null; window.modalMode = type;
-            document.getElementById('modal-title').innerText = type==='folder' ? "ÚJ MAPPA" : "ÚJ JEGYZET";
-            document.getElementById('edit-name').value = ""; 
-            document.getElementById('edit-content').value = "";
-            document.getElementById('note-only-fields').style.display = type==='note' ? 'block' : 'none';
-            document.getElementById('file-download-zone').innerHTML = "";
-            document.getElementById('editor-modal').style.display = 'block';
-        }
-
-        function openEditor(id) {
-            const item = findNode(id, vault); editingItemId = id; window.modalMode = item.type;
-            document.getElementById('modal-title').innerText = item.type === 'folder' ? "MAPPA SZERKESZTÉSE" : "JEGYZET SZERKESZTÉSE";
-            document.getElementById('edit-name').value = item.name;
-            document.getElementById('edit-color').value = item.color || "var(--neon-cyan)";
-            document.getElementById('edit-font-family').value = item.fontFamily || "Arial, sans-serif";
-            document.getElementById('edit-font-size').value = item.fontSize || "18px";
-            document.getElementById('edit-card-size').value = item.displaySize || 'card-normal';
-            document.getElementById('note-only-fields').style.display = item.type==='note' ? 'block' : 'none';
-            if (item.type === 'note') { document.getElementById('edit-content').value = item.content || ""; }
-            refreshFileList(item);
-            document.getElementById('editor-modal').style.display = 'block';
-            updateLiveStyle();
-        }
-
-        async function processSave() {
-            const name = document.getElementById('edit-name').value || "Névtelen";
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('hu-HU') + " " + now.toLocaleTimeString('hu-HU', {hour:'2-digit', minute:'2-digit'});
-            
-            if (editingItemId) {
-                let item = findNode(editingItemId, vault);
-                item.name = name; item.color = document.getElementById('edit-color').value;
-                item.fontFamily = document.getElementById('edit-font-family').value;
-                item.fontSize = document.getElementById('edit-font-size').value;
-                item.displaySize = document.getElementById('edit-card-size').value;
-                item.date = dateStr;
-                if(item.type === 'note') {
-                    item.content = document.getElementById('edit-content').value;
-                    const fIn = document.getElementById('edit-file');
-                    for (let f of fIn.files) {
-                        if(!item.files) item.files = [];
-                        item.files.push({id: "f_"+Date.now()+"_"+Math.random(), name: f.name, data: await toB64(f), type: f.type});
-                    }
-                }
+    // Kód módosítása funkció
+    function changePin() {
+        const newPin = prompt("Add meg az új titkos kódodat:");
+        if (newPin && newPin.trim().length > 0) {
+            const confirmPin = prompt("Megerősítés - Írd be újra:");
+            if (newPin === confirmPin) {
+                currentPin = newPin;
+                localStorage.setItem('vault_pin', newPin);
+                alert("Kód elmentve! Legközelebb már ezzel tudsz belépni.");
             } else {
-                const parent = findNode(currentId, vault);
-                let newItem = { 
-                    id: "id_"+Date.now(), name, type: window.modalMode, 
-                    color: document.getElementById('edit-color').value, 
-                    fontFamily: document.getElementById('edit-font-family').value, 
-                    fontSize: document.getElementById('edit-font-size').value,
-                    displaySize: document.getElementById('edit-card-size').value,
-                    timestamp: Date.now(), date: dateStr 
-                };
-                if (window.modalMode === 'folder') { newItem.children = []; }
-                else {
-                    newItem.content = document.getElementById('edit-content').value; newItem.files = [];
-                    const fIn = document.getElementById('edit-file');
-                    for (let f of fIn.files) newItem.files.push({id: "f_"+Date.now()+"_"+Math.random(), name: f.name, data: await toB64(f), type: f.type});
-                }
-                parent.children.push(newItem);
+                alert("Hiba: A két kód nem egyezik!");
             }
-            saveToDB(() => { closeModal(); render(); });
         }
+    }
 
-        function exportData() {
-            const n = new Date();
-            const d = `${n.getFullYear()}-${n.getMonth()+1}-${n.getDate()}_${n.getHours()}-${n.getMinutes()}`;
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([JSON.stringify(vault)], {type:"application/json"}));
-            a.download = `NeoVault_Mentes_${d}.json`; a.click();
+    // Google Drive link átalakító
+    function transformDriveLink(url) {
+        if (url.includes('drive.google.com')) {
+            let fileId = "";
+            try {
+                if (url.includes('id=')) {
+                    fileId = url.split('id=')[1].split('&')[0];
+                } else {
+                    fileId = url.split('/d/')[1].split('/')[0];
+                }
+                // Közvetlen kép link generálása
+                return `https://docs.google.com/uc?export=view&id=${fileId}`;
+            } catch (e) { return url; }
         }
+        return url;
+    }
 
-        function importData(e) {
-            const r = new FileReader();
-            r.onload = ev => {
-                try {
-                    vault = JSON.parse(ev.target.result);
-                    saveToDB(() => { alert("Import sikeres!"); render(); });
-                } catch(h) { alert("Hiba a fájlban!"); }
-            };
-            r.readAsText(e.target.files[0]);
+    function addNote() {
+        const content = prompt("Írj be jegyzetet vagy illessz be egy Google Drive linket:");
+        if (content) {
+            notes.push({ id: Date.now(), text: content });
+            saveAndRender();
         }
+    }
 
-        function refreshFileList(item) {
-            let zone = document.getElementById('file-download-zone');
-            zone.innerHTML = "";
-            if(!item || !item.files) return;
-            item.files.forEach((f) => {
-                const div = document.createElement('div');
-                div.className = "file-item";
-                let preview = (f.type && f.type.startsWith('image/')) ? `<img src="${f.data}" class="preview-img">` : `<span>📄</span>`;
-                div.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:10px;">${preview}<span style="max-width:150px; overflow:hidden;">${f.name}</span></div>
-                    <div class="file-controls">
-                        <button onclick="downloadFile('${f.data}', '${f.name}')" style="border-color:var(--neon-blue-ui); color:var(--neon-blue-ui);">⬇</button>
-                        <button onclick="removeFile('${item.id}', '${f.id}')" style="border-color:var(--neon-red); color:var(--neon-red);">✖</button>
+    function saveAndRender() {
+        localStorage.setItem('neon_notes', JSON.stringify(notes));
+        renderNotes();
+    }
+
+    function renderNotes() {
+        notesList.innerHTML = '';
+        notes.sort((a, b) => b.id - a.id).forEach(note => {
+            const card = document.createElement('div');
+            card.className = 'note-card';
+            
+            let html = `<p style="white-space: pre-wrap;">${note.text}</p>`;
+            
+            // Ha Drive link, beágyazzuk
+            if (note.text.includes('drive.google.com')) {
+                const directImg = transformDriveLink(note.text);
+                html += `
+                    <div class="media-container">
+                        <p style="font-size: 10px; color: var(--neon-blue); font-family: 'Orbitron';">DRIVE STORAGE ACTIVE</p>
+                        <img src="${directImg}" alt="Kép betöltése..." onerror="this.style.display='none';">
+                        <iframe src="${note.text.replace('/view', '/preview').replace('/edit', '/preview')}" allow="autoplay"></iframe>
                     </div>`;
-                zone.appendChild(div);
-            });
+            }
+
+            card.innerHTML = html + `<button class="delete-btn" onclick="deleteNote(${note.id})">Törlés</button>`;
+            notesList.appendChild(card);
+        });
+    }
+
+    function deleteNote(id) {
+        if(confirm("Törlöd ezt a bejegyzést?")) {
+            notes = notes.filter(n => n.id !== id);
+            saveAndRender();
         }
+    }
+</script>
 
-        function downloadFile(data, name) { const a = document.createElement('a'); a.href = data; a.download = name; a.click(); }
-
-        function removeFile(itemId, fileId) {
-            if(!confirm("Biztosan törlöd a fájlt?")) return;
-            const item = findNode(itemId, vault);
-            item.files = item.files.filter(f => f.id !== fileId);
-            saveToDB(() => refreshFileList(item));
-        }
-
-        function copyToClipboard() {
-            const txt = document.getElementById('edit-content').value;
-            navigator.clipboard.writeText(txt).then(() => alert("Szöveg a vágólapra másolva!"));
-        }
-
-        function findNode(id, node) { if (node.id === id) return node; if (node.children) { for (let c of node.children) { let f = findNode(id, c); if (f) return f; } } return null; }
-        
-        function goBack() { if (pathStack.length > 1) { pathStack.pop(); currentId = pathStack[pathStack.length-1]; document.getElementById('search-input').value = ""; render(); } }
-
-        function updateMB() { const size = new Blob([JSON.stringify(vault)]).size / (1024*1024); document.getElementById('storage-bar').style.width = Math.min(100, (size/500)*100) + "%"; document.getElementById('storage-text').innerText = size.toFixed(2) + " / 500 MB"; }
-        
-        function closeModal() { document.getElementById('editor-modal').style.display = 'none'; }
-        
-        const toB64 = f => new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(f); });
-        
-        function updateLiveStyle() {
-            const f = document.getElementById('edit-font-family').value;
-            document.getElementById('edit-name').style.fontFamily = f;
-            if(document.getElementById('edit-content')) document.getElementById('edit-content').style.fontFamily = f;
-        }
-
-        function deleteItem(e, id) { 
-            e.stopPropagation(); 
-            if(confirm("Biztosan törlöd?")) { 
-                const del = (n) => { 
-                    if(n.children) { 
-                        const idx = n.children.findIndex(c => c.id === id); 
-                        if(idx > -1) { n.children.splice(idx,1); return true; } 
-                        for(let c of n.children) if(del(c)) return true; 
-                    } 
-                    return false; 
-                }; 
-                del(vault); saveToDB(render); 
-            } 
-        }
-    </script>
 </body>
 </html>
