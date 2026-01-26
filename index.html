@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Vault v15.6 - Cinema Update</title>
+    <title>Neon Vault v16.0 - Restore</title>
     <style>
         :root { 
             --bg-dark: #01040a; --neon-red: #ff0000; --neon-blue: #0044ff; --neon-green: #39ff14; 
@@ -27,36 +27,43 @@
 
         #search-input { background: #000; border: 2px solid var(--neon-green); color: var(--neon-green); padding: 8px; border-radius: 5px; font-family: 'Orbitron'; margin-bottom: 15px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 5px var(--neon-green); }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; width: 100%; }
-        .item-card { border: 3px solid; border-radius: 15px; cursor: pointer; text-align: center; background: rgba(0,0,0,0.85); position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; padding: 10px; overflow: hidden; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; width: 100%; align-items: start; }
+        .item-card { border: 3px solid; border-radius: 15px; cursor: pointer; text-align: center; background: rgba(0,0,0,0.85); position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; padding: 10px; overflow: hidden; box-sizing: border-box; align-self: start; }
         
-        .card-micro { min-height: 50px; font-size: 0.8em; }
-        .card-tiny { min-height: 80px; }
-        .card-small { min-height: 130px; }
-        .card-normal { min-height: 190px; }
-        .card-medium-wide { min-height: 190px; grid-column: span 2; }
-        .card-large { min-height: 250px; grid-column: span 2; }
-        .card-huge { min-height: 380px; grid-column: span 2; grid-row: span 2; }
-        .card-panorama { min-height: 120px; grid-column: 1 / -1; }
-        .card-cinema { min-height: 160px; grid-column: 1 / -1; border-width: 5px; }
+        .card-micro { height: 45px !important; min-height: 45px !important; padding: 2px; }
+        .card-micro svg, .card-micro .card-date, .card-micro .open-folder-btn { display: none !important; }
 
-        .card-name { font-weight: 900; margin-top: 10px; word-break: break-all; line-height: 1.2; }
+        .card-tiny { height: 85px !important; min-height: 85px !important; padding: 5px; }
+        .card-tiny svg { width: 22px; height: 22px; }
+        .card-tiny .card-date, .card-tiny .open-folder-btn { display: none !important; }
+
+        .card-small { height: 130px !important; min-height: 130px !important; }
+        .card-normal { height: 190px !important; min-height: 190px !important; }
+        .card-medium-wide { height: 190px !important; min-height: 190px !important; grid-column: span 2; }
+        .card-large { height: 250px !important; min-height: 250px !important; grid-column: span 2; }
+        .card-huge { height: 380px !important; min-height: 380px !important; grid-column: span 2; grid-row: span 2; }
+        .card-panorama { height: 60px !important; min-height: 60px !important; grid-column: 1 / -1; flex-direction: row; gap: 20px; }
+        .card-panorama .card-date, .card-panorama .open-folder-btn { display: none !important; }
+        .card-cinema { height: 180px !important; min-height: 180px !important; grid-column: 1 / -1; border-width: 5px; }
+
+        .card-name { font-weight: 900; word-break: break-all; line-height: 1.1; margin: 2px; }
         .card-date { font-size: 10px; opacity: 0.7; margin-top: 5px; color: #fff; font-family: sans-serif; }
-        .del-btn { position: absolute; top: 10px; right: 10px; color: #ff0000; font-weight: bold; cursor: pointer; z-index: 5; background: #000; padding: 2px 6px; border: 1px solid #ff0000; }
-        .open-folder-btn { margin-top: 10px; font-size: 9px; border-color: var(--neon-blue-ui); color: var(--neon-blue-ui); }
+        .del-btn { position: absolute; top: 5px; right: 5px; color: #ff0000; font-weight: bold; cursor: pointer; z-index: 5; background: #000; padding: 1px 5px; border: 1px solid #ff0000; font-size: 10px; }
+        .open-folder-btn { margin-top: 8px; font-size: 9px; border-color: var(--neon-blue-ui); color: var(--neon-blue-ui); padding: 2px 5px; }
 
         .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #050505; border: 4px solid var(--neon-pink); padding: 25px; z-index: 1000; border-radius: 15px; width: 85%; max-width: 750px; box-shadow: 0 0 60px #000; overflow-y: auto; max-height: 90vh; }
         input, textarea, select { background: #111; border: 1px solid var(--neon-blue-ui); color: #fff; padding: 10px; margin-bottom: 10px; width: 100%; box-sizing: border-box; border-radius: 5px; }
-        
         .file-item { display: flex; align-items: center; justify-content: space-between; background: #111; padding: 5px; border: 1px solid var(--neon-blue-ui); margin: 2px; border-radius: 4px; font-size: 11px; width: 100%; }
-        .preview-img { width: 45px; height: 45px; object-fit: cover; border: 1px solid var(--neon-blue-ui); }
-        .file-controls button { padding: 2px 5px; font-size: 10px; margin-left: 5px; }
-        
-        optgroup { background: #000; color: var(--neon-yellow); font-style: normal; }
-        option { background: #111; color: #fff; }
+        .preview-img { width: 45px; height: 45px; object-fit: cover; border: 1px solid var(--neon-blue-ui); cursor: zoom-in; }
+        #cinema-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 20000; align-items: center; justify-content: center; cursor: zoom-out; }
+        #cinema-overlay img { max-width: 95vw; max-height: 95vh; border: 2px solid var(--neon-blue-ui); box-shadow: 0 0 30px var(--neon-blue-ui); }
     </style>
 </head>
 <body>
+
+    <div id="cinema-overlay" onclick="this.style.display='none'">
+        <img id="cinema-img" src="" alt="Cinema Preview">
+    </div>
 
     <div id="lock-screen">
         <h1 style="color:var(--neon-blue-ui); font-family: 'Orbitron';">RENDSZER ZÁROLVA</h1>
@@ -76,7 +83,8 @@
             <button onclick="goBack()" id="back-btn" style="display:none; border-color:#fff; color:#fff;">← VISSZA</button>
             <button onclick="openCreator('folder')" style="border-color:var(--neon-cyan); color:var(--neon-cyan);">+ ÚJ MAPPA</button>
             <button onclick="openCreator('note')" style="border-color:var(--neon-magenta); color:var(--neon-magenta);">+ ÚJ JEGYZET</button>
-            <button onclick="exportData()" style="border-color:var(--neon-yellow); color:var(--neon-yellow);">📤 EXPORT (DÁTUMMAL)</button>
+            <button onclick="changeMasterPassword()" style="border-color:var(--neon-red); color:var(--neon-red);">🔐 JELSZÓ MÓDOSÍTÁSA</button>
+            <button onclick="exportData()" style="border-color:var(--neon-yellow); color:var(--neon-yellow);">📤 EXPORT (IDŐVEL)</button>
             <button onclick="document.getElementById('import-file').click()" style="border-color:var(--neon-orange); color:var(--neon-orange);">📥 IMPORT</button>
             <input type="file" id="import-file" style="display:none;" onchange="importData(event)">
         </div>
@@ -181,7 +189,7 @@
         function loadFromDB() {
             const trans = db.transaction("store", "readonly");
             const req = trans.objectStore("store").get("main");
-            req.onsuccess = () => { if (req.result) { vault = req.result; render(); } };
+            req.onsuccess = () => { if (req.result) { vault = req.result; if(!vault.pass) vault.pass = "0000"; render(); } };
         }
 
         function saveToDB(cb) {
@@ -192,6 +200,19 @@
         function unlock() {
             if (document.getElementById('pass-input').value === vault.pass) document.getElementById('lock-screen').style.display = 'none';
             else alert("HIBÁS KÓD!");
+        }
+
+        function changeMasterPassword() {
+            const oldPass = prompt("Kérlek, add meg a jelenlegi jelszót:");
+            if (oldPass === null) return;
+            if (oldPass !== vault.pass) { alert("Helytelen régi jelszó!"); return; }
+            const newPass = prompt("Add meg az ÚJ jelszót:");
+            if (!newPass) { alert("A jelszó nem lehet üres!"); return; }
+            const confirmPass = prompt("Megerősítés - Add meg újra az új jelszót:");
+            if (newPass === confirmPass) {
+                vault.pass = newPass;
+                saveToDB(() => alert("Jelszó sikeresen megváltoztatva!"));
+            } else { alert("A két jelszó nem egyezik!"); }
         }
 
         function render() {
@@ -212,8 +233,8 @@
                 card.style.borderColor = color; card.style.color = color;
                 
                 let icon = item.type === 'folder' ? 
-                    `<svg style="width:40px; height:40px;" viewBox="0 0 24 24" fill="${item.children.length?color:'none'}" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>` : 
-                    `<div style="font-size:25px;">📄</div>`;
+                    `<svg style="width:25px; height:25px;" viewBox="0 0 24 24" fill="${item.children.length?color:'none'}" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>` : 
+                    `<div style="font-size:18px;">📄</div>`;
 
                 let folderAction = item.type === 'folder' ? `<button class="open-folder-btn" onclick="event.stopPropagation(); enterFolder('${item.id}')">MEGNYITÁS</button>` : '';
 
@@ -293,12 +314,20 @@
             saveToDB(() => { closeModal(); render(); });
         }
 
+        // VISSZAÁLLÍTOTT FUNKCIÓ: Felugró ablak a fájlnévhez
         function exportData() {
             const n = new Date();
             const d = `${n.getFullYear()}-${n.getMonth()+1}-${n.getDate()}_${n.getHours()}-${n.getMinutes()}`;
+            const defaultName = `NeoVault_Mentes_${d}`;
+            let customName = prompt("Add meg a mentés nevét (a .json automatikus):", defaultName);
+            if (customName === null) return;
+            const finalName = (customName || defaultName) + ".json";
+            const blob = new Blob([JSON.stringify(vault)], {type:"application/json"});
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([JSON.stringify(vault)], {type:"application/json"}));
-            a.download = `NeoVault_Mentes_${d}.json`; a.click();
+            a.href = URL.createObjectURL(blob);
+            a.download = finalName;
+            a.click();
+            URL.revokeObjectURL(a.href);
         }
 
         function importData(e) {
@@ -319,7 +348,7 @@
             item.files.forEach((f) => {
                 const div = document.createElement('div');
                 div.className = "file-item";
-                let preview = (f.type && f.type.startsWith('image/')) ? `<img src="${f.data}" class="preview-img">` : `<span>📄</span>`;
+                let preview = (f.type && f.type.startsWith('image/')) ? `<img src="${f.data}" class="preview-img" onclick="openCinema('${f.data}')">` : `<span>📄</span>`;
                 div.innerHTML = `
                     <div style="display:flex; align-items:center; gap:10px;">${preview}<span style="max-width:150px; overflow:hidden;">${f.name}</span></div>
                     <div class="file-controls">
@@ -330,13 +359,23 @@
             });
         }
 
+        function openCinema(src) {
+            const overlay = document.getElementById('cinema-overlay');
+            const img = document.getElementById('cinema-img');
+            img.src = src;
+            overlay.style.display = 'flex';
+        }
+
         function downloadFile(data, name) { const a = document.createElement('a'); a.href = data; a.download = name; a.click(); }
 
         function removeFile(itemId, fileId) {
             if(!confirm("Biztosan törlöd a fájlt?")) return;
             const item = findNode(itemId, vault);
             item.files = item.files.filter(f => f.id !== fileId);
-            saveToDB(() => refreshFileList(item));
+            saveToDB(() => {
+                refreshFileList(item);
+                render();
+            });
         }
 
         function copyToClipboard() {
