@@ -128,7 +128,10 @@ button,select,input{background:#000;color:var(--text);border:1px solid var(--bor
         <button onclick="deleteCurrent()" class="color-red">🗑 Töröl</button> <button onclick="resetApp()" class="danger-reset">⚠ RESET</button> 
     </div>
 
-    <input id="search" placeholder="Keresés..." oninput="searchText()">
+    <input id="search" placeholder="Keresés..." oninput="searchText()" style="min-width:180px; background:#000; color:#ddd; border:1px solid #333; padding:8px 12px; border-radius:4px;">
+    <button onclick="openPreciseOverlay()" style="background:linear-gradient(90deg,#0a1e3a,#1a4a8a,#0a1e3a); color:#6ab0ff; border:3px solid #2a6fd6; font-weight:bold; font-size:18px; padding:12px 22px; border-radius:8px; box-shadow:0 0 18px rgba(42,111,214,0.8); margin-left:8px; cursor:pointer; text-shadow:0 0 8px #2a6fd6;">🔵 Precíz OCR 2-es</button>
+    <span id="precise-counter-wrap" style="display:inline-flex; align-items:center; gap:6px; margin-left:10px; background:#000; border:2px solid #00ffff; padding:10px 16px; border-radius:8px; box-shadow:0 0 12px rgba(0,255,255,0.5);"><span style="color:#aaa; font-family:Arial; font-size:13px; font-weight:bold;">MENTVE:</span><span id="precise-save-counter" style="background:#000; color:#00ffff; font-family:Arial; font-size:22px; font-weight:bold; min-width:32px; text-align:center; text-shadow:0 0 10px #00ffff;">0</span><span style="color:#00ffff; font-family:Arial; font-size:13px; font-weight:bold;"> db</span></span>
+    <span style="font-size:11px; color:#4a7abf; margin-left:6px; background:#0a1e3a; padding:5px 10px; border-radius:4px; border:1px solid #2a6fd6;">🟠 Narancs EN | 🟡 Citrom HU</span>
     <button onclick="openPreciseOverlay()" style="background:linear-gradient(90deg,#0a1e3a,#143a6b); color:#6ab0ff; border:2px solid #2a6fd6; font-weight:bold; box-shadow:0 0 12px rgba(42,111,214,0.6); margin-left:6px;">🔵 Precíz OCR 2-es</button>
     <span style="font-size:10px; color:#4a7abf; margin-left:4px;">🟠 Narancs EN | 🟡 Citrom HU</span> 
 </div>
@@ -217,6 +220,8 @@ function insertTimestamp() {
 }
 
 function refresh() {
+    setTimeout(()=>{ try{ updatePreciseCounter(); }catch(e){} }, 400);
+
     const select = document.getElementById("notes");
     select.innerHTML = "";
     Object.keys(notes).forEach((n, i) => {
@@ -361,7 +366,9 @@ function insertOcrToNote(){
     alert("Beszúrva a jegyzetbe!");
 }
 
-window.addEventListener('load', () => { 
+window.addEventListener('load', ()=>{ setTimeout(updatePreciseCounter, 1200); setTimeout(updatePreciseCounter, 3000); });
+// dummy
+window.addEventListener('load_dummy', () => { 
     if (localStorage.getItem('htmlEditorOpen') === 'true') openHtmlEditor(); 
 });
 
@@ -605,6 +612,50 @@ function copyOcr(type){
 
 // === 4IN1 EXPORT/IMPORT BRIDGE - VÉGTELEN + OCR - FIX V26 ===
 
+
+// === SZÁMLÁLÓ - FEKETE MEZŐ CYAN ARIAL - VALÓS ===
+function getRealSavedCount(){
+  try{
+    let totalPrecise = 0;
+    let totalNotes = 0;
+    if(window.notes){
+      totalNotes = Object.keys(window.notes).length;
+      for(let k in window.notes){
+        const txt = window.notes[k] || '';
+        // minden --- [xxx] --- blokk
+        const re = /---\s*\[.*?\].*?---/g;
+        let m;
+        while((m = re.exec(txt)) !== null){
+          const up = m[0].toUpperCase();
+          if(up.includes('OCR') || up.includes('FORD') || up.includes('NARANCS') || up.includes('CITROM') || up.includes('PRECIZ') || up.includes('ALSÓKÉP') || up.includes('TELJESKÉP') || up.includes('FÉNYKÉP') || up.includes('KÜLDETÉS')){
+            totalPrecise++;
+          }
+        }
+      }
+    }
+    if(totalPrecise>0) return totalPrecise;
+    return totalNotes;
+  }catch(e){ return 0; }
+}
+function updatePreciseCounter(){
+  try{
+    let cnt = getRealSavedCount();
+    const ls = parseInt(localStorage.getItem('preciseSaveCount')||'0');
+    if(ls>cnt) cnt = ls;
+    if(window.notes) {
+      const ncnt = Object.keys(window.notes).length;
+      if(ncnt>cnt) cnt = ncnt;
+    }
+    const el = document.getElementById('precise-save-counter');
+    if(el) el.textContent = cnt;
+    const wrap = document.getElementById('precise-counter-wrap');
+    if(wrap) wrap.title = 'Jegyzetek: ' + (window.notes?Object.keys(window.notes).length:0) + ' | Precíz: ' + cnt;
+  }catch(e){}
+}
+function incrementPreciseCounter(){
+  setTimeout(updatePreciseCounter, 600);
+}
+
 // === LILA SZERKEZETŰ MENTÉS - mint a Teljeskép (MAGENTA) ===
 window.insertPreciseToNote = function(text, lang){
   try{
@@ -649,7 +700,7 @@ window.insertPreciseToNote = function(text, lang){
     if(typeof showSaveToast === 'function'){
       showSaveToast(prefix + ' mentve: ' + text.substring(0,50) + '...');
     }
-    console.log('Lila szerkezettel mentve:', window.current);
+    incrementPreciseCounter(); updatePreciseCounter(); console.log('Lila szerkezettel mentve:', window.current);
   }catch(err){
     alert('Mentés hiba (lila): ' + err.message);
     console.error(err);
@@ -784,6 +835,50 @@ function saveDataRobust(){
   }catch(e){ console.error(e); }
 }
 
+
+// === SZÁMLÁLÓ - FEKETE MEZŐ CYAN ARIAL - VALÓS ===
+function getRealSavedCount(){
+  try{
+    let totalPrecise = 0;
+    let totalNotes = 0;
+    if(window.notes){
+      totalNotes = Object.keys(window.notes).length;
+      for(let k in window.notes){
+        const txt = window.notes[k] || '';
+        // minden --- [xxx] --- blokk
+        const re = /---\s*\[.*?\].*?---/g;
+        let m;
+        while((m = re.exec(txt)) !== null){
+          const up = m[0].toUpperCase();
+          if(up.includes('OCR') || up.includes('FORD') || up.includes('NARANCS') || up.includes('CITROM') || up.includes('PRECIZ') || up.includes('ALSÓKÉP') || up.includes('TELJESKÉP') || up.includes('FÉNYKÉP') || up.includes('KÜLDETÉS')){
+            totalPrecise++;
+          }
+        }
+      }
+    }
+    if(totalPrecise>0) return totalPrecise;
+    return totalNotes;
+  }catch(e){ return 0; }
+}
+function updatePreciseCounter(){
+  try{
+    let cnt = getRealSavedCount();
+    const ls = parseInt(localStorage.getItem('preciseSaveCount')||'0');
+    if(ls>cnt) cnt = ls;
+    if(window.notes) {
+      const ncnt = Object.keys(window.notes).length;
+      if(ncnt>cnt) cnt = ncnt;
+    }
+    const el = document.getElementById('precise-save-counter');
+    if(el) el.textContent = cnt;
+    const wrap = document.getElementById('precise-counter-wrap');
+    if(wrap) wrap.title = 'Jegyzetek: ' + (window.notes?Object.keys(window.notes).length:0) + ' | Precíz: ' + cnt;
+  }catch(e){}
+}
+function incrementPreciseCounter(){
+  setTimeout(updatePreciseCounter, 600);
+}
+
 // === LILA SZERKEZETŰ MENTÉS - mint a Teljeskép (MAGENTA) ===
 window.insertPreciseToNote = function(text, lang){
   try{
@@ -828,7 +923,7 @@ window.insertPreciseToNote = function(text, lang){
     if(typeof showSaveToast === 'function'){
       showSaveToast(prefix + ' mentve: ' + text.substring(0,50) + '...');
     }
-    console.log('Lila szerkezettel mentve:', window.current);
+    incrementPreciseCounter(); updatePreciseCounter(); console.log('Lila szerkezettel mentve:', window.current);
   }catch(err){
     alert('Mentés hiba (lila): ' + err.message);
     console.error(err);
