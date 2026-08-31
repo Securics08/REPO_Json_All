@@ -1,25 +1,25 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>7in1-V12-MULTI-DB-FIXED</title><style>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>100in1-V12-MULTI-DB-FIXED</title><style>
 *{box-sizing:border-box}body{margin:0;background:#050505;color:#fff;font-family:Segoe UI,sans-serif;overflow:hidden;display:flex;flex-direction:column;height:100vh}
 .topbar{height:96px;background:#0a0a0a;border-bottom:3px solid #222;display:flex;align-items:center;gap:10px;padding:8px 14px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;flex-shrink:0}
 .topbar::-webkit-scrollbar{height:13px} .topbar::-webkit-scrollbar-track{background:#111; border-radius:10px} .topbar::-webkit-scrollbar-thumb{background:#00ffff; border-radius:10px; border:1.5px solid #00ffff; box-shadow:0 0 8px #00ffffaa} .topbar::-webkit-scrollbar-thumb:hover{background:#00ff88; box-shadow:0 0 10px #00ffff}
-.topbar button{padding:10px 18px;border-radius:12px;border:2px solid #333;color:#fff;font-weight:400;cursor:pointer;font-size:15px;white-space:normal;flex-shrink:0;transition:0.2s; min-height:70px;}
+.topbar button{padding:10px 18px;border-radius:12px;border:2px solid #333;color:#fff;font-weight:400;cursor:pointer;font-size:20px;white-space:normal;flex-shrink:0;transition:0.2s; min-height:70px;}
 .topbar button.menu-btn{background:#1a1a1a !important; color:#ddd !important;}
 .topbar button.menu-btn.active{background:#00ff00!important;color:#000!important;border-color:#00ff00!important;box-shadow:0 0 20px #00ff00!important;transform:scale(1.08);}
-.logo{font-weight:400;color:#00ff00;margin-right:14px;font-size:17px;white-space:nowrap;text-shadow:0 0 10px #00ff00;flex-shrink:0}
+.logo{font-weight:400;color:#00ff00;margin-right:14px;font-size:20px;white-space:nowrap;text-shadow:0 0 10px #00ff00;flex-shrink:0}
 .cyan-cnt{background:#001a1a;border:2px solid #00ffff;border-radius:12px;padding:6px 14px;font-size:20px;font-weight:400;margin-right:10px;min-width:46px;display:inline-block;text-align:center; box-shadow:0 0 10px #00ffff66;}
 .main-wrap{flex:1;display:flex;overflow:hidden;min-height:0}
 .sidebar{width:380px;background:#0a0a0a;border-right:2px solid #222;display:flex;flex-direction:column;padding:14px;overflow:hidden}
 .main{flex:1;display:flex;flex-direction:column;background:#000;overflow:hidden}
-h2{color:#00ff00;text-shadow:0 0 10px #00ff00, 0 0 20px #00ff00aa;font-size:16px;margin:0 0 8px 0;text-align:center; border:2px solid #00ff00; border-radius:8px; padding:6px; background:#001100; box-shadow:0 0 12px #00ff00aa;}
-.storage{font-size:11px;color:#ffea00;font-weight:400;margin-bottom:4px}
+h2{color:#00ff00;text-shadow:0 0 10px #00ff00, 0 0 20px #00ff00aa;font-size:20px;margin:0 0 8px 0;text-align:center; border:2px solid #00ff00; border-radius:8px; padding:6px; background:#001100; box-shadow:0 0 12px #00ff00aa;}
+.storage{font-size:20px;color:#ffea00;font-weight:400;margin-bottom:4px}
 .bar{width:100%;height:8px;background:#111;border-radius:5px;overflow:hidden;margin-bottom:8px;border:1px solid #333}
 #fill{height:100%;width:0%;background:linear-gradient(90deg,#ffea00,#fff);box-shadow:0 0 6px #ffea00;transition:0.5s}
 input,textarea,button{background:#161616;color:#fff;border:1px solid #333;padding:10px;border-radius:8px;outline:none;margin-bottom:6px;font-size:13px}
 input#fileName{border:3px solid #00ffff !important; box-shadow:0 0 10px #00ffff44; background:#0a1a1a !important;}
 input#fileName:focus{border-color:#00ff88 !important; box-shadow:0 0 15px #00ffffaa;}
-textarea{flex:1;width:100%;resize:none;font-family:Consolas,monospace;color:#0f0;font-size:13px;background:#000;border:1px solid #0f04;line-height:1.5}
+textarea{flex:1;width:100%;resize:none;font-family:Consolas,monospace;color:#0f0;font-size:20px;background:#000;border:1px solid #0f04;line-height:1.5}
 .toolbar{display:flex;gap:6px;margin-bottom:6px}
-button{cursor:pointer;font-weight:400;font-size:11px;flex:1;border:1px solid transparent;transition:0.1s;text-transform:uppercase;padding:11px;border-radius:8px}
+button{cursor:pointer;font-weight:400;font-size:20px;flex:1;border:1px solid transparent;transition:0.1s;text-transform:uppercase;padding:11px;border-radius:8px}
 button:hover{filter:brightness(1.3)}
 .btn-save{background:#ffea00;color:#000;box-shadow:0 0 10px #ffea00aa}
 .btn-new{background:#222;color:#fff;border:1px solid #444}
@@ -50,14 +50,14 @@ button:hover{filter:brightness(1.3)}
 #fileList{flex:1;overflow-y:auto;padding-right:4px;margin-top:8px}
 .file-item{padding:10px;margin-bottom:8px;background:#141414;border-radius:8px;cursor:pointer;border:1px solid #222;border-left:5px solid #ffea00}
 .file-item.active{ border-left-color: inherit !important; background:#111 !important; box-shadow:none !important; }
-.file-item strong{display:block;font-size:13px;margin-bottom:3px}
-.file-item small{color:#888;font-size:10px;font-family:monospace}
+.file-item strong{display:block;font-size:20px;margin-bottom:3px}
+.file-item small{color:#888;font-size:20px;font-family:monospace}
 .editor-sec{display:flex;flex-direction:column;padding:8px;border-bottom:2px solid #333;background:#000;overflow:hidden;height:45%;min-height:80px}
 #resizer{height:12px;background:#1a1a1a;cursor:row-resize;display:flex;align-items:center;justify-content:center;border-top:2px solid #333;border-bottom:2px solid #333;flex-shrink:0}
 #resizer:hover{background:#333}
-#resizer::after{content:"═══ HÚZD AZ ÁTMÉRETEZÉSHEZ ═══"; color:#666; font-size:9px; letter-spacing:1px}
+#resizer::after{content:"═══ HÚZD AZ ÁTMÉRETEZÉSHEZ ═══"; color:#666; font-size:20px; letter-spacing:1px}
 .preview-sec{flex:1;display:flex;flex-direction:column;background:#fff;overflow:hidden;min-height:80px}
-.preview-head{background:#0a0a0a;color:#0f0;padding:6px 12px;font-size:11px;font-weight:400;border-bottom:1px solid #333;display:flex;justify-content:space-between}
+.preview-head{background:#0a0a0a;color:#0f0;padding:6px 12px;font-size:20px;font-weight:400;border-bottom:1px solid #333;display:flex;justify-content:space-between}
 iframe.preview{flex:1;border:none;background:#fff;width:100%}
 .bottom-block{margin-top:auto;display:flex;flex-direction:column;gap:6px;padding-top:8px;border-top:1px solid #222}
 
@@ -97,7 +97,7 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
   background:#330033;
   border:1.5px solid #ff00ff;
   color:#ff00ff;
-  font-size:11px;
+  font-size:20px;
   font-weight:400;
   padding:3px 8px;
   border-radius:6px;
@@ -114,7 +114,7 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
   background:#440044;
   border-color:#ff00ff;
   color:#ff88ff;
-  font-size:12px;
+  font-size:20px;
   box-shadow:0 0 12px #ff00ffaa;
   text-shadow:0 0 8px #ff00ff;
 }
@@ -135,7 +135,7 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
 
 .last-full-under{
   display:block;
-  font-size:10px;
+  font-size:20px;
   font-weight:400;
   max-width:140px;
   min-width:60px;
@@ -166,7 +166,7 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
   gap:6px;
 }
 .menu-btn.has-data .last-full-under{
-  font-size:11px;
+  font-size:20px;
   background:#000000cc;
   box-shadow:0 0 8px currentColor;
 }
@@ -177,9 +177,140 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
 }
 </style>
 <style>
-#yellowActiveCounter{color:#ffea00 !important;text-shadow:0 0 8px #ffea00 !important;background:#1a1a00 !important;border:1.5px solid #ffea00 !important;border-radius:5px !important;padding:3px 10px !important;font-size:15px !important;font-weight:bold !important;margin:0 4px !important;display:inline-block !important;}
-#cyanCodeCounter{color:#00f6ff !important;text-shadow:0 0 8px #00f6ff !important;background:#001a1a !important;border:1.5px solid #00f6ff !important;border-radius:5px !important;padding:3px 10px !important;font-size:15px !important;font-weight:bold !important;margin:0 4px !important;display:inline-block !important;}
+#yellowActiveCounter{color:#ffea00 !important;background:#1a1a00 !important;border:1.5px solid #ffea00 !important;border-radius:5px !important;padding:3px 10px !important;font-weight:bold !important;text-shadow:0 0 8px #ffea00 !important;}
+#cyanCodeCounter{color:#00f6ff !important;background:#001a1a !important;border:1.5px solid #00f6ff !important;border-radius:5px !important;padding:3px 10px !important;font-weight:bold !important;text-shadow:0 0 8px #00f6ff !important;}
 #titleH2{border:2px solid #00ff00 !important;background:#001100 !important;display:flex !important;flex-wrap:wrap !important;align-items:center !important;justify-content:center !important;gap:6px !important;}
+</style>
+
+<style>
+.top-bar{
+  flex-wrap:nowrap !important;
+  overflow-x:auto !important;
+  align-items:center !important;
+}
+.top-bar button{
+  width:auto !important;
+  max-width:none !important;
+  min-width:max-content !important;
+  height:45px !important;
+  min-height:45px !important;
+  max-height:45px !important;
+  flex-shrink:0 !important;
+  white-space:nowrap !important;
+  padding:0 14px !important;
+}
+.top-bar button .last-full-under{
+  font-size:20px !important;
+  white-space:nowrap !important;
+  word-break:normal !important;
+  overflow-wrap:normal !important;
+  max-width:none !important;
+  width:auto !important;
+  display:inline-block !important;
+  line-height:45px !important;
+}
+</style>
+
+<style>
+.top-bar button .last-full-under{
+  font-size:20px !important;
+  white-space:normal !important;
+  word-break:break-all !important;
+  overflow-wrap:anywhere !important;
+  line-height:1.1 !important;
+  max-width:140px !important;
+  min-width:80px !important;
+}
+.top-bar button{
+  max-width:160px !important;
+  min-width:80px !important;
+  height:auto !important;
+  min-height:35px !important;
+  white-space:normal !important;
+}
+</style>
+
+<style>
+.top-bar{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:6px !important;
+  background:#000 !important;
+  padding:8px !important;
+  align-items:flex-start !important;
+}
+.top-bar button{
+  width:auto !important;
+  min-width:80px !important;
+  max-width:none !important;
+  height:auto !important;
+  min-height:40px !important;
+  max-height:none !important;
+  background:#000 !important;
+  border:1px solid #222 !important;
+  flex-shrink:0 !important;
+  flex-grow:0 !important;
+  padding:6px 12px !important;
+  overflow:visible !important;
+}
+.top-bar button .last-full-under{
+  font-family: Arial, sans-serif !important;
+  font-size:20px !important;
+  font-weight:400 !important;
+  font-style:normal !important;
+  width:auto !important;
+  height:auto !important;
+  max-width:none !important;
+  max-height:none !important;
+  display:inline-block !important;
+  white-space:nowrap !important;
+  word-break:normal !important;
+  line-height:1.2 !important;
+  text-align:center !important;
+  padding:2px 4px !important;
+  background:#000 !important;
+  text-shadow:none !important;
+  box-shadow:none !important;
+  border:none !important;
+  overflow:visible !important;
+}
+</style>
+
+<style>
+/* CYAN CSÚSZKA */
+.top-bar::-webkit-scrollbar{
+  height:10px !important;
+}
+.top-bar::-webkit-scrollbar-track{
+  background:#000 !important;
+  border:1px solid #111 !important;
+}
+.top-bar::-webkit-scrollbar-thumb{
+  background:#00f6ff !important;
+  border-radius:5px !important;
+  box-shadow:0 0 10px #00f6ff !important;
+}
+.top-bar::-webkit-scrollbar-thumb:hover{
+  background:#00e0ff !important;
+  box-shadow:0 0 15px #00f6ff !important;
+}
+/* Firefox */
+.top-bar{
+  scrollbar-width:thin !important;
+  scrollbar-color:#00f6ff #000 !important;
+}
+/* Oldal scroll is cyan */
+::-webkit-scrollbar{
+  width:8px !important;
+  height:8px !important;
+}
+::-webkit-scrollbar-track{
+  background:#0a0a0a !important;
+}
+::-webkit-scrollbar-thumb{
+  background:#00f6ff !important;
+  border-radius:4px !important;
+}
 </style>
 
 <style>
@@ -358,7 +489,7 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
 }
 </style>
 </head><body>
-<div class="topbar" id="topbar"><div class="logo">7in1-V12</div></div>
+<div class="topbar" id="topbar"><div class="logo">100in1-V12</div></div>
 <div class="main-wrap">
 <div class="sidebar">
 <h2 id="titleH2">⚡ 1. REPO 1 V12</h2>
@@ -373,7 +504,7 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
 </div>
 </div>
 <div class="main">
-<div class="editor-sec" id="editorSec"><div class="toolbar" style="align-items:center; gap:8px;"><span style="color:#ffff00;font-size:12px;font-weight:400; padding:6px 10px; background:#222; border-radius:6px; border:1px solid #444;">KÓD</span><div style="flex:1"></div><button style="background:#0066ff; color:#fff; border:1px solid #0088ff; padding:10px 18px; font-size:12px; flex:0 0 auto; min-width:110px; border-radius:8px;" onclick="copyCode()">📋 MÁSOLÁS</button><button style="background:#00cc00; color:#000; border:1px solid #00ff00; padding:10px 20px; font-size:12px; font-weight:400; flex:0 0 auto; min-width:140px; border-radius:8px; box-shadow:0 0 8px #00ff0055;" onclick="runCode()">▶ FUTTATÁS</button></div>
+<div class="editor-sec" id="editorSec"><div class="toolbar" style="align-items:center; gap:8px;"><span style="color:#ffff00;font-size:20px;font-weight:400; padding:6px 10px; background:#222; border-radius:6px; border:1px solid #444;">KÓD</span><div style="flex:1"></div><button style="background:#0066ff; color:#fff; border:1px solid #0088ff; padding:10px 18px; font-size:20px; flex:0 0 auto; min-width:110px; border-radius:8px;" onclick="copyCode()">📥 LETÖLTÉS (100 ablak + uBlock FIX)</button><button onclick="copyToClipboardSafe()" style="background:#ffea00;color:#000;border:1px solid #ff0;padding:10px 8px;border-radius:4px;cursor:pointer;font-weight:bold;margin-left:4px;">📋 SAFE COPY</button><button style="background:#00cc00; color:#000; border:1px solid #00ff00; padding:10px 20px; font-size:20px; font-weight:400; flex:0 0 auto; min-width:140px; border-radius:8px; box-shadow:0 0 8px #00ff0055;" onclick="runCode()">▶ FUTTATÁS</button></div>
 <textarea id="editor" spellcheck="false" placeholder="Ide írd a HTML kódot..."></textarea></div>
 <div id="resizer"></div>
 <div class="preview-sec" id="previewSec"><div class="preview-head"><span>ELŐNÉZET - HÚZD FELÜL!</span><span>↕</span></div><iframe id="preview" class="preview"></iframe></div>
@@ -491,7 +622,7 @@ function getLatestProject(arr){
 function updateAllCounts(){
   totalAllCount=0;
   let processed=0;
-  for(let i=1;i<=7;i++){
+  for(let i=1;i<=100;i++){
     const lsKey="NeonRepoV5_LS_"+i;
     try{
       const arr=JSON.parse(localStorage.getItem(lsKey)||"[]");
@@ -584,7 +715,7 @@ function switchDB(id){
   DB_NAME="NeonRepoV5_"+id;
   LS_KEY="NeonRepoV5_LS_"+id;
   const col=neonColors[(id-1) % neonColors.length];
-  document.getElementById("titleH2").innerHTML="⚡ "+id+". REPO "+id+" V12 | <span id=\"yellowActiveCounter\">👁️ AKTÍV: 0 db</span> | <span id=\"cyanCodeCounter\">💾 ÖSSZ: 0 db</span>";
+  document.getElementById('titleH2').textContent="⚡ "+id+". REPO "+id+" V12";
   document.getElementById('titleH2').style.color='#00ff00';
   document.getElementById('titleH2').style.textShadow="0 0 10px #00ff00, 0 0 20px #00ff00aa";
   document.getElementById('dbNameLabel').textContent=DB_NAME;
@@ -766,7 +897,7 @@ function loadList(){
   if(useLS){render(getLS()); return;}
   if(!db){setTimeout(loadList,500); return;}
   try{
-    const tx=db.transaction(STORE,"readonly");
+    if(!db){ useLS=true; render(getLS()); return; } const tx=db.transaction(STORE,"readonly");
     tx.objectStore(STORE).getAll().onsuccess=e=>{render(e.target.result);};
   }catch(e){useLS=true; render(getLS());}
 }
@@ -835,12 +966,14 @@ function exportData(){
 
   if(useLS){doExport(getLS()); return;}
   try{
-    const tx=db.transaction(STORE,"readonly");
+    if(!db){ useLS=true; render(getLS()); return; } const tx=db.transaction(STORE,"readonly");
     tx.objectStore(STORE).getAll().onsuccess=e=>{doExport(e.target.result);};
   }catch(e){doExport(getLS());}
 }
 
 function importData(){
+  if(!db){ useLS=true; }
+
   const input=document.createElement("input");
   input.type="file";
   input.accept=".json";
@@ -853,15 +986,19 @@ function importData(){
         const parsed=JSON.parse(ev.target.result);
         let arr=parsed.data||parsed;
         if(!Array.isArray(arr)) arr=[arr];
-        if(useLS){
+        if(useLS || !db){
           let cur=getLS();
           arr.forEach(it=>{delete it.id; it.id=Date.now()+Math.floor(Math.random()*10000); cur.push(it);});
           setLS(cur); loadList(); alert("Import kész LS: "+arr.length+" db"); return;
         }
+        try{
         const tx=db.transaction(STORE,"readwrite");
         const store=tx.objectStore(STORE);
         arr.forEach(it=>{delete it.id; store.put(it);});
         tx.oncomplete=()=>{loadList(); alert("Import kész: "+arr.length+" db");};
+        }catch(e2){ 
+          let cur=getLS(); arr.forEach(it=>{delete it.id; it.id=Date.now()+Math.floor(Math.random()*10000); cur.push(it);}); setLS(cur); loadList(); alert("Import kész LS fallback: "+arr.length+" db"); 
+        }
       }catch(err){alert("Import hiba: "+err.message);}
     };
     reader.readAsText(file);
@@ -883,7 +1020,7 @@ function resetAll100(){
   let total=0;
 
   // Delete LS + LAST names
-  for(let i=1;i<=7;i++){
+  for(let i=1;i<=100;i++){
     const key="NeonRepoV5_LS_"+i;
     const lastKey="NeonRepoV5_LAST_"+i;
     if(localStorage.getItem(key)){
@@ -925,7 +1062,7 @@ function resetAll100(){
     }
   };
 
-  for(let i=1;i<=7;i++){
+  for(let i=1;i<=100;i++){
     try{
       const del=indexedDB.deleteDatabase("NeonRepoV5_"+i);
       del.onsuccess=()=>{deletedIDB++; finish();};
@@ -963,24 +1100,36 @@ function clearAll(){
 function copyCode(){
   try{
     const ed=document.getElementById("editor");
-    const text=ed.value || "";
-    const ta=document.createElement("textarea");
-    ta.value=text;
-    ta.style.position="fixed";
-    ta.style.left="-9999px";
-    ta.style.top="-9999px";
-    document.body.appendChild(ta);
-    ta.focus();
-    ta.select();
-    ta.setSelectionRange(0, ta.value.length);
-    const ok=document.execCommand("copy");
-    document.body.removeChild(ta);
-    ed.focus();
-    if(ok){ setStatus("MÁSOLVA! ("+text.length+" karakter)","#0f0"); }
-    else{ ed.focus(); ed.select(); document.execCommand("copy"); setStatus("MÁSOLVA!","#0f0"); }
-  }catch(e){
-    try{ const ed=document.getElementById("editor"); ed.focus(); ed.select(); document.execCommand("copy"); setStatus("MÁSOLVA!","#0f0"); }catch(e2){ setStatus("MÁSOLÁSI HIBA: "+e2.message,"#f00"); alert("Másolás hiba: Ctrl+A, Ctrl+C kézzel"); }
-  }
+    let text=ed.value || "";
+    if(!text){ setStatus("Nincs kód!","#f80"); return; }
+    // uBlock ClickFix FIX: nem vágólap, hanem LETÖLTÉS!
+    const blob=new Blob([text], {type:"text/html;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    let name="REPO_"+(currentDB||"code")+"_"+Date.now()+".html";
+    try{ let last=localStorage.getItem('NeonRepoV5_LS_'+currentDB); if(last){ let arr=JSON.parse(last); if(arr && arr.length>0){ let lastItem=arr[arr.length-1]; if(lastItem && lastItem.name) name=lastItem.name+".html"; } } }catch(e){}
+    a.download=name;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{ try{document.body.removeChild(a); URL.revokeObjectURL(url);}catch(e){} },500);
+    setStatus("📥 LETÖLTVE: "+name+" (uBlock FIX)","#0ff");
+  }catch(e){ setStatus("Hiba: "+e.message,"#f00"); }
+}
+// Extra: ha tényleg vágólap kell, safe módszer ponttal
+function copyToClipboardSafe(){
+  const ed=document.getElementById("editor");
+  let text=ed.value||"";
+  if(!text) return;
+  let safe="."+text;
+  const ta=document.createElement("textarea");
+  ta.value=safe;
+  ta.style.position="fixed"; ta.style.left="-9999px";
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand("copy");
+  document.body.removeChild(ta);
+  setStatus("✅ MÁSOLVA ponttal! Töröld az első pontot!","#0f0");
 }
 
 
@@ -998,7 +1147,7 @@ function exportAll100(){
     setStatus("Exportálás mind a 100...","#ff0");
     const allRepos=[];
     let totalCount=0;
-    for(let i=1;i<=7;i++){
+    for(let i=1;i<=100;i++){
       const lsKey="NeonRepoV5_LS_"+i;
       let lsData=[];
       try{lsData=JSON.parse(localStorage.getItem(lsKey)||"[]");}catch(e){lsData=[];}
@@ -1020,7 +1169,7 @@ function exportAll100(){
       exportDate:dateStr,
       exportTime:timeStr,
       exportDateTime:now.toLocaleString("hu-HU"),
-      totalRepos:7,
+      totalRepos:100,
       totalCount:totalCount,
       repos:allRepos
     };
@@ -1105,7 +1254,7 @@ function importAll100(){
           if(!found){
             // Last resort: if object has numeric keys 1..100 with arrays
             let collected=[];
-            for(let i=1;i<=7;i++){
+            for(let i=1;i<=100;i++){
               if(parsed[i] && Array.isArray(parsed[i]) && parsed[i].length>0){
                 collected.push({repo:i, data:parsed[i]});
               }
@@ -1168,7 +1317,7 @@ function importAll100(){
         setStatus("IMPORT ALL 100 kész: "+totalImported,"#0f0");
         try{ loadList(); updateAllCounts(); updateTitleWithTotal(); }catch(e){}
         setTimeout(()=>{
-          for(let i=1;i<=7;i++){
+          for(let i=1;i<=100;i++){
             try{
               const lastStored=localStorage.getItem('NeonRepoV5_LAST_'+i);
               if(lastStored) updateLastName(i, lastStored);
@@ -1214,12 +1363,12 @@ function importAll100(){
   document.addEventListener('mouseup', ()=>{
     if(dragging){dragging=false; document.body.style.cursor=''; document.body.style.userSelect='';}
   });
-})(); setTimeout(()=>{ for(let i=0;i<7;i++){ const el=document.getElementById('last'+i); if(el) fitTextToBox(el); } }, 300);
+})(); setTimeout(()=>{ for(let i=0;i<100;i++){ const el=document.getElementById('last'+i); if(el) fitTextToBox(el); } }, 300);
 
 // Build topbar 100 buttons
 (function(){
   const topbar=document.getElementById('topbar');
-  for(let i=1;i<=7;i++){
+  for(let i=1;i<=100;i++){
     const col=neonColors[(i-1) % neonColors.length];
     const btn=document.createElement('button');
     btn.className='menu-btn'+(i===1?' active':'');
@@ -1241,7 +1390,7 @@ function importAll100(){
     const fullNameHtml = lastName 
       ? '<span class="last-full-under" id="last'+(i-1)+'" style="color:'+lastColor+'; border:1px solid '+lastColor+'; background:rgba(0,0,0,0.35); box-shadow:0 0 8px '+lastColor+'99; box-shadow:0 0 6px '+col+'66;" title="'+lastName.replace(/"/g,'&quot;')+'">'+lastName+'</span>'
       : '<span class="last-full-under" id="last'+(i-1)+'" style="display:none;"></span>';
-    btn.innerHTML=`<span class="last-full-under" id="last${i-1}" style="display:flex; color:${lastColor}; background:#000; width:100%; height:100%; align-items:center; justify-content:center; font-size:28px; font-weight:400; text-shadow:none; box-shadow:none; border:none; text-align:center; word-break:break-all; line-height:0.9; padding:4px; overflow:hidden; white-space:nowrap;">${lastName||'—'}</span>`;
+    btn.innerHTML=`<span class="last-full-under" id="last${i-1}" style="display:flex; color:${lastColor}; background:#000; width:auto; height:auto; align-items:center; justify-content:center; font-size:20px; font-weight:400; text-shadow:none; box-shadow:none; border:none; text-align:center; word-break:break-all; line-height:0.9; padding:4px; overflow:hidden; white-space:nowrap;">${lastName||''}</span>`;
     btn.onclick=()=>switchDB(i);
     topbar.appendChild(btn);
   }
@@ -1283,7 +1432,7 @@ setInterval(updateAllCounts,5000);
 // MIGRATION: javítja az összes LAST kulcsot legfrissebb id szerint - V28 fix
 setTimeout(()=>{
   try{
-    for(let i=1;i<=7;i++){
+    for(let i=1;i<=100;i++){
       const lsKey="NeonRepoV5_LS_"+i;
       let arr=[];
       try{arr=JSON.parse(localStorage.getItem(lsKey)||"[]");}catch(e){arr=[];}
@@ -1335,69 +1484,33 @@ setTimeout(()=>{ try{ updateAllCounts(); }catch(e){} }, 1500);
 
 
 
+
+
+
 function fitTextToBox(el){
-  if(!el || !el.textContent.trim()) return;
-  const box = el.parentElement;
-  if(!box) return;
-  const text = el.textContent.trim();
-  const len = text.length;
-  
+  if(!el) return;
+  el.style.fontFamily='Arial, sans-serif';
+  el.style.fontSize='20px';
   el.style.fontWeight='400';
-  el.style.whiteSpace='normal';
-  el.style.wordBreak='break-all';
-  el.style.lineHeight='0.9';
-  el.style.display='flex';
-  el.style.flexWrap='wrap';
-  el.style.justifyContent='center';
-  el.style.alignContent='center';
-  el.style.alignItems='center';
-  el.style.textAlign='center';
-  el.style.padding='2px';
-  el.style.boxSizing='border-box';
-  el.style.overflow='hidden';
-  
-  // MINDIG TÖLTSE KI: rövid = nagy, hosszú = kicsi, de kitölti
-  let fontSize = 8;
-  if(len <= 3) fontSize = 38;
-  else if(len <= 5) fontSize = 32;
-  else if(len <= 8) fontSize = 26;
-  else if(len <= 12) fontSize = 20;
-  else if(len <= 18) fontSize = 16;
-  else if(len <= 25) fontSize = 13;
-  else fontSize = 10;
-  
-  el.style.fontSize = fontSize + 'px';
-  
-  // Ha rövid, próbáljuk nagyítani amíg kitölti az ablakot
-  if(len <= 10){
-    let tries=0;
-    while(tries<30){
-      const bh = box.clientHeight - 6;
-      const bw = box.clientWidth - 6;
-      const sh = el.scrollHeight;
-      const sw = el.scrollWidth;
-      // Ha még bőven van hely, növeljük
-      if(sh < bh*0.7 && sw < bw*0.85){
-        fontSize += 1;
-        el.style.fontSize = fontSize + 'px';
-      }else{
-        break;
-      }
-      tries++;
-      if(fontSize > 42) break;
-    }
-  }
-  
-  // Ha hosszú és nem fér, zsugorítjuk
-  let tries2=0;
-  while(tries2<40){
-    if(el.scrollHeight <= box.clientHeight - 4) break;
-    fontSize -= 0.5;
-    if(fontSize < 6) break;
-    el.style.fontSize = fontSize + 'px';
-    tries2++;
+  el.style.whiteSpace='nowrap';
+  el.style.wordBreak='normal';
+  el.style.lineHeight='45px';
+  el.style.display='inline-block';
+  el.style.maxWidth='none';
+  el.style.width='auto';
+  const box = el.parentElement;
+  if(box){
+    box.style.width='auto';
+    box.style.maxWidth='none';
+    box.style.minWidth='max-content';
   }
 }
+
+
+
+
+
+
 
 
 
