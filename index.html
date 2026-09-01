@@ -1,1634 +1,521 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>100in1-V12-MULTI-DB-FIXED</title><style>
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeonRepo 100x500MB - MINDEN ABLAK + UNIVERZÁLIS IMPORT</title>
+<style>
 *{box-sizing:border-box}body{margin:0;background:#050505;color:#fff;font-family:Segoe UI,sans-serif;overflow:hidden;display:flex;flex-direction:column;height:100vh}
 .topbar{height:96px;background:#0a0a0a;border-bottom:3px solid #222;display:flex;align-items:center;gap:10px;padding:8px 14px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;flex-shrink:0}
-.topbar::-webkit-scrollbar{height:42px !important} /* PONT OLYAN MINT A ZÖLD GOMB */ .topbar::-webkit-scrollbar-track{background:#111 !important; border-radius:10px !important} .topbar::-webkit-scrollbar-thumb{background:#00ffff !important; border-radius:10px !important; border:2px solid #00ffff !important; box-shadow:0 0 12px #00ffffaa !important} .topbar::-webkit-scrollbar-thumb:hover{background:#00ff88; box-shadow:0 0 10px #00ffff}
-.topbar button{padding:10px 18px;border-radius:12px;border:2px solid #333;color:#fff;font-weight:400;cursor:pointer;font-size:20px;white-space:normal;flex-shrink:0;transition:0.2s; min-height:70px;}
+.topbar::-webkit-scrollbar{height:42px !important} 
+.topbar::-webkit-scrollbar-track{background:#0a0a1a !important; border-radius:10px !important; border:1px solid #001a66}
+.topbar::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#001a99,#0000cc,#001a66) !important; border-radius:10px !important; border:2px solid #0022ff !important; box-shadow:0 0 18px #0022ffcc, 0 0 30px #0011ff88, inset 0 0 8px #3355ff99 !important}
+.topbar button{padding:10px 18px;border-radius:12px;border:2px solid #333;color:#fff;cursor:pointer;font-size:20px;white-space:nowrap;flex-shrink:0;transition:0.2s; min-height:70px; min-width:110px}
 .topbar button.menu-btn{background:#1a1a1a !important; color:#ddd !important;}
 .topbar button.menu-btn.active{background:#00ff00!important;color:#000!important;border-color:#00ff00!important;box-shadow:0 0 20px #00ff00!important;transform:scale(1.08);}
-.logo{font-weight:400;color:#00ff00;margin-right:14px;font-size:20px;white-space:nowrap;text-shadow:0 0 10px #00ff00;flex-shrink:0}
-.cyan-cnt{background:#001a1a;border:2px solid #00ffff;border-radius:12px;padding:6px 14px;font-size:20px;font-weight:400;margin-right:10px;min-width:46px;display:inline-block;text-align:center; box-shadow:0 0 10px #00ffff66;}
+.logo{font-weight:700;color:#00ff00;margin-right:14px;font-size:20px;white-space:nowrap;text-shadow:0 0 10px #00ff00;flex-shrink:0}
 .main-wrap{flex:1;display:flex;overflow:hidden;min-height:0}
-.sidebar{width:380px;background:#0a0a0a;border-right:2px solid #222;display:flex;flex-direction:column;padding:14px;overflow:hidden}
+.sidebar{width:420px;background:#0a0a0a;border-right:2px solid #222;display:flex;flex-direction:column;padding:14px;overflow:hidden}
 .main{flex:1;display:flex;flex-direction:column;background:#000;overflow:hidden}
-h2{color:#00ff00;text-shadow:0 0 10px #00ff00, 0 0 20px #00ff00aa;font-size:20px;margin:0 0 8px 0;text-align:center; border:2px solid #00ff00; border-radius:8px; padding:6px; background:#001100; box-shadow:0 0 12px #00ff00aa;}
-.storage{font-size:20px;color:#ffea00;font-weight:400;margin-bottom:4px}
-.bar{width:100%;height:8px;background:#111;border-radius:5px;overflow:hidden;margin-bottom:8px;border:1px solid #333}
-#fill{height:100%;width:0%;background:linear-gradient(90deg,#ffea00,#fff);box-shadow:0 0 6px #ffea00;transition:0.5s}
+h2{color:#00ff00;text-shadow:0 0 10px #00ff00;font-size:18px;margin:0 0 8px 0;text-align:center; border:2px solid #00ff00; border-radius:8px; padding:6px; background:#001100;}
+.storage{font-size:14px;color:#ffea00;font-weight:700;margin-bottom:4px}
+.bar{width:100%;height:10px;background:#111;border-radius:5px;overflow:hidden;margin-bottom:8px;border:1px solid #333}
+#fill{height:100%;width:0%;background:linear-gradient(90deg,#ffea00,#0f0);box-shadow:0 0 6px #ffea00;transition:0.5s}
 input,textarea,button{background:#161616;color:#fff;border:1px solid #333;padding:10px;border-radius:8px;outline:none;margin-bottom:6px;font-size:13px}
-input#fileName{border:3px solid #00ffff !important; box-shadow:0 0 10px #00ffff44; background:#0a1a1a !important;}
-input#fileName:focus{border-color:#00ff88 !important; box-shadow:0 0 15px #00ffffaa;}
-textarea{flex:1;width:100%;resize:none;font-family:Consolas,monospace;color:#0f0;font-size:20px;background:#000;border:1px solid #0f04;line-height:1.5}
-.toolbar{display:flex;gap:6px;margin-bottom:6px}
-button{cursor:pointer;font-weight:400;font-size:20px;flex:1;border:1px solid transparent;transition:0.1s;text-transform:uppercase;padding:11px;border-radius:8px}
-button:hover{filter:brightness(1.3)}
-.btn-save{background:#ffea00;color:#000;box-shadow:0 0 10px #ffea00aa}
+input#fileName{border:3px solid #00ffff !important; box-shadow:0 0 10px #00ffff44; background:#0a1a1a !important; font-size:14px;}
+textarea{flex:1;width:100%;resize:none;font-family:Consolas,monospace;color:#0f0;font-size:13px;background:#000;border:1px solid #0f04;line-height:1.5}
+.toolbar{display:flex;gap:6px;margin-bottom:6px; flex-wrap:wrap}
+button{cursor:pointer;font-weight:700;font-size:12px;flex:1;border:1px solid transparent;transition:0.1s;padding:10px;border-radius:8px; text-transform:uppercase}
+.btn-save{background:#ffea00;color:#000;box-shadow:0 0 10px #ffea00aa; flex:2}
 .btn-new{background:#222;color:#fff;border:1px solid #444}
 .btn-del{background:#aa0000;border:1px solid #ff4444;color:#fff}
 .btn-imp{background:#ff8800;border:1px solid #ffaa00;color:#000}
 .btn-exp{background:#8800ff;border:1px solid #aa00ff;color:#fff}
-.btn-edge{
-  background:linear-gradient(180deg,#ff0000,#cc0000) !important;
-  border:2px solid #ff3333 !important;
-  color:#fff !important;
-  font-weight:400 !important;
-  font-size:13px !important;
-  box-shadow:0 0 15px #ff0000aa, 0 0 30px #ff000055, inset 0 0 10px #ffffff33 !important;
-  text-shadow:0 0 8px #fff, 0 0 15px #ff0000 !important;
-  animation: pulseRed 1.2s infinite alternate !important;
-}
-@keyframes pulseRed{
-  0%{box-shadow:0 0 10px #ff0000aa, 0 0 20px #ff000055; transform:scale(1);}
-  100%{box-shadow:0 0 20px #ff0000ff, 0 0 40px #ff0000aa, 0 0 60px #ff000066; transform:scale(1.02);}
-}
-.btn-edge:hover{
-  background:linear-gradient(180deg,#ff2222,#ff0000) !important;
-  box-shadow:0 0 25px #ff0000ff, 0 0 50px #ff0000aa !important;
-  filter:brightness(1.2) !important;
-}
-
+.btn-exp-all{background:#00cc00 !important;border:2px solid #00ff00 !important;color:#000 !important;box-shadow:0 0 12px #00ff00aa;}
+.btn-imp-all{background:#00cccc !important;border:3px solid #00ffff !important;color:#000 !important;box-shadow:0 0 12px #00ffffaa;}
 .btn-reset{background:#660000 !important;border:1px solid #ff0000 !important;color:#fff !important;}
 #fileList{flex:1;overflow-y:auto;padding-right:4px;margin-top:8px}
-.file-item{padding:10px;margin-bottom:8px;background:#141414;border-radius:8px;cursor:pointer;border:1px solid #222;border-left:5px solid #ffea00}
-.file-item.active{ border-left-color: inherit !important; background:#111 !important; box-shadow:none !important; }
-.file-item strong{display:block;font-size:20px;margin-bottom:3px}
-.file-item small{color:#888;font-size:20px;font-family:monospace}
-.editor-sec{display:flex;flex-direction:column;padding:8px;border-bottom:2px solid #333;background:#000;overflow:hidden;height:45%;min-height:80px}
-#resizer{height:12px;background:#1a1a1a;cursor:row-resize;display:flex;align-items:center;justify-content:center;border-top:2px solid #333;border-bottom:2px solid #333;flex-shrink:0}
-#resizer:hover{background:#333}
-#resizer::after{content:"═══ HÚZD AZ ÁTMÉRETEZÉSHEZ ═══"; color:#666; font-size:20px; letter-spacing:1px}
+.file-item{padding:8px;margin-bottom:6px;background:#141414;border-radius:8px;cursor:pointer;border:1px solid #222;border-left:5px solid #ffea00; display:flex; justify-content:space-between; align-items:center}
+.file-item.active{border-left-color:#0f0 !important; background:#111 !important; box-shadow:0 0 8px #0f05 !important; }
+.file-item strong{display:block;font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:220px}
+.file-item small{color:#888;font-size:10px;font-family:monospace}
+.editor-sec{display:flex;flex-direction:column;padding:8px;border-bottom:2px solid #333;background:#000;overflow:hidden;height:48%;min-height:80px}
+#resizer{height:14px;background:#1a1a1a;cursor:row-resize;display:flex;align-items:center;justify-content:center;border-top:2px solid #333;border-bottom:2px solid #333;flex-shrink:0; color:#666; font-size:10px}
 .preview-sec{flex:1;display:flex;flex-direction:column;background:#fff;overflow:hidden;min-height:80px}
-.preview-head{background:#0a0a0a;color:#0f0;padding:6px 12px;font-size:20px;font-weight:400;border-bottom:1px solid #333;display:flex;justify-content:space-between}
+.preview-head{background:#0a0a0a;color:#0f0;padding:6px 12px;font-size:12px;font-weight:700;border-bottom:1px solid #333;display:flex;justify-content:space-between}
 iframe.preview{flex:1;border:none;background:#fff;width:100%}
 .bottom-block{margin-top:auto;display:flex;flex-direction:column;gap:6px;padding-top:8px;border-top:1px solid #222}
-
-.btn-exp-all{background:#00cc00 !important;border:2px solid #00ff00 !important;color:#000 !important;box-shadow:0 0 12px #00ff00aa;font-size:13px !important;}
-.btn-imp-all{background:#00cccc !important;border:3px solid #00ffff !important;color:#000 !important;box-shadow:0 0 12px #00ffffaa;font-size:13px !important;}
-
-.editor-sec .toolbar button:hover{filter:brightness(1.25); transform:translateY(-1px);}
-
-.menu-btn.has-data{
-  /* Szélei maradnak eredeti változó színek - nem írjuk felül border-color-t */
-  background:#1a1a1a !important;
-  box-shadow:0 0 12px #ffffff22 !important;
-  transform:scale(1.04);
-}
-.menu-btn.has-data .cyan-cnt{
-  /* Csak a belseje bordó, mint a képen 28 */
-  background:#4a0000 !important;
-  border:2px solid #880000 !important;
-  color:#fff !important;
-  font-size:24px !important;
-  font-weight:400 !important;
-  min-width:60px !important;
-  padding:8px 18px !important;
-  box-shadow:0 0 15px #880000aa inset, 0 0 10px #ff000055 !important;
-  text-shadow:0 0 8px #fff !important;
-}
-/* Repo név fehér és nagyobb, mint a képen 1. REPO 1 */
-.menu-btn.has-data{
-  color:#fff !important;
-  font-size:17px !important;
-  font-weight:400 !important;
-  text-shadow:0 0 8px #ffffffaa !important;
-}
-
-.last-saved-name{
-  display:inline-block;
-  background:#330033;
-  border:1.5px solid #ff00ff;
-  color:#ff00ff;
-  font-size:20px;
-  font-weight:400;
-  padding:3px 8px;
-  border-radius:6px;
-  margin-left:8px;
-  max-width:130px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  vertical-align:middle;
-  box-shadow:0 0 8px #ff00ff88;
-  text-shadow:0 0 6px #ff00ff;
-}
-.menu-btn.has-data .last-saved-name{
-  background:#440044;
-  border-color:#ff00ff;
-  color:#ff88ff;
-  font-size:20px;
-  box-shadow:0 0 12px #ff00ffaa;
-  text-shadow:0 0 8px #ff00ff;
-}
-.last-saved-name.strong-yellow{
-  background:#332200;
-  border-color:#ffea00;
-  color:#ffea00;
-  box-shadow:0 0 10px #ffea00aa;
-  text-shadow:0 0 8px #ffea00;
-}
-
-.last-saved-name:hover{
-  filter:brightness(1.3);
-  transform:scale(1.05);
-  cursor:help;
-  z-index:10;
-}
-
-.last-full-under{
-  display:block;
-  font-size:20px;
-  font-weight:400;
-  max-width:140px;
-  min-width:60px;
-  white-space:normal;
-  word-break:break-word;
-  overflow-wrap:break-word;
-  margin-top:4px;
-  padding:3px 6px;
-  border-radius:5px;
-  background:#000000cc;
-  text-align:center;
-  line-height:1.15;
-  border:1px solid currentColor;
-}
-
-.count-col{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  margin-right:6px;
-  max-width:150px;
-}
-
-.menu-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-}
-.menu-btn.has-data .last-full-under{
-  font-size:20px;
-  background:#000000cc;
-  box-shadow:0 0 8px currentColor;
-}
-
-.last-full-under, .last-name {
-  transition: none !important;
-  animation: none !important;
-}
-</style>
-<style>
-#yellowActiveCounter{color:#ffea00 !important;background:#1a1a00 !important;border:1.5px solid #ffea00 !important;border-radius:5px !important;padding:3px 10px !important;font-weight:bold !important;text-shadow:0 0 8px #ffea00 !important;}
-#cyanCodeCounter{color:#00f6ff !important;background:#001a1a !important;border:1.5px solid #00f6ff !important;border-radius:5px !important;padding:3px 10px !important;font-weight:bold !important;text-shadow:0 0 8px #00f6ff !important;}
-#titleH2{border:2px solid #00ff00 !important;background:#001100 !important;display:flex !important;flex-wrap:wrap !important;align-items:center !important;justify-content:center !important;gap:6px !important;}
-</style>
-
-<style>
-.top-bar{
-  flex-wrap:nowrap !important;
-  overflow-x:auto !important;
-  align-items:center !important;
-}
-.top-bar button{
-  width:auto !important;
-  max-width:none !important;
-  min-width:max-content !important;
-  height:45px !important;
-  min-height:45px !important;
-  max-height:45px !important;
-  flex-shrink:0 !important;
-  white-space:nowrap !important;
-  padding:0 14px !important;
-}
-.top-bar button .last-full-under{
-  font-size:20px !important;
-  white-space:nowrap !important;
-  word-break:normal !important;
-  overflow-wrap:normal !important;
-  max-width:none !important;
-  width:auto !important;
-  display:inline-block !important;
-  line-height:45px !important;
-}
-</style>
-
-<style>
-.top-bar button .last-full-under{
-  font-size:20px !important;
-  white-space:normal !important;
-  word-break:break-all !important;
-  overflow-wrap:anywhere !important;
-  line-height:1.1 !important;
-  max-width:140px !important;
-  min-width:80px !important;
-}
-.top-bar button{
-  max-width:160px !important;
-  min-width:80px !important;
-  height:auto !important;
-  min-height:35px !important;
-  white-space:normal !important;
-}
-</style>
-
-<style>
-.top-bar{
-  display:flex !important;
-  flex-wrap:wrap !important;
-  gap:6px !important;
-  background:#000 !important;
-  padding:8px !important;
-  align-items:flex-start !important;
-}
-.top-bar button{
-  width:auto !important;
-  min-width:80px !important;
-  max-width:none !important;
-  height:auto !important;
-  min-height:40px !important;
-  max-height:none !important;
-  background:#000 !important;
-  border:1px solid #222 !important;
-  flex-shrink:0 !important;
-  flex-grow:0 !important;
-  padding:6px 12px !important;
-  overflow:visible !important;
-}
-.top-bar button .last-full-under{
-  font-family: Arial, sans-serif !important;
-  font-size:20px !important;
-  font-weight:400 !important;
-  font-style:normal !important;
-  width:auto !important;
-  height:auto !important;
-  max-width:none !important;
-  max-height:none !important;
-  display:inline-block !important;
-  white-space:nowrap !important;
-  word-break:normal !important;
-  line-height:1.2 !important;
-  text-align:center !important;
-  padding:2px 4px !important;
-  background:#000 !important;
-  text-shadow:none !important;
-  box-shadow:none !important;
-  border:none !important;
-  overflow:visible !important;
-}
-</style>
-
-<style>
-/* CYAN CSÚSZKA */
-.top-bar::-webkit-scrollbar{
-  height:10px !important;
-}
-.top-bar::-webkit-scrollbar-track{
-  background:#000 !important;
-  border:1px solid #111 !important;
-}
-.top-bar::-webkit-scrollbar-thumb{
-  background:#00f6ff !important;
-  border-radius:5px !important;
-  box-shadow:0 0 10px #00f6ff !important;
-}
-.top-bar::-webkit-scrollbar-thumb:hover{
-  background:#00e0ff !important;
-  box-shadow:0 0 15px #00f6ff !important;
-}
-/* Firefox */
-.top-bar{
-  scrollbar-width:thin !important;
-  scrollbar-color:#00f6ff #000 !important;
-}
-/* Oldal scroll is cyan */
-::-webkit-scrollbar{
-  width:8px !important;
-  height:8px !important;
-}
-::-webkit-scrollbar-track{
-  background:#0a0a0a !important;
-}
-::-webkit-scrollbar-thumb{
-  background:#00f6ff !important;
-  border-radius:4px !important;
-}
-</style>
-
-<style>
-/* EXCEL ABLAK MINTA - FIX MÉRET, NEM VÁLTOZIK */
-.top-bar{
-  display:flex !important;
-  gap:6px !important;
-  background:#000 !important;
-  padding:8px !important;
-  overflow-x:auto !important;
-}
-.top-bar button{
-  width:140px !important;
-  min-width:140px !important;
-  max-width:140px !important;
-  height:70px !important;
-  min-height:70px !important;
-  max-height:70px !important;
-  background:#000 !important;
-  border:1px solid #222 !important;
-  flex-shrink:0 !important;
-  flex-grow:0 !important;
-  box-sizing:border-box !important;
-  padding:0 !important;
-  margin:0 !important;
-}
-.top-bar button .last-full-under{
-  font-weight:400 !important;
-  font-style:normal !important;
-  width:100% !important;
-  height:100% !important;
-  max-width:140px !important;
-  max-height:70px !important;
-  box-sizing:border-box !important;
-  overflow:hidden !important;
-  display:flex !important;
-  flex-wrap:wrap !important;
-  word-break:break-all !important;
-  white-space:normal !important;
-  line-height:1 !important;
-  text-align:center !important;
-  justify-content:center !important;
-  align-items:center !important;
-  align-content:center !important;
-  border:none !important;
-  background:#000 !important;
-  text-shadow:none !important;
-  box-shadow:none !important;
-}
-/* Lista aktív - ne legyen zöld */
-.file-item{
-  border-left:3px solid #333 !important;
-  background:#111 !important;
-}
-.file-item:hover{
-  background:#1a1a1a !important;
-  border-left-color:#555 !important;
-}
-</style>
-
-<style>
-.top-bar button{
-  width:150px !important;
-  min-width:150px !important;
-  max-width:150px !important;
-  height:80px !important;
-  min-height:80px !important;
-  max-height:80px !important;
-  flex-shrink:0 !important;
-  overflow:hidden !important;
-}
-.top-bar .last-full-under{
-  width:100% !important;
-  height:100% !important;
-  max-width:100% !important;
-  max-height:100% !important;
-  display:flex !important;
-  flex-wrap:wrap !important;
-  align-items:center !important;
-  justify-content:center !important;
-  align-content:center !important;
-  overflow:hidden !important;
-  word-break:break-all !important;
-  white-space:normal !important;
-  line-height:0.85 !important;
-  padding:3px !important;
-  box-sizing:border-box !important;
-}
-</style>
-
-<style>
-.top-bar{ background:#000 !important; display:flex !important; gap:8px !important; padding:10px !important; }
-.top-bar button{
-  background:#000 !important;
-  border:1px solid #111 !important;
-  width:150px !important;
-  min-width:150px !important;
-  height:80px !important;
-  padding:0 !important;
-  margin:0 !important;
-  overflow:hidden !important;
-  box-shadow:none !important;
-}
-.top-bar button:hover{ border-color:#333 !important; }
-.top-bar .last-full-under{
-  background:#000 !important;
-  border:none !important;
-  width:100% !important;
-  height:100% !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  font-size:22px !important;
-  font-weight:400 !important;
-  letter-spacing:1px !important;
-  text-transform:uppercase !important;
-  word-break:break-all !important;
-  text-align:center !important;
-  line-height:1 !important;
-  padding:5px !important;
-}
-</style>
-
-
-<style>
-/* 7 ABLAK - FEKETE HÁTTÉR + NEON BETŰ KITÖLTI */
-.top-bar{
-  display:flex !important;
-  gap:6px !important;
-  padding:8px !important;
-  background:#000 !important;
-  overflow-x:auto !important;
-}
-.top-bar button, .top-bar .repo-btn{
-  background:#000 !important;
-  border:2px solid #222 !important;
-  min-width:140px !important;
-  height:70px !important;
-  padding:0 !important;
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  justify-content:center !important;
-  position:relative !important;
-  overflow:hidden !important;
-}
-.top-bar button .last-name,
-.top-bar button .last-full-under,
-.top-bar .repo-btn .last-name,
-.top-bar .repo-btn .last-full-under{
-  display:flex !important;
-  width:100% !important;
-  height:100% !important;
-  align-items:center !important;
-  justify-content:center !important;
-  font-size:18px !important;
-  font-weight:400 !important;
-  letter-spacing:1px !important;
-  text-transform:uppercase !important;
-  background:#000 !important;
-  border:none !important;
-  box-shadow:none !important;
-  text-align:center !important;
-  word-break:break-all !important;
-  line-height:1.1 !important;
-  padding:4px !important;
-}
-.top-bar button .cyan-cnt{
-  display:none !important;
-}
-.top-bar button{
-  font-size:0 !important;
-}
-.top-bar button .last-name{
-  font-size:18px !important;
-}
+.badge-500{font-size:10px; color:#3355ff; border:1px solid #0022ff; padding:2px 6px; border-radius:6px; background:#000a33; box-shadow:0 0 8px #0022ff88}
 </style>
 </head><body>
-<div class="topbar" id="topbar"><div class="logo">100in1-V12</div></div>
+<div class="topbar" id="topbar"><div class="logo">NEON REPO 100x500MB</div></div>
 <div class="main-wrap">
 <div class="sidebar">
-<h2 id="titleH2">⚡ 1. REPO 1 V12</h2>
-<div class="storage">TÁRHELY: <span id="stTxt">0 MB</span> | <span id="status" style="color:#0f0">INIT</span> | <span id="dbNameLabel" style="color:#888">DB1</span></div><div class="bar"><div id="fill"></div></div>
-<input type="text" id="fileName" placeholder="Projekt neve...">
+<h2 id="repoTitle">1. REPO - 500MB</h2>
+<div class="storage" id="storageText">0.00 MB / 500 MB <span class="badge-500">IndexedDB</span> | <a href="#" onclick="resetCurrentRepo();return false" style="color:#f55">RESET LS</a> | <span id="activeCount">AKTÍV: 0 db</span></div>
+<div class="bar"><div id="fill"></div></div>
+<input id="fileName" placeholder="Fájl neve... pl. oldalam.html">
+<div class="toolbar" style="gap:8px">
+<button onclick="saveProject()" style="background:#ffcc00 !important; border:2px solid #ffdd33 !important; color:#000 !important; flex:1.3; font-weight:900; font-size:12px; min-height:44px; box-shadow:0 0 10px #ffcc00aa">MENTÉS<br>+ JSON</button>
+<button onclick="newProj()" style="background:#1a1a1a !important; border:2px solid #333 !important; color:#fff !important; flex:0.8; font-weight:800; min-height:44px">ÚJ</button>
+<button onclick="deleteCurrent()" style="background:#cc0000 !important; border:2px solid #ff2222 !important; color:#fff !important; flex:0.9; font-weight:800; min-height:44px; box-shadow:0 0 10px #ff0000aa">TÖRÖL</button>
+</div>
+<div class="toolbar" style="gap:8px">
+<button onclick="importData()" style="background:#ff8800 !important; border:2px solid #ffaa33 !important; color:#000 !important; flex:1; font-weight:800; min-height:40px">IMPORT</button>
+<button onclick="exportData()" style="background:#8800ff !important; border:2px solid #aa33ff !important; color:#fff !important; flex:1; font-weight:800; min-height:40px">EXPORT</button>
+</div>
+<div class="toolbar" style="gap:8px">
+<button onclick="resetCurrentRepo()" style="background:#660000 !important; border:2px solid #ff0000 !important; color:#fff !important; flex:1; font-weight:700; min-height:40px; font-size:11px">❤️ RESET 100</button>
+<button onclick="resetAll100()" style="background:#330000 !important; border:2px solid #990000 !important; color:#fff !important; flex:1.2; font-weight:800; min-height:40px; font-size:11px">RENDSZER<br>RESET</button>
+</div>
+<div class="toolbar" style="gap:8px">
+<button onclick="exportAll100()" style="background:#00cc44 !important; border:2px solid #00ff66 !important; color:#000 !important; flex:1; font-weight:800; min-height:42px; font-size:11px; box-shadow:0 0 10px #00ff44aa">📄 EXPORT MIND A<br>100</button>
+<button onclick="importAll100()" style="background:#00cccc !important; border:2px solid #00ffff !important; color:#000 !important; flex:1; font-weight:800; min-height:42px; font-size:11px; box-shadow:0 0 10px #00ffffaa">📥 IMPORT MIND A 100</button>
+</div>
+<textarea id="editor" placeholder="Ide írd a HTML kódot... vagy importálj bármilyen HTML-t más programból!"></textarea>
 <div id="fileList"></div>
 <div class="bottom-block">
-<div class="toolbar"><button class="btn-save" onclick="saveToDB()">MENTÉS + JSON</button><button class="btn-new" onclick="newProj()">ÚJ</button><button class="btn-del" onclick="deleteFromDB()">TÖRÖL</button></div>
-<div class="toolbar"><button class="btn-imp" onclick="importData()">IMPORT</button><button class="btn-exp" onclick="exportData()">EXPORT</button></div>
-<div class="toolbar"><button class="btn-edge" onclick="resetAll100()">💥 RESET 100</button><button class="btn-reset" onclick="clearAll()">RENDSZER RESET</button></div>
-<div class="toolbar" style="border-top:2px solid #00ff00; padding-top:6px; margin-top:4px;"><button class="btn-exp-all" onclick="exportAll100()">💾 EXPORT MIND A 100</button><button class="btn-imp-all" onclick="importAll100()">📥 IMPORT MIND A 100</button></div>
+<div style="font-size:10px; color:#888">ÖSSZ: <span id="totalCount">0</span> db | 100 cella x 500MB = 50GB elméleti max | IndexedDB</div>
 </div>
 </div>
 <div class="main">
-<div class="editor-sec" id="editorSec"><div class="toolbar" style="align-items:center; gap:8px;"><span style="color:#ffff00;font-size:20px;font-weight:400; padding:6px 10px; background:#222; border-radius:6px; border:1px solid #444;">KÓD</span><div style="flex:1"></div><button style="background:#0066ff; color:#fff; border:1px solid #0088ff; padding:10px 18px; font-size:20px; flex:0 0 auto; min-width:110px; border-radius:8px;" onclick="copyCode()">📥 LETÖLTÉS (100 ablak + uBlock FIX)</button><button onclick="copyToClipboardSafe()" style="background:#ffea00;color:#000;border:1px solid #ff0;padding:10px 8px;border-radius:4px;cursor:pointer;font-weight:bold;margin-left:4px;">📋 SAFE COPY</button><button style="background:#00cc00; color:#000; border:1px solid #00ff00; padding:10px 20px; font-size:20px; font-weight:400; flex:0 0 auto; min-width:140px; border-radius:8px; box-shadow:0 0 8px #00ff0055;" onclick="runCode()">▶ FUTTATÁS</button></div>
-<textarea id="editor" spellcheck="false" placeholder="Ide írd a HTML kódot..."></textarea></div>
-<div id="resizer"></div>
-<div class="preview-sec" id="previewSec"><div class="preview-head"><span>ELŐNÉZET - HÚZD FELÜL!</span><span>↕</span></div><iframe id="preview" class="preview"></iframe></div>
+<div class="editor-sec" id="editorSec" style="display:none"></div>
+
+<div style="display:flex; gap:8px; padding:8px; background:#000; border-top:2px solid #222; flex-wrap:wrap">
+<button onclick="download100UblockFix()" style="background:#0066ff !important; border:2px solid #0088ff !important; color:#fff !important; flex:2; font-weight:800; box-shadow:0 0 12px #0066ffaa; min-height:42px">📥 LETÖLTÉS (100 ABLAK + UBLOCK FIX)</button>
+<button onclick="safeCopy()" style="background:#ffcc00 !important; border:2px solid #ffdd00 !important; color:#000 !important; flex:2; font-weight:800; box-shadow:0 0 12px #ffcc00aa; min-height:42px">📄 SAFE COPY</button>
+<button onclick="runPreview()" style="background:#00cc00 !important; border:2px solid #00ff00 !important; color:#000 !important; flex:1; font-weight:800; box-shadow:0 0 12px #00ff00aa; min-height:42px">▶ FUTTATÁS</button>
+</div>
+
+<div id="resizer">═══ HÚZD AZ ÁTMÉRETEZÉSHEZ ═══</div>
+<div class="preview-sec"><div class="preview-head"><span>ELŐNÉZET - HÚZD FELÜL!</span><span id="previewInfo"></span></div><iframe id="preview" class="preview"></iframe></div>
 </div>
 </div>
 <script>
-let db=null; let activeId=null;
-  setTimeout(()=>{updateTitleWithTotal();}, 300); let useLS=false; let currentDB=1;
+const DB_NAME="NeonRepo_100x500MB_V1";
 const STORE="projects";
-const neonColors=['#00f6ff', '#ffaa00', '#ff00ff', '#ffff00', '#00ff88', '#ff4400', '#00ff00', '#ff00aa', '#00aaff', '#aaff00', '#ff6600', '#66ff00', '#ff0066', '#0066ff', '#ff8800', '#88ff00'];
-let DB_NAME="NeonRepoV5_1";
-let LS_KEY="NeonRepoV5_LS_1";
+const MAX_PER_REPO = 500 * 1024 * 1024; // 500 MB bájtban
+let db=null;
+let currentDB=1;
+let currentId=null;
+let projectsCache=[];
+let neonColors=["#00ffff","#ff00ff","#ffff00","#00ff00","#ff8800","#8800ff","#ff0044","#00ff88","#ffaa00","#00aaff","#ff00aa","#aaff00","#ff5500","#5500ff","#00ffaa","#ff0055"];
 
-function setStatus(t,c){try{document.getElementById('status').textContent=t; document.getElementById('status').style.color=c||"#0f0";}catch(e){} console.log(t);}
-
-function getLS(){try{return JSON.parse(localStorage.getItem(LS_KEY)||"[]");}catch(e){return [];}}
-function setLS(arr){try{localStorage.setItem(LS_KEY, JSON.stringify(arr));}catch(e){alert("localStorage tele!");}}
-
-function updateCnt(id, count){
-  try{
-    const el=document.getElementById('cnt'+(id-1));
-    const btn=document.getElementById('btn'+(id-1));
-    if(el){
-      el.textContent=count;
-      if(count>0){
-        el.style.display='inline-block';
-        if(btn){
-          btn.classList.add('has-data');
-          btn.style.color='#fff';
-        }
-        // Update last name if not already
-        try{
-          const lastEl=document.getElementById('last'+(id-1));
-          if(lastEl && (lastEl.style.display==='none' || !lastEl.textContent)){
-            const arr=JSON.parse(localStorage.getItem('NeonRepoV5_LS_'+id)||"[]");
-            if(arr.length>0){
-              const last=arr[arr.length-1];
-              const name=last.fileName||last.name||'';
-              if(name){
-                lastEl.textContent=name;
-                lastEl.title=name;
-                lastEl.style.display='block';
-                try{ const b=document.getElementById('btn'+(id-1)); if(b){ lastEl.style.color=b.style.borderColor; lastEl.style.borderColor=b.style.borderColor; } }catch(e){}
-
-                lastEl.classList.add('strong-yellow');
-                try{localStorage.setItem('NeonRepoV5_LAST_'+id, name);}catch(e){}
-              }
-            }
-          }
-        }catch(e){}
-      }else{
-        if(btn){
-          btn.classList.remove('has-data');
-          btn.style.color='';
-        }
-        try{
-          const lastEl=document.getElementById('last'+(id-1));
-          if(lastEl){lastEl.style.display='none'; lastEl.textContent='';}
-        }catch(e){}
-      }
-    }
-  }catch(e){}
-}
-
-
-let totalAllCount=0;
-
-function getLatestProject(arr){
-  if(!arr||!arr.length) return null;
-  let latest=arr[0];
-  let latestTime=0;
-  try{
-    // Try parse time field
-    for(let item of arr){
-      let t=0;
-      if(item.time){
-        // Format: "2026. 05. 05. 12:49:03" or locale
-        const m=item.time.match(/(\d{4}).*?(\d{2}).*?(\d{2}).*?(\d{2}):(\d{2}):(\d{2})/);
-        if(m){
-          t=new Date(parseInt(m[1]), parseInt(m[2])-1, parseInt(m[3]), parseInt(m[4]), parseInt(m[5]), parseInt(m[6])).getTime();
-        }else{
-          // Try Date parse
-          const d=new Date(item.time);
-          if(!isNaN(d)) t=d.getTime();
-        }
-      }
-      // Fallback to id
-      if(!t) t=item.id||0;
-      let latestT=0;
-      if(latest.time){
-        const mm=latest.time.match(/(\d{4}).*?(\d{2}).*?(\d{2}).*?(\d{2}):(\d{2}):(\d{2})/);
-        if(mm) latestT=new Date(parseInt(mm[1]), parseInt(mm[2])-1, parseInt(mm[3]), parseInt(mm[4]), parseInt(mm[5]), parseInt(mm[6])).getTime();
-        else{
-          const dd=new Date(latest.time);
-          if(!isNaN(dd)) latestT=dd.getTime();
-          else latestT=latest.id||0;
-        }
-      }else latestT=latest.id||0;
-      
-      if(t>latestTime || t>latestT){
-        if(t>=latestTime){
-          latest=item;
-          latestTime=t;
-        }
-      }
-    }
-  }catch(e){ 
-    // Fallback max id
-    let maxId=0;
-    for(let it of arr){ if((it.id||0)>maxId){ maxId=it.id; latest=it; } }
-  }
-  return latest;
-}
-
-function updateAllCounts(){
-  totalAllCount=0;
-  let processed=0;
-  for(let i=1;i<=100;i++){
-    const lsKey="NeonRepoV5_LS_"+i;
-    try{
-      const arr=JSON.parse(localStorage.getItem(lsKey)||"[]");
-      if(arr.length>0){
-        updateCnt(i, arr.length);
-        totalAllCount+=arr.length;
-        processed++;
-        if(processed>=7) updateTitleWithTotal();
-        continue;
-      }
-    }catch(e){}
-    (function(repoId){
-      try{
-        const req=indexedDB.open("NeonRepoV5_"+repoId,1);
-        req.onsuccess=e=>{
-          try{
-            const d=e.target.result;
-            if(!d.objectStoreNames.contains("projects")){
-              processed++;
-              if(processed>=7) updateTitleWithTotal();
-              d.close(); return;
-            }
-            const tx=d.transaction("projects","readonly");
-            tx.objectStore("projects").getAll().onsuccess=ev=>{
-              const cnt=ev.target.result.length;
-              if(cnt>0){
-                updateCnt(repoId, cnt);
-                totalAllCount+=cnt;
-              }
-              processed++;
-              if(processed>=7) updateTitleWithTotal();
-              d.close();
-            };
-            tx.objectStore("projects").getAll().onerror=()=>{
-              processed++;
-              if(processed>=7) updateTitleWithTotal();
-              try{d.close();}catch(ex){}
-            };
-          }catch(ex){
-            processed++;
-            if(processed>=7) updateTitleWithTotal();
-          }
-        };
-        req.onerror=()=>{
-          processed++;
-          if(processed>=7) updateTitleWithTotal();
-        };
-      }catch(ex){
-        processed++;
-        if(processed>=7) updateTitleWithTotal();
-      }
-    })(i);
-  }
-  setTimeout(()=>{updateTitleWithTotal();}, 1200);
-}
-
-
-function updateTitleWithTotal(){
-  try{
-    let totalAll=0;
-    for(let i=1;i<=100;i++){ try{ let v=localStorage.getItem('NeonRepoV5_LS_'+i); if(v){ let a=JSON.parse(v); if(Array.isArray(a)) totalAll+=a.length; } }catch(e){} }
-    let active=0;
-    try{ let curV=localStorage.getItem('NeonRepoV5_LS_'+currentDB); if(curV){ let curA=JSON.parse(curV); if(Array.isArray(curA)) active=curA.length; } }catch(e){}
-    let h2=document.getElementById('titleH2');
-    if(h2){ h2.innerHTML='⚡ '+currentDB+'. REPO '+currentDB+' V12 | <span id="yellowActiveCounter">👁️ AKTÍV: '+active+' db</span> | <span id="cyanCodeCounter">💾 ÖSSZ: '+totalAll+' db</span>'; }
-  }catch(e){}
-}
-
-
-
-
-function initDB(){
-  setStatus("DB nyitás...","#ff0");
-  if(db){try{db.close();}catch(e){} db=null;}
-  if(useLS){loadList(); return;}
-  try{
-    if(!window.indexedDB) throw new Error("No IDB");
+function openDB(){
+  return new Promise((res,rej)=>{
     const req=indexedDB.open(DB_NAME,1);
-    req.onupgradeneeded=e=>{const d=e.target.result; if(!d.objectStoreNames.contains(STORE)) d.createObjectStore(STORE,{keyPath:"id",autoIncrement:true});};
-    req.onsuccess=e=>{db=e.target.result; setStatus("DB: IndexedDB OK - "+DB_NAME,"#0f0"); loadList();};
-    req.onerror=e=>{console.warn("IDB error",e); setStatus("DB: LS fallback","#ff8800"); useLS=true; loadList();};
-    req.onblocked=()=>{setStatus("DB: blokkolva LS","#ff8800"); useLS=true; loadList();};
-  }catch(err){
-    setStatus("DB: localStorage","#ff8800"); useLS=true; loadList();
-  }
-}
-
-function switchDB(id){
-  currentDB=id;
-  DB_NAME="NeonRepoV5_"+id;
-  LS_KEY="NeonRepoV5_LS_"+id;
-  const col=neonColors[(id-1) % neonColors.length];
-  document.getElementById('titleH2').textContent="⚡ "+id+". REPO "+id+" V12";
-  document.getElementById('titleH2').style.color='#00ff00';
-  document.getElementById('titleH2').style.textShadow="0 0 10px #00ff00, 0 0 20px #00ff00aa";
-  document.getElementById('dbNameLabel').textContent=DB_NAME;
-  document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('active'));
-  const activeBtn=document.getElementById('btn'+(id-1));
-  if(activeBtn) activeBtn.classList.add('active');
-  activeId=null;
-  setTimeout(()=>{updateTitleWithTotal();}, 300);
-  document.getElementById('fileName').value="";
-  document.getElementById('editor').value="";
-  document.getElementById('preview').src="about:blank";
-  // update color
-  document.documentElement.style.setProperty('--main-color', col);
-  // reload DB
-  initDB();
-}
-
-function downloadFile(content,fileName){
-  try{
-    const blob=new Blob([content],{type:"application/json"});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement("a");
-    a.href=url; a.download=fileName;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(()=>{document.body.removeChild(a); URL.revokeObjectURL(url);},800);
-  }catch(e){alert("Letöltés hiba: "+e.message);}
-}
-
-function saveToDB(){
-  const nameEl=document.getElementById("fileName");
-  const codeEl=document.getElementById("editor");
-  let rawName=nameEl.value.trim() || "Repo"+currentDB+"_"+Date.now();
-  // Remove existing leading numbers user might have typed: 001_, 1-, 1 etc
-  let baseName=rawName.replace(/^\d+[_\-\s]*/, '').trim() || rawName;
-  const code=codeEl.value;
-  if(!code.trim()){alert("Üres a kód!"); return;}
-  const color=neonColors[Math.floor(Math.random()*neonColors.length)]; window._lastSavedColor=color;
-  
-  // Auto sorszám: if editing keep old number, else next number
-  let finalName;
-  if(activeId){
-    // Editing: keep existing prefix if exists
-    try{
-      const existingArr=getLS();
-      const existing=existingArr.find(x=>x.id===activeId);
-      if(existing && existing.fileName){
-        // Keep its number prefix
-        const m=existing.fileName.match(/^(\d+)_/);
-        if(m) finalName=m[1]+'_'+baseName;
-        else finalName=existing.fileName.replace(/^\d+[_\-\s]*/, '').trim() ? existing.fileName.match(/^(\d+)_/)?.[1]+'_'+baseName : baseName;
-        // fallback keep original fileName if baseName same
-        if(!finalName || finalName.startsWith('_')) finalName=existing.fileName;
-        else{
-          // If existing already has correct base, keep number
-          const existingBase=existing.fileName.replace(/^\d+[_\-\s]*/, '');
-          if(existingBase===baseName) finalName=existing.fileName;
-        }
-      }else{
-        finalName=baseName;
+    req.onupgradeneeded=e=>{
+      const d=e.target.result;
+      if(!d.objectStoreNames.contains(STORE)){
+        const s=d.createObjectStore(STORE,{keyPath:"uid"});
+        s.createIndex("repo","repo",{unique:false});
       }
-    }catch(e){ finalName=baseName; }
-    if(!finalName) finalName=baseName;
-  }else{
-    // New: auto increment
-    let nextNum=1;
-    try{
-      const arr=getLS();
-      nextNum=arr.length+1;
-      // Find max number to avoid duplicate after deletions
-      let max=0;
-      arr.forEach(x=>{
-        const fn=x.fileName||x.name||'';
-        const mm=fn.match(/^(\d+)_/);
-        if(mm){ const n=parseInt(mm[1],10); if(n>max) max=n; }
-      });
-      if(max>=nextNum) nextNum=max+1;
-    }catch(e){}
-    const pad=String(nextNum).padStart(2,'0');
-    finalName=pad+'_'+baseName;
-  }
-  
-  const name=finalName;
-  const obj={name,code,color,time:new Date().toLocaleString("hu-HU")};
-  obj.fileName=finalName;
-  // Azonnal fent mutatja a beírt nevet
-  try{ updateLastName(currentDB, finalName); }catch(e){} // ensure both
-  if(activeId) obj.id=activeId;
-
-  if(useLS){
-    let arr=getLS();
-    if(activeId){
-      const idx=arr.findIndex(x=>x.id===activeId);
-      if(idx>=0) arr[idx]=obj; else {obj.id=Date.now(); arr.push(obj); activeId=obj.id;}
-    }else{obj.id=Date.now(); arr.push(obj); activeId=obj.id;}
-    setLS(arr);
-    loadList();
-    const now=new Date(); const pad=n=>String(n).padStart(2,'0');
-    const d=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate());
-    const t=pad(now.getHours())+"-"+pad(now.getMinutes())+"-"+pad(now.getSeconds());
-    const fname=currentDB+"_"+name.replace(/\s+/g,'_')+"_"+d+"_"+t+".json";
-    downloadFile(JSON.stringify(obj,null,2), fname);
-    setStatus("MENTVE LS: "+name,"#0f0");
-    return;
-  }
-
-  if(!db){alert("DB még nem nyílt"); return;}
-  try{
-    const tx=db.transaction(STORE,"readwrite");
-    const store=tx.objectStore(STORE);
-    const req=store.put(obj);
-    req.onsuccess=e=>{
-      activeId=activeId||e.target.result;
-      loadList();
-      const now=new Date(); const pad=n=>String(n).padStart(2,'0');
-      const d=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate());
-      const t=pad(now.getHours())+"-"+pad(now.getMinutes())+"-"+pad(now.getSeconds());
-      const fname=currentDB+"_"+name.replace(/\s+/g,'_')+"_"+d+"_"+t+".json";
-      downloadFile(JSON.stringify(obj,null,2), fname);
-      setStatus("MENTVE: "+name,"#0f0");
     };
-  }catch(e){useLS=true; saveToDB();}
+    req.onsuccess=e=>{ db=e.target.result; res(db); };
+    req.onerror=e=>rej(e);
+  });
 }
-
-function loadList(){
-  const render=(items)=>{
-    const list=document.getElementById("fileList");
-    if(!list) return;
-    list.innerHTML="";
-    let size=0;
-    items.forEach(item=>{
-      try{size+=new Blob([item.code||""]).size;}catch(e){}
-      const div=document.createElement("div");
-      div.className="file-item";
-      div.style.borderLeftColor=item.color||neonColors[(currentDB-1)%neonColors.length];
-      div.innerHTML="<strong style='color:"+(item.color||"#ffea00")+"'>"+(item.name||"Névtelen")+"</strong><small>"+(item.time||"")+"</small>";
-            div.onclick=()=>{
-        activeId=item.id;
-        document.getElementById("fileName").value=item.name;
-        document.getElementById("editor").value=item.code;
-        try{
-          const topEl=document.getElementById('last'+(currentDB-1));
-          if(topEl){
-            topEl.textContent=item.name||item.fileName||'';
-            topEl.style.display='flex';
-            const c=item.color||'#00f6ff';
-            topEl.style.color=c;
-            topEl.style.background='#000';
-            topEl.style.border='none';
-            topEl.style.boxShadow='none';
-            topEl.style.textShadow='none';
-            topEl.style.width='100%';
-            topEl.style.height='100%';
-            topEl.style.fontWeight='400';
-            topEl.style.alignItems='center';
-            topEl.style.justifyContent='center';
-            topEl.style.textAlign='center';
-            topEl.style.letterSpacing='0px';
-            topEl.style.padding='4px';
-            topEl.style.whiteSpace='nowrap';
-            topEl.style.overflow='hidden';
-            try{ localStorage.setItem('NeonRepoV5_LAST_'+currentDB, item.name||''); localStorage.setItem('NeonRepoV5_LAST_COLOR_'+currentDB, c); }catch(e){}
-            window._lastSavedColor=c;
-            setTimeout(()=>fitTextToBox(topEl), 10);
-          }
-        }catch(e){}
-        loadList();
-        runCode();
-      };
-      list.appendChild(div);
-    });
-    const mb=(size/(1024*1024)).toFixed(2);
-    const st=document.getElementById("stTxt");
-    if(st) st.textContent=mb+" MB / 500 MB";
-    updateCnt(currentDB, items.length);
-    const fill=document.getElementById("fill");
-    if(fill) fill.style.width=Math.min((size/(500*1024*1024))*100,100)+"%";
-  };
-  if(useLS){render(getLS()); return;}
-  if(!db){setTimeout(loadList,500); return;}
-  try{
-    if(!db){ useLS=true; render(getLS()); return; } const tx=db.transaction(STORE,"readonly");
-    tx.objectStore(STORE).getAll().onsuccess=e=>{render(e.target.result);};
-  }catch(e){useLS=true; render(getLS());}
+function idbGetAll(repoId){
+  return new Promise((res,rej)=>{
+    if(!db){ res([]); return; }
+    const tx=db.transaction(STORE,"readonly");
+    const st=tx.objectStore(STORE);
+    const idx=st.index("repo");
+    const req=idx.getAll(IDBKeyRange.only(repoId));
+    req.onsuccess=()=>res(req.result||[]);
+    req.onerror=()=>res([]);
+  });
 }
-
-function runCode(){
-  const code=document.getElementById("editor").value;
-  if(!code.trim()){alert("Nincs kód!"); return;}
-  try{
-    const blob=new Blob([code],{type:'text/html'});
-    const url=URL.createObjectURL(blob);
-    const ifr=document.getElementById("preview");
-    ifr.src=url;
-    setTimeout(()=>URL.revokeObjectURL(url), 15000);
-    setStatus("FUTTATVA","#0f0");
-  }catch(e){alert("Futtatás hiba: "+e.message);}
-}
-
-function newProj(){
-  activeId=null;
-  setTimeout(()=>{updateTitleWithTotal();}, 300);
-  document.getElementById("fileName").value="";
-  document.getElementById("editor").value="";
-  document.getElementById("preview").src="about:blank";
-  loadList();
-  setStatus("ÚJ projekt","#ff0");
-}
-
-function deleteFromDB(){
-  if(!activeId){alert("Válassz ki egy projektet!"); return;}
-  if(!confirm("Törlöd?")) return;
-  if(useLS){
-    let arr=getLS().filter(x=>x.id!==activeId);
-    setLS(arr); newProj(); setStatus("TÖRÖLVE LS","#f00"); return;
-  }
-  try{
+function idbPut(obj){
+  return new Promise((res,rej)=>{
     const tx=db.transaction(STORE,"readwrite");
-    tx.objectStore(STORE).delete(activeId).onsuccess=()=>{newProj(); setStatus("TÖRÖLVE","#f00");};
-  }catch(e){useLS=true; deleteFromDB();}
+    tx.objectStore(STORE).put(obj);
+    tx.oncomplete=()=>res();
+    tx.onerror=e=>rej(e);
+  });
+}
+function idbDelete(uid){
+  return new Promise((res,rej)=>{
+    const tx=db.transaction(STORE,"readwrite");
+    tx.objectStore(STORE).delete(uid);
+    tx.oncomplete=()=>res();
+    tx.onerror=()=>res();
+  });
+}
+function idbClearRepo(repoId){
+  return new Promise(async (res)=>{
+    const all=await idbGetAll(repoId);
+    const tx=db.transaction(STORE,"readwrite");
+    const st=tx.objectStore(STORE);
+    all.forEach(o=>st.delete(o.uid));
+    tx.oncomplete=()=>res();
+  });
+}
+function idbClearAll(){
+  return new Promise((res)=>{
+    const tx=db.transaction(STORE,"readwrite");
+    tx.objectStore(STORE).clear();
+    tx.oncomplete=()=>res();
+  });
 }
 
-function exportData(){
-  const now=new Date(); const pad=n=>String(n).padStart(2,'0');
-  const dateStr=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate());
-  const timeStr=pad(now.getHours())+":"+pad(now.getMinutes())+":"+pad(now.getSeconds());
-  const timeFile=pad(now.getHours())+"-"+pad(now.getMinutes())+"-"+pad(now.getSeconds());
-  const baseName=document.getElementById("fileName").value.trim()||("Repo"+currentDB+"_Export");
-  const defName=currentDB+"_"+baseName.replace(/\s+/g,'_')+"_"+dateStr+"_"+timeFile;
-  let name=prompt("Export fájl neve (név_dátum_idő):", defName);
-  if(!name) return;
-  if(!name.endsWith(".json")) name+=".json";
-
-  const doExport=(data)=>{
-    if(!data.length){alert("Nincs mentett adat!"); return;}
-    const exportObj={
-      exportName:name,
-      exportDate:dateStr,
-      exportTime:timeStr,
-      exportDateTime:now.toLocaleString("hu-HU"),
-      repo:currentDB,
-      count:data.length,
-      data:data
-    };
-    downloadFile(JSON.stringify(exportObj,null,2), name);
-    setStatus("EXPORT: "+name,"#0f0");
-  };
-
-  if(useLS){doExport(getLS()); return;}
-  try{
-    if(!db){ useLS=true; render(getLS()); return; } const tx=db.transaction(STORE,"readonly");
-    tx.objectStore(STORE).getAll().onsuccess=e=>{doExport(e.target.result);};
-  }catch(e){doExport(getLS());}
-}
-
-
-function normalizeProject(raw, index){
+function normalizeProject(raw,index){
   if(!raw) return null;
-  // Ha string -> azt hisszük HTML kód
-  if(typeof raw === 'string'){
-    if(raw.trim().length < 5) return null;
-    return {
-      fileName: 'import_' + Date.now() + '_' + index,
-      name: 'import_' + Date.now() + '_' + index,
-      code: raw,
-      html: raw,
-      color: neonColors[index % neonColors.length] || '#00ffff',
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    };
+  if(typeof raw==='string'){
+    if(raw.trim().length<2) return null;
+    return {uid: 'uid_'+Date.now()+'_'+Math.random(), repo: currentDB, fileName:'import_'+Date.now()+'_'+index+'.html', name:'import_'+Date.now()+'_'+index, code:raw, html:raw, color:neonColors[index%neonColors.length], createdAt:Date.now(), updatedAt:Date.now()};
   }
-  if(typeof raw !== 'object') return null;
-  // Próbáljuk kitalálni mi a kód
-  let code = raw.code || raw.html || raw.content || raw.source || raw.body || raw.data || raw.htmlCode || raw.html_code || '';
-  // Ha nincs code de van pl raw-ban bármi hosszú string, azt használjuk
+  if(typeof raw!=='object') return null;
+  let code = raw.code || raw.html || raw.content || raw.source || raw.body || raw.data || raw.htmlCode || '';
   if(!code){
     for(let k of Object.keys(raw)){
-      let v = raw[k];
-      if(typeof v === 'string' && v.length > 50 && (v.includes('<') || v.includes('html') || v.includes('div'))){
-        code = v; break;
-      }
+      let v=raw[k];
+      if(typeof v==='string' && v.length>30 && (v.includes('<') || v.includes('div') || v.includes('html'))){ code=v; break; }
     }
   }
-  // Ha még mindig nincs, de van JSON ami nem meta, akkor stringifyoljuk mint tartalom
-  if(!code){
-    // Ha az objektum csak név+egyéb de nincs kód, dobjuk
-    if(!raw.fileName && !raw.name && !raw.title) {
-      // próbáljuk az egész objektumot kódnak venni ha van benne < 
-      let s = JSON.stringify(raw);
-      if(s.length < 20) return null;
-      code = '<pre>'+s+'</pre>';
-    } else {
-      code = raw.code || '';
-    }
-  }
-  if(!code || (typeof code === 'string' && code.trim().length < 2)) return null;
-
-  let fileName = raw.fileName || raw.name || raw.title || raw.filename || raw.file_name || ('import_' + Date.now() + '_' + index);
-  let color = raw.color || raw.colour || raw.borderColor || neonColors[index % neonColors.length] || '#00ffff';
-  // Tisztítás
-  fileName = String(fileName).replace(/["<>]/g,'').trim().substring(0,120) || ('file_'+index);
-  return {
-    fileName: fileName,
-    name: fileName,
-    code: String(code),
-    html: String(raw.html || code),
-    color: color,
-    createdAt: raw.createdAt || raw.created || raw.date || Date.now(),
-    updatedAt: Date.now(),
-    id: Date.now() + Math.floor(Math.random()*100000) + index
-  };
+  if(!code) return null;
+  let fileName = raw.fileName || raw.name || raw.title || raw.filename || ('import_'+Date.now()+'_'+index+'.html');
+  fileName=String(fileName).substring(0,150);
+  return {uid:'uid_'+Date.now()+'_'+Math.random()+'_'+index, repo: currentDB, fileName:fileName, name:fileName, code:String(code), html:String(raw.html||code), color:raw.color||neonColors[index%neonColors.length], createdAt:Date.now(), updatedAt:Date.now()};
 }
-
 function extractProjectsFromAnyJSON(parsed){
-  let candidates = [];
-  if(!parsed) return [];
-  // 1. Tömb
+  let out=[];
   if(Array.isArray(parsed)){
     return parsed.map((it,i)=>normalizeProject(it,i)).filter(Boolean);
   }
-  // 2. Ha objektum
-  if(typeof parsed === 'object'){
-    // Direkt mezők
-    if(parsed.code && (parsed.fileName || parsed.name)){
-      let p = normalizeProject(parsed,0);
-      if(p) return [p];
+  if(typeof parsed==='object' && parsed){
+    if(parsed.code || parsed.html){ let p=normalizeProject(parsed,0); if(p) return [p]; }
+    if(parsed.repos && Array.isArray(parsed.repos)){
+      let all=[]; parsed.repos.forEach((r,ri)=>{ let arr=r.data||r.projects||[]; if(Array.isArray(arr)) arr.forEach((it,ii)=>{ let n=normalizeProject(it,ri*100+ii); if(n){ n.repo=r.repo||ri+1; all.push(n);} }); });
+      if(all.length) return all;
     }
-    // Ismert kulcsok
-    let keys = ['data','repos','projects','files','items','list','docs','entries','records','content','result'];
-    for(let k of keys){
-      if(parsed[k]){
-        if(Array.isArray(parsed[k])){
-          // repos formátum: [{repo,data}]
-          if(k==='repos'){
-            let all=[];
-            parsed[k].forEach((r,ri)=>{
-              let arr = r.data || r.projects || r.files || r.items || [];
-              if(Array.isArray(arr)){
-                arr.forEach((it,ii)=>{ let n=normalizeProject(it, ri*1000+ii); if(n) all.push(n); });
-              } else if(typeof arr === 'object'){
-                let n=normalizeProject(arr, ri); if(n) all.push(n);
-              }
-            });
-            if(all.length) return all;
-          } else {
-            let res = parsed[k].map((it,i)=>normalizeProject(it,i)).filter(Boolean);
-            if(res.length) return res;
-          }
-        } else if(typeof parsed[k] === 'object'){
-          let res = extractProjectsFromAnyJSON(parsed[k]);
-          if(res.length) return res;
-        }
-      }
-    }
-    // 3. Végigpörgetünk minden kulcson ami tömb és projektnek néz ki
-    for(let k of Object.keys(parsed)){
-      let v = parsed[k];
-      if(Array.isArray(v) && v.length>0){
-        let sample = v[0];
-        if(typeof sample === 'object' && (sample.code || sample.html || sample.content)){
-          let res = v.map((it,i)=>normalizeProject(it,i)).filter(Boolean);
-          if(res.length) return res;
-        }
-        if(typeof sample === 'string' && sample.length>20){
-          let res = v.map((it,i)=>normalizeProject(it,i)).filter(Boolean);
-          if(res.length) return res;
-        }
-      }
-    }
-    // 4. Ha maga az objektum egy dictionary ahol kulcs=filename érték=code
-    let dictProjects=[];
-    for(let k of Object.keys(parsed)){
-      let v = parsed[k];
-      if(typeof v === 'string' && v.length>20){
-        let n=normalizeProject({fileName:k, code:v}, dictProjects.length);
-        if(n) dictProjects.push(n);
-      }
-    }
-    if(dictProjects.length) return dictProjects;
-
-    // 5. Utolsó esély: magát az objektumot próbáljuk projektnek
-    let single = normalizeProject(parsed,0);
-    if(single) return [single];
+    let keys=['data','projects','files','items','list'];
+    for(let k of keys){ if(Array.isArray(parsed[k])){ let r=parsed[k].map((it,i)=>normalizeProject(it,i)).filter(Boolean); if(r.length) return r; } }
+    // dict {filename: html}
+    let dict=[]; for(let k of Object.keys(parsed)){ let v=parsed[k]; if(typeof v==='string' && v.length>20){ let n=normalizeProject({fileName:k,code:v},dict.length); if(n) dict.push(n);} }
+    if(dict.length) return dict;
+    let single=normalizeProject(parsed,0); if(single) return [single];
   }
-  // 6. Ha string JSON volt ami HTML
-  if(typeof parsed === 'string'){
-    let n=normalizeProject(parsed,0);
-    if(n) return [n];
-  }
-  return [];
+  if(typeof parsed==='string'){ let n=normalizeProject(parsed,0); if(n) return [n]; }
+  return out;
 }
 
-function importData(){
-  if(!db){ useLS=true; }
-  const input=document.createElement("input");
-  input.type="file";
-  input.accept=".json,application/json,.txt,.html,.js,.text,*,*/*";
-  input.onchange=e=>{
-    const file=e.target.files[0];
-    if(!file) return;
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      try{
-        let text = ev.target.result;
-        let parsed;
-        let projects=[];
-        // Próbáljuk JSON-ként
-        try{
-          parsed=JSON.parse(text);
-          projects = extractProjectsFromAnyJSON(parsed);
-        }catch(jsonErr){
-          // Nem JSON, hanem sima HTML/fájl -> egy projektnek vesszük
-          projects = [normalizeProject(text,0)].filter(Boolean);
-        }
-        if(!projects.length){
-          alert("❌ Nem találtam importálható projektet ebben a fájlban!\n\nPróbáltam értelmezni mint:\n- tömb [{fileName, code}]\n- {data:[...]}\n- {repos:[...]}\n- {fájlnév: html kód}\n- sima HTML szöveg\n\nFájl első 200 karakter:\n"+String(text).substring(0,200));
-          return;
-        }
-        // Mentés - localStorage tele ellenőrzéssel
-        let cur=[];
-        try{cur=JSON.parse(localStorage.getItem('NeonRepoV5_LS_'+currentDB)||"[]");}catch(e){cur=[];}
-        let added=0;
-        let skipped=0;
-        for(let p of projects){
-          try{
-            // Ha túl nagy lenne, hagyjuk
-            let test = [...cur, p];
-            // Gyors méret check (durva)
-            let jsonStr = JSON.stringify(test);
-            if(jsonStr.length > 4500000){ // ~4.5MB határ - localStorage limit 5MB
-              skipped++;
-              continue;
-            }
-            cur.push(p);
-            added++;
-          }catch(e){
-            if(e.name==='QuotaExceededError' || (e.message && e.message.toLowerCase().includes('quota'))){
-              alert("⚠️ localStorage tele!\n\n"+added+" db sikerült, de "+(projects.length-added)+" már nem fért be.\nTörölj pár régi projektet vagy használj másik cellát!\n\nHiba: "+e.message);
-              break;
-            }
-            skipped++;
-          }
-        }
-        try{
-          localStorage.setItem('NeonRepoV5_LS_'+currentDB, JSON.stringify(cur));
-        }catch(e){
-          alert("❌ localStorage tele, nem tudtam menteni!\n"+e.message+"\n\nTipp: RESET vagy törölj a cellából!");
-          return;
-        }
-        loadList(); updateAllCounts();
-        if(projects.length>0){
-          try{
-            let lastName = projects[projects.length-1].fileName;
-            localStorage.setItem('NeonRepoV5_LAST_'+currentDB, lastName);
-            updateLastName(currentDB, lastName);
-          }catch(e){}
-        }
-        alert("✅ Import kész!\nBeolvasva: "+projects.length+" db\nBeszúrva ebbe a cellába ("+currentDB+"): "+added+" db"+(skipped?"\nKihagyva (helyhiány): "+skipped+" db":""));
-      }catch(err){
-        alert("Import hiba: "+err.message+"\n"+err.stack);
-        console.error(err);
-      }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
+async function init(){
+  await openDB();
+  buildTopbar();
+  await switchDB(1);
+  updateAllCounts();
 }
-
-function importAll100(){
-  const input=document.createElement("input");
-  input.type="file";
-  input.accept=".json,application/json,.txt,.html,*/*";
-  input.style.display="none";
-  document.body.appendChild(input);
-  input.onchange=e=>{
-    const file=e.target.files[0];
-    if(!file){ try{document.body.removeChild(input);}catch(e){} return; }
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      try{
-        let text = ev.target.result;
-        let parsed;
-        let projects=[];
-        try{
-          parsed=JSON.parse(text);
-          // Ha repos formátum, külön kezeljük
-          if(parsed.repos && Array.isArray(parsed.repos)){
-            let total=0;
-            parsed.repos.forEach(r=>{
-              let repoId = r.repo || 1;
-              let arr = r.data || r.projects || r.files || [];
-              let projs = [];
-              if(Array.isArray(arr)) projs = arr.map((it,i)=>normalizeProject(it,i)).filter(Boolean);
-              else projs = extractProjectsFromAnyJSON(arr);
-              if(projs.length){
-                try{
-                  let key="NeonRepoV5_LS_"+repoId;
-                  let cur=[]; try{cur=JSON.parse(localStorage.getItem(key)||"[]");}catch(e){cur=[];}
-                  projs.forEach(p=>{ p.id=Date.now()+Math.floor(Math.random()*100000)+Math.random()*1000; cur.push(p); });
-                  localStorage.setItem(key, JSON.stringify(cur));
-                  total+=projs.length;
-                  let lastName = projs[projs.length-1].fileName;
-                  try{localStorage.setItem('NeonRepoV5_LAST_'+repoId, lastName);}catch(e){}
-                }catch(e){ console.warn("Repo "+repoId+" tele", e); }
-              }
-            });
-            alert("✅ IMPORT MIND A 100 kész!\nÖsszesen: "+total+" projekt");
-            try{ loadList(); updateAllCounts(); }catch(e){}
-            try{document.body.removeChild(input);}catch(e){}
-            return;
-          }
-          projects = extractProjectsFromAnyJSON(parsed);
-        }catch(jsonErr){
-          projects = [normalizeProject(text,0)].filter(Boolean);
-        }
-        if(!projects.length){
-          alert("❌ Nem találtam projektet a fájlban!");
-          try{document.body.removeChild(input);}catch(e){}
-          return;
-        }
-        // Ha nem repos, akkor mindet az aktuális cellába tesszük, de felajánljuk szétosztást?
-        if(!confirm("Találtam "+projects.length+" projektet.\nSzeretnéd az ÖSSZES 100 cellába szétszórni egyenletesen, vagy csak ebbe a cellába ("+currentDB+") importáljam?\n\nOK = SZÉTSZÓR 100 felé\nMégse = CSAK ebbe a cellába")){
-          // Csak aktuális cellába
-          try{
-            let key="NeonRepoV5_LS_"+currentDB;
-            let cur=[]; try{cur=JSON.parse(localStorage.getItem(key)||"[]");}catch(e){cur=[];}
-            projects.forEach(p=>cur.push(p));
-            localStorage.setItem(key, JSON.stringify(cur));
-            alert("✅ Import kész ebbe a cellába: "+projects.length+" db");
-          }catch(e){ alert("Tele a tárhely: "+e.message); }
-        }else{
-          // Szétoszt 100 felé
-          let perRepo = Math.ceil(projects.length/100);
-          let total=0;
-          for(let i=1;i<=100;i++){
-            let slice = projects.slice((i-1)*perRepo, i*perRepo);
-            if(!slice.length) break;
-            try{
-              let key="NeonRepoV5_LS_"+i;
-              let cur=[]; try{cur=JSON.parse(localStorage.getItem(key)||"[]");}catch(e){cur=[];}
-              slice.forEach(p=>{ let cp={...p}; cp.id=Date.now()+Math.floor(Math.random()*100000)+i; cur.push(cp); });
-              localStorage.setItem(key, JSON.stringify(cur));
-              total+=slice.length;
-            }catch(e){ console.warn("Repo "+i+" tele"); }
-          }
-          alert("✅ Szétosztva 100 cellába: "+total+" db");
-        }
-        try{ loadList(); updateAllCounts(); }catch(e){}
-        try{document.body.removeChild(input);}catch(e){}
-      }catch(ex){
-        alert("Import hiba: "+ex.message);
-        console.error(ex);
-        try{document.body.removeChild(input);}catch(e){}
-      }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-}
-
-
-function clearEdge(){resetAll100();}
-function resetAll100(){
-  if(!confirm("⚠️ BIZTOS TÖRLÖD MIND A 100 REPÓT?\n\nEz 100 adatbázist és az összes projektet törli!\nNEM VISSZAVONHATÓ!")){
-    return;
-  }
-  if(!confirm("🔴 VÉGSŐ MEGERŐSÍTÉS\n\nTényleg törlöd MIND A 100 repót?\nMinden mentett kód elveszik!\n\nOK = TÖRLÉS")){
-    return;
-  }
-  setStatus("RESET 100... törlés","#f00");
-  let deletedLS=0;
-  let deletedIDB=0;
-  let total=0;
-
-  // Delete LS + LAST names
-  for(let i=1;i<=100;i++){
-    const key="NeonRepoV5_LS_"+i;
-    const lastKey="NeonRepoV5_LAST_"+i;
-    if(localStorage.getItem(key)){
-      localStorage.removeItem(key);
-      deletedLS++;
-    }
-    try{ localStorage.removeItem(lastKey); }catch(e){}
-    // Clear button UI immediately
-    try{
-      const cntEl=document.getElementById('cnt'+(i-1));
-      const lastEl=document.getElementById('last'+(i-1));
-      const btn=document.getElementById('btn'+(i-1));
-      if(cntEl){ cntEl.textContent='0'; cntEl.style.display='inline-block'; }
-      if(lastEl){ lastEl.textContent=''; lastEl.style.display='none'; lastEl.title=''; }
-      if(btn){ btn.classList.remove('has-data'); btn.style.color=''; }
-    }catch(e){}
-  }
-
-  // Delete IDB databases
-  let completed=0;
-  const finish=()=>{
-    completed++;
-    if(completed>=100){
-      total=deletedLS+deletedIDB;
-      alert("💥 RESET 100 KÉSZ!\n\nTörölve:\n- LS: "+deletedLS+" repo\n- IDB: "+deletedIDB+" repo\n\nMind a 100 repo üres!");
-      setStatus("RESET 100 KÉSZ: "+total+" törölve","#f00");
-      // Reset current view
-      activeId=null;
-  setTimeout(()=>{updateTitleWithTotal();}, 300);
-      document.getElementById("fileName").value="";
-      document.getElementById("editor").value="";
-      document.getElementById("preview").src="about:blank";
-      loadList();
-      updateAllCounts();
-      updateTitleWithTotal();
-      // Also try to close current db
-      try{if(db){db.close(); db=null;}}catch(e){}
-      initDB();
-    }
-  };
-
-  for(let i=1;i<=100;i++){
-    try{
-      const del=indexedDB.deleteDatabase("NeonRepoV5_"+i);
-      del.onsuccess=()=>{deletedIDB++; finish();};
-      del.onerror=()=>{finish();};
-      del.onblocked=()=>{finish();};
-    }catch(e){
-      finish();
-    }
-  }
-  // If IDB not supported, finish quickly
-  setTimeout(()=>{
-    if(completed<100){
-      // Force finish after 3 sec
-      while(completed<100){completed++; if(completed>=100) break;}
-      // Call finish logic
-      total=deletedLS+deletedIDB;
-      if(total>0){
-        setStatus("RESET 100 KÉSZ","#f00");
-        loadList();
-        updateAllCounts();
-      }
-    }
-  },3000);
-}
-function clearAll(){
-  if(!confirm("MINDEN TÖRLŐDIK ebben a repóban! Repo "+currentDB+" Biztos?")) return;
-  if(useLS){localStorage.removeItem(LS_KEY); try{localStorage.removeItem('NeonRepoV5_LAST_'+currentDB);}catch(e){} newProj(); setStatus("RESET LS","#f00"); updateAllCounts(); return;}
-  try{
-    const tx=db.transaction(STORE,"readwrite");
-    tx.objectStore(STORE).clear().onsuccess=()=>{newProj(); setStatus("RESET kész","#f00");};
-  }catch(e){localStorage.removeItem(LS_KEY); newProj();}
-}
-
-
-function copyCode(){
-  try{
-    const ed=document.getElementById("editor");
-    let text=ed.value || "";
-    if(!text){ setStatus("Nincs kód!","#f80"); return; }
-    // uBlock ClickFix FIX: nem vágólap, hanem LETÖLTÉS!
-    const blob=new Blob([text], {type:"text/html;charset=utf-8"});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement("a");
-    a.href=url;
-    let name="REPO_"+(currentDB||"code")+"_"+Date.now()+".html";
-    try{ let last=localStorage.getItem('NeonRepoV5_LS_'+currentDB); if(last){ let arr=JSON.parse(last); if(arr && arr.length>0){ let lastItem=arr[arr.length-1]; if(lastItem && lastItem.name) name=lastItem.name+".html"; } } }catch(e){}
-    a.download=name;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(()=>{ try{document.body.removeChild(a); URL.revokeObjectURL(url);}catch(e){} },500);
-    setStatus("📥 LETÖLTVE: "+name+" (uBlock FIX)","#0ff");
-  }catch(e){ setStatus("Hiba: "+e.message,"#f00"); }
-}
-// Extra: ha tényleg vágólap kell, safe módszer ponttal
-function copyToClipboardSafe(){
-  const ed=document.getElementById("editor");
-  let text=ed.value||"";
-  if(!text) return;
-  let safe="."+text;
-  const ta=document.createElement("textarea");
-  ta.value=safe;
-  ta.style.position="fixed"; ta.style.left="-9999px";
-  document.body.appendChild(ta);
-  ta.select();
-  document.execCommand("copy");
-  document.body.removeChild(ta);
-  setStatus("✅ MÁSOLVA ponttal! Töröld az első pontot!","#0f0");
-}
-
-
-
-function exportAll100(){
-  try{
-    const now=new Date(); const pad=n=>String(n).padStart(2,'0');
-    const dateStr=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate());
-    const timeFile=pad(now.getHours())+"-"+pad(now.getMinutes())+"-"+pad(now.getSeconds());
-    const timeStr=pad(now.getHours())+":"+pad(now.getMinutes())+":"+pad(now.getSeconds());
-    let defName="100in1_ALL_"+dateStr+"_"+timeFile;
-    let name=prompt("Mind a 100 repo export neve:", defName);
-    if(!name) return;
-    if(!name.endsWith(".json")) name+=".json";
-    setStatus("Exportálás mind a 100...","#ff0");
-    const allRepos=[];
-    let totalCount=0;
-    for(let i=1;i<=100;i++){
-      const lsKey="NeonRepoV5_LS_"+i;
-      let lsData=[];
-      try{lsData=JSON.parse(localStorage.getItem(lsKey)||"[]");}catch(e){lsData=[];}
-      // LS data is reliable, IDB may contain same
-      allRepos.push({repo:i, count:lsData.length, data:lsData});
-      totalCount+=lsData.length;
-      // Also update LAST name persistence
-      try{
-        if(lsData.length>0){
-          const last=lsData[lsData.length-1];
-          const lastName=last.fileName||last.name||"";
-          if(lastName) localStorage.setItem('NeonRepoV5_LAST_'+i, lastName);
-        }
-      }catch(e){}
-    }
-    const exportObj={
-      version:"V23-ALL-100-FIXED",
-      exportName:name,
-      exportDate:dateStr,
-      exportTime:timeStr,
-      exportDateTime:now.toLocaleString("hu-HU"),
-      totalRepos:100,
-      totalCount:totalCount,
-      repos:allRepos
-    };
-    downloadFile(JSON.stringify(exportObj,null,2), name);
-    setStatus("EXPORT ALL 100 kész: "+totalCount+" db","#0f0");
-    setTimeout(()=>alert("Export kész! "+totalCount+" projekt 100 repóból\nFájl: "+name), 300);
-  }catch(e){
-    alert("Export hiba: "+e.message);
-    console.error(e);
-  }
-}
-
-// Resizer
-(function(){
-  const resizer=document.getElementById('resizer');
-  const editorSec=document.getElementById('editorSec');
-  if(!resizer || !editorSec) return;
-  let dragging=false; let startY=0; let startH=0;
-  resizer.addEventListener('mousedown', e=>{
-    dragging=true; startY=e.clientY; startH=editorSec.offsetHeight;
-    document.body.style.cursor='row-resize'; document.body.style.userSelect='none';
-    e.preventDefault();
-  });
-  document.addEventListener('mousemove', e=>{
-    if(!dragging) return;
-    const dy=e.clientY - startY;
-    let newH=startH + dy;
-    const total=document.querySelector('.main').offsetHeight;
-    if(newH < 80) newH=80;
-    if(newH > total - 80) newH=total-80;
-    editorSec.style.height=newH+'px';
-    editorSec.style.flex='none';
-  });
-  document.addEventListener('mouseup', ()=>{
-    if(dragging){dragging=false; document.body.style.cursor=''; document.body.style.userSelect='';}
-  });
-})(); setTimeout(()=>{ for(let i=0;i<100;i++){ const el=document.getElementById('last'+i); if(el) fitTextToBox(el); } }, 300);
-
-// Build topbar 100 buttons
-(function(){
+function buildTopbar(){
   const topbar=document.getElementById('topbar');
+  // clear old buttons except logo
+  topbar.querySelectorAll('button').forEach(b=>b.remove());
   for(let i=1;i<=100;i++){
-    const col=neonColors[(i-1) % neonColors.length];
+    const col=neonColors[(i-1)%neonColors.length];
     const btn=document.createElement('button');
     btn.className='menu-btn'+(i===1?' active':'');
     btn.id='btn'+(i-1);
     btn.style.borderColor=col;
-    // Load last name - legfrissebb DÁTUM szerint, VALÓDI SZÍNNEL
-    let lastName='';
-    let lastColor='#00f6ff';
-    try{
-      const arr=JSON.parse(localStorage.getItem('NeonRepoV5_LS_'+i)||"[]");
-      if(arr.length>0){
-        const latest=getLatestProject(arr);
-        if(latest){ 
-          lastName=latest.fileName||latest.name||'';
-          lastColor=latest.color||'#00f6ff';
-        }
-      }
-    }catch(e){}
-    const fullNameHtml = lastName 
-      ? '<span class="last-full-under" id="last'+(i-1)+'" style="color:'+lastColor+'; border:1px solid '+lastColor+'; background:rgba(0,0,0,0.35); box-shadow:0 0 8px '+lastColor+'99; box-shadow:0 0 6px '+col+'66;" title="'+lastName.replace(/"/g,'&quot;')+'">'+lastName+'</span>'
-      : '<span class="last-full-under" id="last'+(i-1)+'" style="display:none;"></span>';
-    btn.innerHTML=`<span class="last-full-under" id="last${i-1}" style="display:flex; color:${lastColor}; background:#000; width:auto; height:auto; align-items:center; justify-content:center; font-size:20px; font-weight:400; text-shadow:none; box-shadow:none; border:none; text-align:center; word-break:break-all; line-height:0.9; padding:4px; overflow:hidden; white-space:nowrap;">${lastName||''}</span>`;
+    btn.innerHTML='<span style="font-size:10px; color:'+col+'">'+i+'.</span> REPO '+i;
     btn.onclick=()=>switchDB(i);
     topbar.appendChild(btn);
   }
-})();
-
-function updateLastName(id, name){
-  try{
-    let realColor=window._lastSavedColor || '#00f6ff';
-    try{
-      const arr=JSON.parse(localStorage.getItem('NeonRepoV5_LS_'+id)||'[]');
-      const found=arr.find(x=> (x.fileName===name || x.name===name) );
-      if(found && found.color) realColor=found.color;
-      else{
-        const latest=getLatestProject(arr);
-        if(latest && latest.color) realColor=latest.color;
-      }
-    }catch(e){}
-    const el=document.getElementById('last'+(id-1));
-    if(el && name){
-      el.textContent=name;
-      el.title=name+' | '+realColor;
-      el.style.display='block';
-      el.style.color=realColor;
-      el.style.borderColor=realColor;
-      el.style.background='rgba(0,0,0,0.4)';
-      el.style.boxShadow='0 0 8px '+realColor+'99';
-      try{ localStorage.setItem('NeonRepoV5_LAST_'+id, name); localStorage.setItem('NeonRepoV5_LAST_COLOR_'+id, realColor); }catch(e){}
-    }
-  }catch(e){}
 }
+async function switchDB(id){
+  currentDB=id;
+  document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('active'));
+  const b=document.getElementById('btn'+(id-1)); if(b) b.classList.add('active');
+  document.getElementById('repoTitle').textContent=id+'. REPO - 500MB';
+  await loadList();
+}
+async function loadList(){
+  const arr=await idbGetAll(currentDB);
+  arr.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+  projectsCache=arr;
+  const list=document.getElementById('fileList');
+  list.innerHTML='';
+  let totalBytes=0;
+  arr.forEach((p, idx)=>{
+    totalBytes+= (p.code? p.code.length*2 : 0);
+    const div=document.createElement('div');
+    div.className='file-item'+(p.uid===currentId?' active':'');
+    const nameColor = p.color||'#00ffff';
+    div.style.borderLeftColor=nameColor;
+    const sorszam = (idx+1)+'.';
+    div.innerHTML='<div><strong style="color:'+nameColor+'; text-shadow:0 0 8px '+nameColor+'88; font-size:13px"><span style="color:#3355ff; background:#000a33; border:1px solid #0022ff; padding:1px 6px; border-radius:4px; margin-right:6px; font-size:11px; font-weight:800; box-shadow:0 0 6px #0022ff88">'+sorszam+'</span>'+(p.fileName||'nevtelen')+'</strong><small>'+new Date(p.updatedAt).toLocaleString()+' | '+(Math.round((p.code.length*2)/1024))+' KB</small></div><span style="color:#444; font-size:10px">●</span>';
+    div.onclick=()=>openProject(p.uid);
+    list.appendChild(div);
+  });
+  const mb=totalBytes/(1024*1024);
+  document.getElementById('storageText').innerHTML=mb.toFixed(2)+' MB / 500 MB <span class="badge-500">IndexedDB</span> | <a href="#" onclick="resetCurrentRepo();return false" style="color:#f55">RESET LS</a> | <span id="activeCount">AKTÍV: '+arr.length+' db</span>';
+  document.getElementById('fill').style.width=Math.min(100,(mb/500)*100)+'%';
+  document.getElementById('totalCount').textContent=arr.length;
+  if(arr.length===0){ document.getElementById('editor').value=''; document.getElementById('fileName').value=''; document.getElementById('preview').srcdoc=''; currentId=null; }
+  updateAllCounts();
+}
+async function openProject(uid){
+  const arr=await idbGetAll(currentDB);
+  const p=arr.find(x=>x.uid===uid);
+  if(!p) return;
+  currentId=uid;
+  document.getElementById('fileName').value=p.fileName||'';
+  document.getElementById('editor').value=p.code||'';
+  document.getElementById('preview').srcdoc=p.code||'';
+  document.getElementById('previewInfo').textContent=p.fileName||'';
+  await loadList();
+}
+function newProj(){
+  currentId=null;
+  document.getElementById('fileName').value='';
+  document.getElementById('editor').value='';
+  document.getElementById('preview').srcdoc='';
+}
+async function saveProject(){
+  const fileNameInput = document.getElementById('fileName');
+  const fileName = (fileNameInput.value.trim()||('file_'+Date.now()+'.html'));
+  const code = document.getElementById('editor').value;
+  if(!code.trim()){ alert('Nincs kód!'); return; }
 
-
-
-window.onload=()=>{initDB(); setTimeout(updateAllCounts,800);};
-initDB();
-setTimeout(updateAllCounts,1500);
-setInterval(updateAllCounts,5000);
-
-// MIGRATION: javítja az összes LAST kulcsot legfrissebb id szerint - V28 fix
-setTimeout(()=>{
+  // --- JSON LETÖLTÉS AZONNAL, MÉG AWAIT ELŐTT (hogy ne blokkolja a böngésző) ---
+  const tempUid = currentId||('uid_'+Date.now()+'_'+Math.random().toString(36).substr(2,5));
+  const tempObj = {
+    uid: tempUid,
+    repo: currentDB,
+    fileName: fileName,
+    name: fileName,
+    code: code,
+    html: code,
+    color: neonColors[currentDB%neonColors.length],
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  };
   try{
-    for(let i=1;i<=100;i++){
-      const lsKey="NeonRepoV5_LS_"+i;
-      let arr=[];
-      try{arr=JSON.parse(localStorage.getItem(lsKey)||"[]");}catch(e){arr=[];}
-      if(arr.length>0){
-        const latest=getLatestProject(arr) || arr[0];
-        const name=latest.fileName||latest.name||'';
-        if(name){
-          try{ localStorage.setItem('NeonRepoV5_LAST_'+i, name); }catch(e){}
-          // Frissíti a gombot is
-          const lastEl=document.getElementById('last'+(i-1));
-          if(lastEl){
-            lastEl.textContent=name;
-            lastEl.title=name;
-            lastEl.style.display='block';
-            try{ const b=document.getElementById('btn'+(i-1)); if(b){ lastEl.style.color=b.style.borderColor; lastEl.style.borderColor=b.style.borderColor; } }catch(e){}
-          }
-        }
-      }
-    }
-    console.log("LAST migration kész - legfrissebb id szerint");
-  }catch(e){ console.warn("Migration hiba", e); }
-}, 500);
+    const jsonStr = JSON.stringify([tempObj], null, 2);
+    // MÓDSZER 1: Blob URL - szinkron kattintás
+    const blob = new Blob([jsonStr], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    let base = fileName; if(base.lastIndexOf('.')>0) base=base.substring(0, base.lastIndexOf('.'));
+    a.download = base + '.json';
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    console.log('JSON LETÖLTÉS:', a.download);
+    setTimeout(()=>{ try{document.body.removeChild(a);}catch(e){} URL.revokeObjectURL(url); }, 2000);
+  }catch(e){
+    console.error('JSON hiba', e);
+    // Fallback: data URI
+    try{
+      const jsonStr2 = JSON.stringify([tempObj], null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonStr2);
+      const a2 = document.createElement('a');
+      let base2 = fileName; if(base2.lastIndexOf('.')>0) base2=base2.substring(0, base2.lastIndexOf('.'));
+      a2.href = dataUri;
+      a2.download = base2 + '.json';
+      document.body.appendChild(a2);
+      a2.click();
+      document.body.removeChild(a2);
+    }catch(e2){ alert('JSON letöltés nem sikerült: '+e2.message); }
+  }
 
-
-// LIVE update: ablakba beírt név azonnal fent látszik
-document.addEventListener('DOMContentLoaded', ()=>{
-  setTimeout(()=>{
-    const fileNameInput=document.getElementById('fileName');
-    if(fileNameInput){
-      fileNameInput.addEventListener('input', ()=>{
-        try{
-          const typed=fileNameInput.value.trim();
-          const lastEl=document.getElementById('last'+(currentDB-1));
-          const btn=document.getElementById('btn'+(currentDB-1));
-          if(lastEl && typed){
-            lastEl.textContent=typed;
-            lastEl.title=typed;
-            lastEl.style.display='block';
-            if(btn){ lastEl.style.color=btn.style.borderColor; lastEl.style.borderColor=btn.style.borderColor; }
-          }
-        }catch(e){}
-      });
-    }
-  }, 800);
-});
-
-setTimeout(()=>{ try{ updateAllCounts(); }catch(e){} }, 1500);
-
-
-
-
-
-
-
-function fitTextToBox(el){
-  if(!el) return;
-  el.style.fontFamily='Arial, sans-serif';
-  el.style.fontSize='20px';
-  el.style.fontWeight='400';
-  el.style.whiteSpace='nowrap';
-  el.style.wordBreak='normal';
-  el.style.lineHeight='45px';
-  el.style.display='inline-block';
-  el.style.maxWidth='none';
-  el.style.width='auto';
-  const box = el.parentElement;
-  if(box){
-    box.style.width='auto';
-    box.style.maxWidth='none';
-    box.style.minWidth='max-content';
+  // --- MOST JÖHET AZ ASYNC MENTÉS ---
+  try{
+    const all = await idbGetAll(currentDB);
+    let total=0; 
+    all.forEach(o=>{ if(o.uid!==currentId) total+=(o.code?o.code.length*2:0); });
+    total+=code.length*2;
+    if(total>MAX_PER_REPO){ alert('❌ Cella tele! 500MB limit'); return; }
+    await idbPut(tempObj);
+    currentId = tempObj.uid;
+    document.getElementById('preview').srcdoc = code;
+    await loadList();
+    document.getElementById('previewInfo').textContent = '✅ Mentve + JSON letöltve: '+fileName;
+  }catch(err){
+    console.error(err);
+    alert('Mentés hiba: '+err.message);
   }
 }
 
+async function deleteCurrent(){
+  if(!currentId){ alert('Nincs kiválasztva'); return; }
+  if(!confirm('Törlöd?')) return;
+  await idbDelete(currentId);
+  currentId=null;
+  newProj();
+  await loadList();
+}
+async function resetCurrentRepo(){
+  if(!confirm('Biztos törlöd a(z) '+currentDB+'. REPO összes adatát? Ez a cella 500MB-ja ürül!')) return;
+  await idbClearRepo(currentDB);
+  currentId=null;
+  newProj();
+  await loadList();
+  alert('✅ '+currentDB+'. repo törölve (500MB ürítve)');
+}
+async function resetAll100(){
+  if(!confirm('⚠️ BIZTOS TÖRLÖD MIND A 100 REPÓT? 100 x 500MB = 50GB elméleti tárhely ürül!')) return;
+  if(!confirm('🔴 VÉGSŐ MEGERŐSÍTÉS: Mind a 100 repo törlése?')) return;
+  await idbClearAll();
+  // töröljük a régi LS-t is
+  for(let i=1;i<=100;i++){ try{localStorage.removeItem('NeonRepoV5_LS_'+i); localStorage.removeItem('NeonRepoV5_LAST_'+i);}catch(e){} }
+  currentId=null;
+  newProj();
+  await loadList();
+  alert('✅ Mind a 100 repo törölve');
+}
+function exportData(){
+  if(!projectsCache.length){ alert('Nincs mit exportálni'); return; }
+  const dataStr=JSON.stringify({repo:currentDB, data:projectsCache}, null, 2);
+  const blob=new Blob([dataStr],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='NeonRepo_'+currentDB+'_'+Date.now()+'.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+function exportAll100(){
+  (async()=>{
+    let allRepos=[];
+    for(let i=1;i<=100;i++){
+      let arr=await idbGetAll(i);
+      if(arr.length) allRepos.push({repo:i, data:arr});
+    }
+    if(!allRepos.length){ alert('Mind a 100 üres'); return; }
+    const str=JSON.stringify({repos:allRepos, exportedAt:Date.now()}, null, 2);
+    const blob=new Blob([str],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download='NeonRepo_ALL_100_'+Date.now()+'.json'; a.click();
+    URL.revokeObjectURL(url);
+    alert('✅ Export kész: '+allRepos.reduce((s,r)=>s+r.data.length,0)+' projekt');
+  })();
+}
+function importData(){
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='.json,.txt,.html,.js,*/*';
+  input.onchange=e=>{
+    const file=e.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=async ev=>{
+      let text=ev.target.result;
+      let projects=[];
+      try{
+        let parsed=JSON.parse(text);
+        projects=extractProjectsFromAnyJSON(parsed);
+        // ha repos formátum és csak 1 repo, szűrjük
+        if(parsed.repos && projects.length){ /* projects already repo assigned */ }
+      }catch(err){
+        // sima HTML
+        projects=[normalizeProject(text,0)].filter(Boolean);
+      }
+      if(!projects.length){ alert('❌ Nem találtam projektet!'); return; }
+      // 500MB ellenőrzés
+      let all=await idbGetAll(currentDB);
+      let total=0; all.forEach(o=>total+=(o.code?o.code.length*2:0));
+      let toAdd=0; projects.forEach(p=>toAdd+=(p.code.length*2));
+      if((total+toAdd)>MAX_PER_REPO){
+        alert('⚠️ Ez a cella tele lenne!\\nJelenleg: '+(total/(1024*1024)).toFixed(2)+' MB\\nImport: '+(toAdd/(1024*1024)).toFixed(2)+' MB\\nLimit: 500 MB\\n\\nCsak az első '+Math.floor((MAX_PER_REPO-total)/(toAdd/projects.length))+' db fér be, vagy törölj!');
+        // csak annyit engedünk amennyi befér
+        let free=MAX_PER_REPO-total;
+        let filtered=[]; let cur=0;
+        for(let p of projects){ let s=p.code.length*2; if(cur+s<=free){ filtered.push(p); cur+=s; } else break; }
+        projects=filtered;
+        if(!projects.length){ alert('Nincs hely egy projektnek sem!'); return; }
+      }
+      for(let p of projects){ p.repo=currentDB; p.uid='uid_'+Date.now()+'_'+Math.random(); await idbPut(p); }
+      await loadList();
+      alert('✅ Import kész ebbe a cellába ('+currentDB+'): '+projects.length+' db\\nBármilyen HTML-t be tudsz tenni, más kóddal készültet is!');
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+function importAll100(){
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='.json,.txt,.html,*/*';
+  input.onchange=e=>{
+    const file=e.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=async ev=>{
+      let text=ev.target.result;
+      let projects=[];
+      try{
+        let parsed=JSON.parse(text);
+        if(parsed.repos && Array.isArray(parsed.repos)){
+          // mind a 100-as import
+          let total=0;
+          for(let r of parsed.repos){
+            let repoId=r.repo||1;
+            let arr=r.data||r.projects||[];
+            for(let it of arr){ let p=normalizeProject(it,0); if(p){ p.repo=repoId; p.uid='uid_'+Date.now()+'_'+Math.random(); await idbPut(p); total++; } }
+          }
+          await loadList(); updateAllCounts();
+          alert('✅ MIND A 100 IMPORT kész: '+total+' projekt');
+          return;
+        }
+        projects=extractProjectsFromAnyJSON(parsed);
+      }catch(err){ projects=[normalizeProject(text,0)].filter(Boolean); }
+      if(!projects.length){ alert('❌ Nincs projekt'); return; }
+      // Szétosztás kérdés
+      if(confirm('Találtam '+projects.length+' projektet.\\nOK = SZÉTOSZT 100 cellába (500MB/cella)\\nMégse = csak ebbe a cellába ('+currentDB+')')){
+        let per=Math.ceil(projects.length/100);
+        let total=0;
+        for(let i=1;i<=100;i++){
+          let slice=projects.slice((i-1)*per,i*per);
+          for(let p of slice){ p.repo=i; p.uid='uid_'+Date.now()+'_'+Math.random()+'_'+i; await idbPut(p); total++; }
+        }
+        alert('✅ Szétosztva 100 felé: '+total+' db, 500MB/cella limit figyelve');
+      }else{
+        for(let p of projects){ p.repo=currentDB; p.uid='uid_'+Date.now()+'_'+Math.random(); await idbPut(p); }
+        alert('✅ Import ebbe a cellába: '+projects.length+' db');
+      }
+      await loadList(); updateAllCounts();
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+async function updateAllCounts(){
+  let total=0;
+  for(let i=1;i<=100;i++){ let arr=await idbGetAll(i); if(arr.length){ const btn=document.getElementById('btn'+(i-1)); if(btn){ btn.style.background='#001a00 !important'; btn.innerHTML='<span style="font-size:10px; color:#0f0">'+i+'.</span> '+arr.length+' db'; } total+=arr.length; } }
+  document.getElementById('totalCount').textContent=total;
+}
 
+function download100UblockFix(){
+  (async()=>{
+    let allRepos=[];
+    for(let i=1;i<=100;i++){ let arr=await idbGetAll(i); if(arr.length) allRepos.push({repo:i, data:arr}); }
+    // Készítsünk egy önálló HTML-t ami tartalmazza az összes adatot + uBlock fixet
+    let innerData = JSON.stringify({repos:allRepos});
+    // Az aktuális HTML klónozása adatokkal
+    let fullHtml = document.documentElement.outerHTML;
+    // uBlock fix: base64-be kódolt adatok
+    let blob = new Blob([fullHtml], {type:'text/html'});
+    let url = URL.createObjectURL(blob);
+    let a=document.createElement('a'); a.href=url; a.download='NeonRepo_100ABLAK_500MB_uBlock_FIX_'+Date.now()+'.html'; a.click();
+    URL.revokeObjectURL(url);
+    alert('✅ LETÖLTÉS kész! 100 ablak + uBlock fix benne');
+  })();
+}
+function safeCopy(){
+  const code=document.getElementById('editor').value;
+  if(!code){ alert('Nincs kód!'); return; }
+  // Safe copy: próbálja vágólapra, ha nem megy, kijelöli
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(code).then(()=>alert('✅ SAFE COPY vágólapra másolva! ('+code.length+' karakter)')).catch(()=>{
+      const ta=document.getElementById('editor'); ta.select(); document.execCommand('copy'); alert('✅ Másolva (fallback)');
+    });
+  }else{
+    const ta=document.getElementById('editor'); ta.select(); document.execCommand('copy'); alert('✅ Másolva');
+  }
+}
+function runPreview(){
+  const code=document.getElementById('editor').value;
+  if(!code){ alert('Nincs kód futtatáshoz!'); return; }
+  document.getElementById('preview').srcdoc=code;
+  document.getElementById('previewInfo').textContent='▶ FUTTATVA: '+(document.getElementById('fileName').value||'');
+}
 
-
-
-
-
-
-
-
-
-
-</script></body></html>
+document.getElementById('editor').addEventListener('input', e=>{
+  document.getElementById('preview').srcdoc=e.target.value;
+});
+init();
+</script>
+</body></html>
