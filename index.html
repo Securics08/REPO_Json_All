@@ -971,40 +971,311 @@ function exportData(){
   }catch(e){doExport(getLS());}
 }
 
+
+function normalizeProject(raw, index){
+  if(!raw) return null;
+  // Ha string -> azt hisszük HTML kód
+  if(typeof raw === 'string'){
+    if(raw.trim().length < 5) return null;
+    return {
+      fileName: 'import_' + Date.now() + '_' + index,
+      name: 'import_' + Date.now() + '_' + index,
+      code: raw,
+      html: raw,
+      color: neonColors[index % neonColors.length] || '#00ffff',
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    };
+  }
+  if(typeof raw !== 'object') return null;
+  // Próbáljuk kitalálni mi a kód
+  let code = raw.code || raw.html || raw.content || raw.source || raw.body || raw.data || raw.htmlCode || raw.html_code || '';
+  // Ha nincs code de van pl raw-ban bármi hosszú string, azt használjuk
+  if(!code){
+    for(let k of Object.keys(raw)){
+      let v = raw[k];
+      if(typeof v === 'string' && v.length > 50 && (v.includes('<') || v.includes('html') || v.includes('div'))){
+        code = v; break;
+      }
+    }
+  }
+  // Ha még mindig nincs, de van JSON ami nem meta, akkor stringifyoljuk mint tartalom
+  if(!code){
+    // Ha az objektum csak név+egyéb de nincs kód, dobjuk
+    if(!raw.fileName && !raw.name && !raw.title) {
+      // próbáljuk az egész objektumot kódnak venni ha van benne < 
+      let s = JSON.stringify(raw);
+      if(s.length < 20) return null;
+      code = '<pre>'+s+'</pre>';
+    } else {
+      code = raw.code || '';
+    }
+  }
+  if(!code || (typeof code === 'string' && code.trim().length < 2)) return null;
+
+  let fileName = raw.fileName || raw.name || raw.title || raw.filename || raw.file_name || ('import_' + Date.now() + '_' + index);
+  let color = raw.color || raw.colour || raw.borderColor || neonColors[index % neonColors.length] || '#00ffff';
+  // Tisztítás
+  fileName = String(fileName).replace(/["<>]/g,'').trim().substring(0,120) || ('file_'+index);
+  return {
+    fileName: fileName,
+    name: fileName,
+    code: String(code),
+    html: String(raw.html || code),
+    color: color,
+    createdAt: raw.createdAt || raw.created || raw.date || Date.now(),
+    updatedAt: Date.now(),
+    id: Date.now() + Math.floor(Math.random()*100000) + index
+  };
+}
+
+function extractProjectsFromAnyJSON(parsed){
+  let candidates = [];
+  if(!parsed) return [];
+  // 1. Tömb
+  if(Array.isArray(parsed)){
+    return parsed.map((it,i)=>normalizeProject(it,i)).filter(Boolean);
+  }
+  // 2. Ha objektum
+  if(typeof parsed === 'object'){
+    // Direkt mezők
+    if(parsed.code && (parsed.fileName || parsed.name)){
+      let p = normalizeProject(parsed,0);
+      if(p) return [p];
+    }
+    // Ismert kulcsok
+    let keys = ['data','repos','projects','files','items','list','docs','entries','records','content','result'];
+    for(let k of keys){
+      if(parsed[k]){
+        if(Array.isArray(parsed[k])){
+          // repos formátum: [{repo,data}]
+          if(k==='repos'){
+            let all=[];
+            parsed[k].forEach((r,ri)=>{
+              let arr = r.data || r.projects || r.files || r.items || [];
+              if(Array.isArray(arr)){
+                arr.forEach((it,ii)=>{ let n=normalizeProject(it, ri*1000+ii); if(n) all.push(n); });
+              } else if(typeof arr === 'object'){
+                let n=normalizeProject(arr, ri); if(n) all.push(n);
+              }
+            });
+            if(all.length) return all;
+          } else {
+            let res = parsed[k].map((it,i)=>normalizeProject(it,i)).filter(Boolean);
+            if(res.length) return res;
+          }
+        } else if(typeof parsed[k] === 'object'){
+          let res = extractProjectsFromAnyJSON(parsed[k]);
+          if(res.length) return res;
+        }
+      }
+    }
+    // 3. Végigpörgetünk minden kulcson ami tömb és projektnek néz ki
+    for(let k of Object.keys(parsed)){
+      let v = parsed[k];
+      if(Array.isArray(v) && v.length>0){
+        let sample = v[0];
+        if(typeof sample === 'object' && (sample.code || sample.html || sample.content)){
+          let res = v.map((it,i)=>normalizeProject(it,i)).filter(Boolean);
+          if(res.length) return res;
+        }
+        if(typeof sample === 'string' && sample.length>20){
+          let res = v.map((it,i)=>normalizeProject(it,i)).filter(Boolean);
+          if(res.length) return res;
+        }
+      }
+    }
+    // 4. Ha maga az objektum egy dictionary ahol kulcs=filename érték=code
+    let dictProjects=[];
+    for(let k of Object.keys(parsed)){
+      let v = parsed[k];
+      if(typeof v === 'string' && v.length>20){
+        let n=normalizeProject({fileName:k, code:v}, dictProjects.length);
+        if(n) dictProjects.push(n);
+      }
+    }
+    if(dictProjects.length) return dictProjects;
+
+    // 5. Utolsó esély: magát az objektumot próbáljuk projektnek
+    let single = normalizeProject(parsed,0);
+    if(single) return [single];
+  }
+  // 6. Ha string JSON volt ami HTML
+  if(typeof parsed === 'string'){
+    let n=normalizeProject(parsed,0);
+    if(n) return [n];
+  }
+  return [];
+}
+
 function importData(){
   if(!db){ useLS=true; }
-
   const input=document.createElement("input");
   input.type="file";
-  input.accept=".json";
+  input.accept=".json,application/json,.txt,.html,.js,.text,*,*/*";
   input.onchange=e=>{
     const file=e.target.files[0];
     if(!file) return;
     const reader=new FileReader();
     reader.onload=ev=>{
       try{
-        const parsed=JSON.parse(ev.target.result);
-        let arr=parsed.data||parsed;
-        if(!Array.isArray(arr)) arr=[arr];
-        if(useLS || !db){
-          let cur=getLS();
-          arr.forEach(it=>{delete it.id; it.id=Date.now()+Math.floor(Math.random()*10000); cur.push(it);});
-          setLS(cur); loadList(); alert("Import kész LS: "+arr.length+" db"); return;
+        let text = ev.target.result;
+        let parsed;
+        let projects=[];
+        // Próbáljuk JSON-ként
+        try{
+          parsed=JSON.parse(text);
+          projects = extractProjectsFromAnyJSON(parsed);
+        }catch(jsonErr){
+          // Nem JSON, hanem sima HTML/fájl -> egy projektnek vesszük
+          projects = [normalizeProject(text,0)].filter(Boolean);
+        }
+        if(!projects.length){
+          alert("❌ Nem találtam importálható projektet ebben a fájlban!\n\nPróbáltam értelmezni mint:\n- tömb [{fileName, code}]\n- {data:[...]}\n- {repos:[...]}\n- {fájlnév: html kód}\n- sima HTML szöveg\n\nFájl első 200 karakter:\n"+String(text).substring(0,200));
+          return;
+        }
+        // Mentés - localStorage tele ellenőrzéssel
+        let cur=[];
+        try{cur=JSON.parse(localStorage.getItem('NeonRepoV5_LS_'+currentDB)||"[]");}catch(e){cur=[];}
+        let added=0;
+        let skipped=0;
+        for(let p of projects){
+          try{
+            // Ha túl nagy lenne, hagyjuk
+            let test = [...cur, p];
+            // Gyors méret check (durva)
+            let jsonStr = JSON.stringify(test);
+            if(jsonStr.length > 4500000){ // ~4.5MB határ - localStorage limit 5MB
+              skipped++;
+              continue;
+            }
+            cur.push(p);
+            added++;
+          }catch(e){
+            if(e.name==='QuotaExceededError' || (e.message && e.message.toLowerCase().includes('quota'))){
+              alert("⚠️ localStorage tele!\n\n"+added+" db sikerült, de "+(projects.length-added)+" már nem fért be.\nTörölj pár régi projektet vagy használj másik cellát!\n\nHiba: "+e.message);
+              break;
+            }
+            skipped++;
+          }
         }
         try{
-        const tx=db.transaction(STORE,"readwrite");
-        const store=tx.objectStore(STORE);
-        arr.forEach(it=>{delete it.id; store.put(it);});
-        tx.oncomplete=()=>{loadList(); alert("Import kész: "+arr.length+" db");};
-        }catch(e2){ 
-          let cur=getLS(); arr.forEach(it=>{delete it.id; it.id=Date.now()+Math.floor(Math.random()*10000); cur.push(it);}); setLS(cur); loadList(); alert("Import kész LS fallback: "+arr.length+" db"); 
+          localStorage.setItem('NeonRepoV5_LS_'+currentDB, JSON.stringify(cur));
+        }catch(e){
+          alert("❌ localStorage tele, nem tudtam menteni!\n"+e.message+"\n\nTipp: RESET vagy törölj a cellából!");
+          return;
         }
-      }catch(err){alert("Import hiba: "+err.message);}
+        loadList(); updateAllCounts();
+        if(projects.length>0){
+          try{
+            let lastName = projects[projects.length-1].fileName;
+            localStorage.setItem('NeonRepoV5_LAST_'+currentDB, lastName);
+            updateLastName(currentDB, lastName);
+          }catch(e){}
+        }
+        alert("✅ Import kész!\nBeolvasva: "+projects.length+" db\nBeszúrva ebbe a cellába ("+currentDB+"): "+added+" db"+(skipped?"\nKihagyva (helyhiány): "+skipped+" db":""));
+      }catch(err){
+        alert("Import hiba: "+err.message+"\n"+err.stack);
+        console.error(err);
+      }
     };
     reader.readAsText(file);
   };
   input.click();
 }
+
+function importAll100(){
+  const input=document.createElement("input");
+  input.type="file";
+  input.accept=".json,application/json,.txt,.html,*/*";
+  input.style.display="none";
+  document.body.appendChild(input);
+  input.onchange=e=>{
+    const file=e.target.files[0];
+    if(!file){ try{document.body.removeChild(input);}catch(e){} return; }
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        let text = ev.target.result;
+        let parsed;
+        let projects=[];
+        try{
+          parsed=JSON.parse(text);
+          // Ha repos formátum, külön kezeljük
+          if(parsed.repos && Array.isArray(parsed.repos)){
+            let total=0;
+            parsed.repos.forEach(r=>{
+              let repoId = r.repo || 1;
+              let arr = r.data || r.projects || r.files || [];
+              let projs = [];
+              if(Array.isArray(arr)) projs = arr.map((it,i)=>normalizeProject(it,i)).filter(Boolean);
+              else projs = extractProjectsFromAnyJSON(arr);
+              if(projs.length){
+                try{
+                  let key="NeonRepoV5_LS_"+repoId;
+                  let cur=[]; try{cur=JSON.parse(localStorage.getItem(key)||"[]");}catch(e){cur=[];}
+                  projs.forEach(p=>{ p.id=Date.now()+Math.floor(Math.random()*100000)+Math.random()*1000; cur.push(p); });
+                  localStorage.setItem(key, JSON.stringify(cur));
+                  total+=projs.length;
+                  let lastName = projs[projs.length-1].fileName;
+                  try{localStorage.setItem('NeonRepoV5_LAST_'+repoId, lastName);}catch(e){}
+                }catch(e){ console.warn("Repo "+repoId+" tele", e); }
+              }
+            });
+            alert("✅ IMPORT MIND A 100 kész!\nÖsszesen: "+total+" projekt");
+            try{ loadList(); updateAllCounts(); }catch(e){}
+            try{document.body.removeChild(input);}catch(e){}
+            return;
+          }
+          projects = extractProjectsFromAnyJSON(parsed);
+        }catch(jsonErr){
+          projects = [normalizeProject(text,0)].filter(Boolean);
+        }
+        if(!projects.length){
+          alert("❌ Nem találtam projektet a fájlban!");
+          try{document.body.removeChild(input);}catch(e){}
+          return;
+        }
+        // Ha nem repos, akkor mindet az aktuális cellába tesszük, de felajánljuk szétosztást?
+        if(!confirm("Találtam "+projects.length+" projektet.\nSzeretnéd az ÖSSZES 100 cellába szétszórni egyenletesen, vagy csak ebbe a cellába ("+currentDB+") importáljam?\n\nOK = SZÉTSZÓR 100 felé\nMégse = CSAK ebbe a cellába")){
+          // Csak aktuális cellába
+          try{
+            let key="NeonRepoV5_LS_"+currentDB;
+            let cur=[]; try{cur=JSON.parse(localStorage.getItem(key)||"[]");}catch(e){cur=[];}
+            projects.forEach(p=>cur.push(p));
+            localStorage.setItem(key, JSON.stringify(cur));
+            alert("✅ Import kész ebbe a cellába: "+projects.length+" db");
+          }catch(e){ alert("Tele a tárhely: "+e.message); }
+        }else{
+          // Szétoszt 100 felé
+          let perRepo = Math.ceil(projects.length/100);
+          let total=0;
+          for(let i=1;i<=100;i++){
+            let slice = projects.slice((i-1)*perRepo, i*perRepo);
+            if(!slice.length) break;
+            try{
+              let key="NeonRepoV5_LS_"+i;
+              let cur=[]; try{cur=JSON.parse(localStorage.getItem(key)||"[]");}catch(e){cur=[];}
+              slice.forEach(p=>{ let cp={...p}; cp.id=Date.now()+Math.floor(Math.random()*100000)+i; cur.push(cp); });
+              localStorage.setItem(key, JSON.stringify(cur));
+              total+=slice.length;
+            }catch(e){ console.warn("Repo "+i+" tele"); }
+          }
+          alert("✅ Szétosztva 100 cellába: "+total+" db");
+        }
+        try{ loadList(); updateAllCounts(); }catch(e){}
+        try{document.body.removeChild(input);}catch(e){}
+      }catch(ex){
+        alert("Import hiba: "+ex.message);
+        console.error(ex);
+        try{document.body.removeChild(input);}catch(e){}
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
 
 function clearEdge(){resetAll100();}
 function resetAll100(){
@@ -1181,163 +1452,6 @@ function exportAll100(){
     console.error(e);
   }
 }
-
-function importAll100(){
-  const input=document.createElement("input");
-  input.type="file";
-  input.accept=".json,application/json,.txt";
-  input.style.display="none";
-  document.body.appendChild(input);
-  input.onchange=e=>{
-    const file=e.target.files[0];
-    if(!file){ document.body.removeChild(input); return; }
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      try{
-        let parsed;
-        try{ parsed=JSON.parse(ev.target.result); }catch(err){
-          alert("Nem JSON fájl! "+err.message);
-          document.body.removeChild(input);
-          return;
-        }
-        let repos=[];
-        // Format 1: V12-V26 ALL export {repos:[{repo,data}]}
-        if(parsed.repos && Array.isArray(parsed.repos)){
-          repos=parsed.repos;
-        }
-        // Format 2: single repo export {data:[...]}
-        else if(parsed.data && Array.isArray(parsed.data)){
-          repos=[{repo:currentDB, data:parsed.data}];
-        }
-        // Format 3: array of projects
-        else if(Array.isArray(parsed)){
-          repos=[{repo:currentDB, data:parsed}];
-        }
-        // Format 4: {projects:[...]}
-        else if(parsed.projects && Array.isArray(parsed.projects)){
-          repos=[{repo:currentDB, data:parsed.projects}];
-        }
-        // Format 5: single project {name, code}
-        else if(parsed.code && parsed.name){
-          repos=[{repo:currentDB, data:[parsed]}];
-        }
-        // Format 6: search any array property that looks like projects
-        else{
-          let found=false;
-          for(let k in parsed){
-            if(Array.isArray(parsed[k]) && parsed[k].length>0){
-              const first=parsed[k][0];
-              if(first && (first.code || first.name || first.fileName)){
-                // If k is repos-like but nested
-                if(k==="repos" && first.repo){
-                  repos=parsed[k];
-                  found=true;
-                  break;
-                }else{
-                  repos=[{repo:currentDB, data:parsed[k]}];
-                  found=true;
-                  break;
-                }
-              }
-              // If array of arrays (old)
-              if(Array.isArray(first)){
-                let flat=[];
-                parsed[k].forEach(sub=>{ if(Array.isArray(sub)) flat=flat.concat(sub); else flat.push(sub); });
-                if(flat.length>0 && flat[0].code){
-                  repos=[{repo:currentDB, data:flat}];
-                  found=true;
-                  break;
-                }
-              }
-            }
-          }
-          if(!found){
-            // Last resort: if object has numeric keys 1..100 with arrays
-            let collected=[];
-            for(let i=1;i<=100;i++){
-              if(parsed[i] && Array.isArray(parsed[i]) && parsed[i].length>0){
-                collected.push({repo:i, data:parsed[i]});
-              }
-              if(parsed["NeonRepoV5_LS_"+i] && Array.isArray(parsed["NeonRepoV5_LS_"+i])){
-                collected.push({repo:i, data:parsed["NeonRepoV5_LS_"+i]});
-              }
-            }
-            if(collected.length>0){
-              repos=collected;
-              found=true;
-            }
-          }
-          if(!found){
-            console.log("Import parse debug:", parsed);
-            alert("Ismeretlen formátum!\nA fájl nem tartalmaz repos vagy data tömböt\n\nTartalom kulcsok: "+Object.keys(parsed).join(", ")+"\nNézd meg F12 konzolt");
-            document.body.removeChild(input);
-            return;
-          }
-        }
-
-        const totalToImport=repos.reduce((s,r)=>s+(r.data?r.data.length:0),0);
-        if(totalToImport===0){
-          alert("A fájl üres, 0 projekt van benne!\nRepos: "+repos.length);
-          document.body.removeChild(input);
-          return;
-        }
-        if(!confirm("Importálod mind a 100 repót?\n"+repos.length+" repo, összesen "+totalToImport+" projekt\nEz hozzáadja a meglévőkhöz, nem törli!")){
-          document.body.removeChild(input);
-          return;
-        }
-        let totalImported=0;
-        repos.forEach(r=>{
-          const repoId=r.repo||currentDB;
-          const dataArr=r.data||[];
-          if(!dataArr.length) return;
-          const lsKey="NeonRepoV5_LS_"+repoId;
-          try{
-            let cur=[];
-            try{cur=JSON.parse(localStorage.getItem(lsKey)||"[]");}catch(e){cur=[];}
-            dataArr.forEach(it=>{
-              if(!it || !it.code) return;
-              const newItem={...it};
-              if(!newItem.fileName) newItem.fileName=newItem.name||("import_"+Date.now());
-              if(!newItem.name) newItem.name=newItem.fileName;
-              delete newItem.id;
-              newItem.id=Date.now()+Math.floor(Math.random()*100000)+repoId*1000+Math.random()*1000;
-              cur.push(newItem);
-            });
-            localStorage.setItem(lsKey, JSON.stringify(cur));
-            totalImported+=dataArr.length;
-            try{
-              const last=dataArr[dataArr.length-1];
-              const lastName=last.fileName||last.name||"";
-              if(lastName) localStorage.setItem('NeonRepoV5_LAST_'+repoId, lastName);
-            }catch(e){}
-          }catch(e){ console.warn(e); }
-        });
-        document.body.removeChild(input);
-        alert("✅ IMPORT MIND A 100 kész!\n"+totalImported+" projekt importálva "+repos.length+" repóba");
-        setStatus("IMPORT ALL 100 kész: "+totalImported,"#0f0");
-        try{ loadList(); updateAllCounts(); updateTitleWithTotal(); }catch(e){}
-        setTimeout(()=>{
-          for(let i=1;i<=100;i++){
-            try{
-              const lastStored=localStorage.getItem('NeonRepoV5_LAST_'+i);
-              if(lastStored) updateLastName(i, lastStored);
-            }catch(e){}
-          }
-          try{ loadList(); }catch(e){}
-        }, 300);
-      }catch(ex){
-        alert("Import hiba: "+ex.message);
-        console.error(ex);
-        try{ document.body.removeChild(input); }catch(e){}
-      }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-}
-
-
-
 
 // Resizer
 (function(){
