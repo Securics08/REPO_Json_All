@@ -20,7 +20,7 @@ h2{color:#00ff00;text-shadow:0 0 10px #00ff00;font-size:18px;margin:0 0 8px 0;te
 #fill{height:100%;width:0%;background:linear-gradient(90deg,#ffea00,#0f0);box-shadow:0 0 6px #ffea00;transition:0.5s}
 input,textarea,button{background:#161616;color:#fff;border:1px solid #333;padding:10px;border-radius:8px;outline:none;margin-bottom:6px;font-size:13px}
 input#fileName{border:3px solid #00ffff !important; box-shadow:0 0 10px #00ffff44; background:#0a1a1a !important; font-size:14px;}
-textarea{flex:1;width:100%;resize:none;font-family:Consolas,monospace;color:#0f0;font-size:13px;background:#000;border:1px solid #0f04;line-height:1.5}
+textarea{flex:0 0 140px;width:100%;resize:none;font-family:Consolas,monospace;color:#0f0;font-size:12px;background:#000;border:2px solid #00ff00;line-height:1.4; min-height:60px; height:140px; overflow:auto; box-shadow:0 0 10px #00ff0033 inset}
 .toolbar{display:flex;gap:6px;margin-bottom:6px; flex-wrap:wrap}
 button{cursor:pointer;font-weight:700;font-size:12px;flex:1;border:1px solid transparent;transition:0.1s;padding:10px;border-radius:8px; text-transform:uppercase}
 .btn-save{background:#ffea00;color:#000;box-shadow:0 0 10px #ffea00aa; flex:2}
@@ -31,18 +31,100 @@ button{cursor:pointer;font-weight:700;font-size:12px;flex:1;border:1px solid tra
 .btn-exp-all{background:#00cc00 !important;border:2px solid #00ff00 !important;color:#000 !important;box-shadow:0 0 12px #00ff00aa;}
 .btn-imp-all{background:#00cccc !important;border:3px solid #00ffff !important;color:#000 !important;box-shadow:0 0 12px #00ffffaa;}
 .btn-reset{background:#660000 !important;border:1px solid #ff0000 !important;color:#fff !important;}
-#fileList{flex:1;overflow-y:auto;padding-right:4px;margin-top:8px}
+#fileList{flex:1;overflow-y:auto;padding-right:4px;margin-top:8px; max-height:65vh}
 .file-item{padding:8px;margin-bottom:6px;background:#141414;border-radius:8px;cursor:pointer;border:1px solid #222;border-left:5px solid #ffea00; display:flex; justify-content:space-between; align-items:center}
 .file-item.active{border-left-color:#0f0 !important; background:#111 !important; box-shadow:0 0 8px #0f05 !important; }
-.file-item strong{display:block;font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:220px}
+.file-item strong{display:block;font-size:11px; white-space:normal; word-break:break-all; line-height:1.3; max-width:100%}
 .file-item small{color:#888;font-size:10px;font-family:monospace}
-.editor-sec{display:flex;flex-direction:column;padding:8px;border-bottom:2px solid #333;background:#000;overflow:hidden;height:48%;min-height:80px}
+.editor-sec{display:flex;flex-direction:column;padding:8px;border-bottom:2px solid #333;background:#000;overflow:hidden;min-height:120px; height:auto; flex:1 1 auto}
 #resizer{height:14px;background:#1a1a1a;cursor:row-resize;display:flex;align-items:center;justify-content:center;border-top:2px solid #333;border-bottom:2px solid #333;flex-shrink:0; color:#666; font-size:10px}
 .preview-sec{flex:1;display:flex;flex-direction:column;background:#fff;overflow:hidden;min-height:80px}
 .preview-head{background:#0a0a0a;color:#0f0;padding:6px 12px;font-size:12px;font-weight:700;border-bottom:1px solid #333;display:flex;justify-content:space-between}
 iframe.preview{flex:1;border:none;background:#fff;width:100%}
 .bottom-block{margin-top:auto;display:flex;flex-direction:column;gap:6px;padding-top:8px;border-top:1px solid #222}
 .badge-500{font-size:10px; color:#3355ff; border:1px solid #0022ff; padding:2px 6px; border-radius:6px; background:#000a33; box-shadow:0 0 8px #0022ff88}
+
+#sidebarResizer{width:10px;background:#1a1a1a;cursor:col-resize;display:flex;align-items:center;justify-content:center;border-left:1px solid #333;border-right:1px solid #333;flex-shrink:0;z-index:50;transition:0.2s}
+#sidebarResizer:hover{background:#00ff00 !important; box-shadow:0 0 12px #00ff00aa}
+#sidebarResizer::after{content:'⋮';color:#666;font-size:16px;font-weight:900}
+#sidebarResizer.dragging{background:#00ff00 !important}
+
+
+/* KÓD ABLAK méretváltó - jobb alsó sarokban fogó */
+#editor{position:relative}
+#editor::-webkit-resizer{background:#00ff00; border:2px solid #00ff00; box-shadow:0 0 8px #00ff00}
+.editor-sec{resize:none; overflow:auto; min-height:120px; max-height:none; border-bottom:3px solid #00ff00 !important}
+.editor-sec::-webkit-resizer{background:#00ff00}
+
+
+#editorHandle{height:14px; background:#001100; cursor:ns-resize; border:2px solid #00ff00; border-radius:0 0 8px 8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; user-select:none}
+#editorHandle:hover{background:#00ff00 !important; box-shadow:0 0 15px #00ff00aa}
+#editorHandle::before{content:'↕ HÚZD A KÓD ABLAK MÉRETÉHEZ ↕'; font-size:9px; color:#00ff00; font-weight:900; letter-spacing:1px}
+#editorHandle.dragging{background:#00ff00 !important}
+#editorHandle.dragging::before{color:#000 !important}
+
+
+#editorHandleTop{height:14px; background:#001100; cursor:ns-resize; border:2px solid #00ff00; border-radius:8px 8px 0 0; display:flex; align-items:center; justify-content:center; flex-shrink:0; user-select:none; margin-bottom:2px}
+#editorHandleTop:hover{background:#00ff00 !important; box-shadow:0 0 15px #00ff00aa}
+#editorHandleTop::before{content:'↕ FELSŐ RÉSZ HÚZD ↕'; font-size:9px; color:#00ff00; font-weight:900; letter-spacing:1px}
+#editorHandleTop.dragging{background:#00ff00 !important}
+#editorHandleTop.dragging::before{color:#000 !important}
+
+
+#colorPickerBox{
+ display:flex !important;
+ flex-wrap:wrap !important;
+ gap:8px !important;
+ margin:0 !important;
+ padding:10px 12px !important;
+ background:#000 !important;
+ border-top:3px solid #00ff00 !important;
+ border-bottom:3px solid #00ff00 !important;
+ width:100% !important;
+ align-items:center !important;
+}
+.cdot{
+ width:34px !important; height:34px !important; border-radius:50% !important;
+ cursor:pointer !important; border:2px solid #000 !important; flex-shrink:0 !important;
+ transition:transform .12s !important;
+}
+.cdot:hover{transform:scale(1.35) !important}
+.cdot.sel{transform:scale(1.45) !important; border:3px solid #fff !important}
+#saveColorBtn{
+ margin-left:10px !important; padding:9px 16px !important;
+ background:#00ffff !important; color:#000 !important; border:none !important;
+ border-radius:8px !important; font-weight:900 !important; cursor:pointer !important;
+}
+
+#neonExportModal{
+ position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px);
+ display:none; align-items:center; justify-content:center; z-index:99999;
+}
+#neonExportModal.open{display:flex}
+#neonExportBox{ transition: all .25s !important; } #neonExportBoxXXX{
+ width:460px; max-width:90vw;
+ background:#0a0a0a; border:2px solid #00ffff; border-radius:18px;
+ box-shadow:0 0 30px #00ffff88, inset 0 0 20px #00ffff11;
+ padding:22px 24px; font-family: monospace;
+}
+#neonExportBox.magenta{ border-color:#ff00ff !important; box-shadow:0 0 30px #ff00ff88, inset 0 0 20px #ff00ff11 !important; } #neonExportBox.magenta h2{ color:#ff00ff !important; text-shadow:0 0 10px #ff00ff !important; } #neonExportBox.magenta #neonExportName{ border-color:#ff00ff !important; color:#ff00ff !important; } #neonExportBox.magenta #neonExportName:focus{ box-shadow:0 0 12px #ff00ff88 !important; } #neonExportBox h2{
+ margin:0 0 16px 0; text-align:center; color:#00ffff; text-shadow:0 0 10px #00ffff;
+ font-size:18px; letter-spacing:2px;
+}
+#neonExportBox label{color:#888; font-size:12px; display:block; margin-bottom:6px}
+#neonExportName{
+ width:100%; padding:10px 12px; background:#000; border:2px solid #00ffff; border-radius:10px;
+ color:#00ffff; font-size:14px; outline:none;
+}
+#neonExportName:focus{box-shadow:0 0 12px #00ffff88}
+#neonExportInfo{margin:10px 0; color:#666; font-size:11px; line-height:1.4}
+#neonExportActions{display:flex; gap:10px; margin-top:16px}
+#neonExportActions button{
+ flex:1; padding:12px; border:none; border-radius:10px; font-weight:900; cursor:pointer;
+}
+#neonExportCancel{background:#2a2a2a; color:#fff; border:1px solid #444 !important}
+#neonExportConfirm{background:#8a00ff; color:#fff; box-shadow:0 0 15px #8a00ff88}
+#neonExportConfirm:hover{background:#a020ff}
 </style>
 </head><body>
 <div class="topbar" id="topbar"><div class="logo">NEON REPO 100x500MB</div></div>
@@ -69,12 +151,19 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
 <button onclick="exportAll100()" style="background:#00cc44 !important; border:2px solid #00ff66 !important; color:#000 !important; flex:1; font-weight:800; min-height:42px; font-size:11px; box-shadow:0 0 10px #00ff44aa">📄 EXPORT MIND A<br>100</button>
 <button onclick="importAll100()" style="background:#00cccc !important; border:2px solid #00ffff !important; color:#000 !important; flex:1; font-weight:800; min-height:42px; font-size:11px; box-shadow:0 0 10px #00ffffaa">📥 IMPORT MIND A 100</button>
 </div>
+
+<div class="toolbar" style="gap:8px">
+
+</div>
+<div id="editorHandleTop" title="Húzd fel-le a felső rész méretéhez"></div>
 <textarea id="editor" placeholder="Ide írd a HTML kódot... vagy importálj bármilyen HTML-t más programból!"></textarea>
+<div id="editorHandle" title="Húzd fel-le a kód ablak méretéhez"></div>
 <div id="fileList"></div>
 <div class="bottom-block">
 <div style="font-size:10px; color:#888">ÖSSZ: <span id="totalCount">0</span> db | 100 cella x 500MB = 50GB elméleti max | IndexedDB</div>
 </div>
 </div>
+<div id="sidebarResizer" title="Húzd jobbra-balra - kód ablak méret"></div>
 <div class="main">
 <div class="editor-sec" id="editorSec" style="display:none"></div>
 
@@ -83,6 +172,23 @@ iframe.preview{flex:1;border:none;background:#fff;width:100%}
 <button onclick="safeCopy()" style="background:#ffcc00 !important; border:2px solid #ffdd00 !important; color:#000 !important; flex:2; font-weight:800; box-shadow:0 0 12px #ffcc00aa; min-height:42px">📄 SAFE COPY</button>
 <button onclick="runPreview()" style="background:#00cc00 !important; border:2px solid #00ff00 !important; color:#000 !important; flex:1; font-weight:800; box-shadow:0 0 12px #00ff00aa; min-height:42px">▶ FUTTATÁS</button>
 </div>
+<div id="colorPickerBox"><b style="color:#0f0;font-size:11px;margin-right:6px">🎨 NÉV SZÍNE:</b><div class="cdot" data-hex="#ffffff" title="Fehér" style="background:#ffffff" onclick="pickColor('#ffffff',this)"></div>
+<div class="cdot" data-hex="#ff0055" title="Piros" style="background:#ff0055" onclick="pickColor('#ff0055',this)"></div>
+<div class="cdot" data-hex="#ff6600" title="Narancs" style="background:#ff6600" onclick="pickColor('#ff6600',this)"></div>
+<div class="cdot" data-hex="#ffff00" title="Sárga" style="background:#ffff00" onclick="pickColor('#ffff00',this)"></div>
+<div class="cdot" data-hex="#7fff00" title="Lime" style="background:#7fff00" onclick="pickColor('#7fff00',this)"></div>
+<div class="cdot" data-hex="#00ff00" title="Zöld" style="background:#00ff00" onclick="pickColor('#00ff00',this)"></div>
+<div class="cdot" data-hex="#00ff88" title="Menta" style="background:#00ff88" onclick="pickColor('#00ff88',this)"></div>
+<div class="cdot" data-hex="#00ffff" title="Cián" style="background:#00ffff" onclick="pickColor('#00ffff',this)"></div>
+<div class="cdot" data-hex="#0099ff" title="Kék" style="background:#0099ff" onclick="pickColor('#0099ff',this)"></div>
+<div class="cdot" data-hex="#3300ff" title="Ultramarin" style="background:#3300ff" onclick="pickColor('#3300ff',this)"></div>
+<div class="cdot" data-hex="#9900ff" title="Lila" style="background:#9900ff" onclick="pickColor('#9900ff',this)"></div>
+<div class="cdot" data-hex="#ff00ff" title="Magenta" style="background:#ff00ff" onclick="pickColor('#ff00ff',this)"></div>
+<div class="cdot" data-hex="#ff1493" title="Pink" style="background:#ff1493" onclick="pickColor('#ff1493',this)"></div>
+<div class="cdot" data-hex="#ff00aa" title="Rózsa" style="background:#ff00aa" onclick="pickColor('#ff00aa',this)"></div>
+<div class="cdot" data-hex="#00ffcc" title="Aqua" style="background:#00ffcc" onclick="pickColor('#00ffcc',this)"></div>
+<div class="cdot" data-hex="#ffcc00" title="Arany" style="background:#ffcc00" onclick="pickColor('#ffcc00',this)"></div>
+<button id="saveColorBtn" onclick="saveColor()">💾 MENTÉS</button></div>
 
 <div id="resizer">═══ HÚZD AZ ÁTMÉRETEZÉSHEZ ═══</div>
 <div class="preview-sec"><div class="preview-head"><span>ELŐNÉZET - HÚZD FELÜL!</span><span id="previewInfo"></span></div><iframe id="preview" class="preview"></iframe></div>
@@ -516,6 +622,501 @@ function runPreview(){
 document.getElementById('editor').addEventListener('input', e=>{
   document.getElementById('preview').srcdoc=e.target.value;
 });
+
+// BAL OLDALI méretváltó - menü és kód között
+(function(){
+  const resizer=document.getElementById('sidebarResizer');
+  const sidebar=document.querySelector('.sidebar');
+  if(!resizer||!sidebar) return;
+  let drag=false,sx,sw;
+  resizer.addEventListener('mousedown',e=>{drag=true;sx=e.clientX;sw=sidebar.offsetWidth;resizer.classList.add('dragging');document.body.style.cursor='col-resize';document.body.style.userSelect='none';e.preventDefault();});
+  document.addEventListener('mousemove',e=>{if(!drag) return; let diff=e.clientX-sx; let nw=sw+diff; nw=Math.max(200,Math.min(nw,window.innerWidth*0.75)); sidebar.style.width=nw+'px'; sidebar.style.flex='0 0 '+nw+'px';});
+  document.addEventListener('mouseup',()=>{if(drag){drag=false;resizer.classList.remove('dragging');document.body.style.cursor='';document.body.style.userSelect=''; try{localStorage.setItem('NeonRepo_sidebar_w',sidebar.offsetWidth);}catch(e){}}});
+  try{const s=localStorage.getItem('NeonRepo_sidebar_w'); if(s){const w=parseInt(s); if(w>=200&&w<=window.innerWidth*0.8){sidebar.style.width=w+'px';sidebar.style.flex='0 0 '+w+'px';}}}catch(e){}
+})();
+
+
+// KÓD ABLAK méretváltó - működő fel-le húzás
+(function(){
+  const handle=document.getElementById('editorHandle');
+  const editor=document.getElementById('editor');
+  const editorSec=document.querySelector('.editor-sec');
+  if(!handle||!editor||!editorSec) return;
+  let dragging=false, startY, startH;
+  handle.addEventListener('mousedown', e=>{
+    dragging=true;
+    startY=e.clientY;
+    startH=editor.offsetHeight;
+    handle.classList.add('dragging');
+    document.body.style.cursor='ns-resize';
+    document.body.style.userSelect='none';
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e=>{
+    if(!dragging) return;
+    let diff=e.clientY-startY;
+    let newH=startH+diff;
+    newH=Math.max(80, Math.min(newH, window.innerHeight-150));
+    editor.style.height=newH+'px';
+    editor.style.flex='0 0 '+newH+'px';
+    editorSec.style.height='auto';
+  });
+  document.addEventListener('mouseup', ()=>{
+    if(dragging){
+      dragging=false;
+      handle.classList.remove('dragging');
+      document.body.style.cursor='';
+      document.body.style.userSelect='';
+      try{localStorage.setItem('NeonRepo_editor_text_h', editor.offsetHeight);}catch(e){}
+    }
+  });
+  try{
+    const saved=localStorage.getItem('NeonRepo_editor_text_h');
+    if(saved){
+      const h=parseInt(saved);
+      if(h>=80 && h<=window.innerHeight-100){
+        editor.style.height=h+'px';
+        editor.style.flex='0 0 '+h+'px';
+      }
+    }
+  }catch(e){}
+})();
+
+
+// FELSŐ RÉSZ méretváltó - ugyanilyen
+(function(){
+  const handle=document.getElementById('editorHandleTop');
+  const editor=document.getElementById('editor');
+  if(!handle||!editor) return;
+  let dragging=false, startY, startH;
+  handle.addEventListener('mousedown', e=>{
+    dragging=true;
+    startY=e.clientY;
+    startH=editor.offsetHeight;
+    handle.classList.add('dragging');
+    document.body.style.cursor='ns-resize';
+    document.body.style.userSelect='none';
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e=>{
+    if(!dragging) return;
+    let diff=e.clientY-startY;
+    // Felfelé húzva szűkítsen, hogy több lista látszódjon
+    let newH=startH+diff;
+    newH=Math.max(80, Math.min(newH, window.innerHeight-150));
+    editor.style.height=newH+'px';
+    editor.style.flex='0 0 '+newH+'px';
+  });
+  document.addEventListener('mouseup', ()=>{
+    if(dragging){
+      dragging=false;
+      handle.classList.remove('dragging');
+      document.body.style.cursor='';
+      document.body.style.userSelect='';
+    }
+  });
+})();
+
 init();
+</script>
+
+<script>
+let _chosen = localStorage.getItem('NeonRepo_chosenColor') || '#00ffff';
+let _pending = _chosen;
+
+function pickColor(hex, el){
+  _chosen=hex; _pending=hex;
+  localStorage.setItem('NeonRepo_chosenColor',hex);
+  document.querySelectorAll('.cdot').forEach(d=>d.classList.remove('sel'));
+  if(el) el.classList.add('sel');
+  const fn=document.getElementById('fileName');
+  if(fn){ fn.style.color=hex; fn.style.borderColor=hex; }
+  // bal lista azonnali preview - aktív elem
+  document.querySelectorAll('.file-item').forEach(item=>{
+    if(item.classList.contains('active')){
+      const s=item.querySelector('strong');
+      if(s) s.style.color=hex;
+      item.style.borderLeftColor=hex;
+    }
+  });
+}
+
+async function saveColor(){
+  if(!_pending) _pending=_chosen;
+  const nameEl=document.getElementById('fileName');
+  const curName=nameEl ? nameEl.value.trim() : '';
+  if(!curName){ alert('Válassz fájlt a bal alsó listából!'); return; }
+  // várjuk meg hogy db betöltött legyen
+  if(typeof db==='undefined' || !db){
+    alert('DB még tölt... próbáld újra 1 mp múlva');
+    return;
+  }
+  try{
+    const files=await new Promise((res)=>{
+      const tx=db.transaction(STORE,'readonly');
+      const st=tx.objectStore(STORE);
+      const idx=st.index('repo');
+      const req=idx.getAll(IDBKeyRange.only(currentDB));
+      req.onsuccess=()=>res(req.result||[]);
+      req.onerror=()=>res([]);
+    });
+    const idx=files.findIndex(f=>f.name===curName);
+    if(idx>=0){
+      files[idx].color=_pending;
+      await new Promise((res,rej)=>{
+        const tx=db.transaction(STORE,'readwrite');
+        tx.objectStore(STORE).put(files[idx]);
+        tx.oncomplete=()=>res();
+        tx.onerror=()=>res();
+      });
+      if(typeof window._files!=='undefined') window._files=files;
+      if(typeof renderFileList==='function') renderFileList();
+      setTimeout(()=>{
+        document.querySelectorAll('.file-item').forEach(item=>{
+          const s=item.querySelector('strong');
+          if(s && s.textContent.trim()===curName){
+            s.style.color=_pending;
+            item.style.borderLeftColor=_pending;
+          }
+        });
+        if(nameEl){ nameEl.style.color=_pending; nameEl.style.borderColor=_pending; }
+      },150);
+      const btn=document.getElementById('saveColorBtn');
+      if(btn){ btn.textContent='✅ '+_pending; btn.style.background='#fff'; setTimeout(()=>{btn.textContent='💾 MENTÉS'; btn.style.background='#00ffff';},1500); }
+    }else{
+      alert('Nem találtam: "'+curName+'" a REPO '+currentDB+'-ben. Előbb nyomd meg a SÁRGA MENTÉS + JSON gombot, utána színezd!');
+    }
+  }catch(e){ alert('Hiba: '+e.message); }
+}
+window.addEventListener('load',()=>{ setTimeout(()=>{ const s=document.querySelector(`.cdot[data-hex="${_chosen}"]`); if(s) s.classList.add('sel'); },700); });
+</script>
+
+<div id="neonExportModal">
+  <div id="neonExportBox">
+    <h2>📥 EXPORT - NEON v1</h2>
+    <label>EXPORT NÉV</label>
+    <input id="neonExportName" value="">
+    <div id="neonExportRepoBadge" style="display:none; margin-bottom:10px; padding:8px 12px; background:#ffcc00; color:#000; border-radius:8px; font-weight:900; font-size:13px; text-align:center; box-shadow:0 0 12px #ffcc00aa">📦 REPO: <span id="neonExportRepoNum">1</span> - 500MB</div><div id="neonExportInfo">
+      Fájl: <span id="neonExportFile">Neon_Repo_Export_2026-09-02.json</span><br>
+      Tartalom: <span id="neonExportCount">4 projekt JSON</span>
+    </div>
+    <div id="neonExportActions">
+      <button id="neonExportCancel" onclick="closeNeonExport()">MÉGSE</button>
+      <button id="neonExportConfirm" onclick="doNeonExport()">EXPORT</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function closeNeonExport(){ document.getElementById('neonExportModal').classList.remove('open'); }
+function openNeonExport(){
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  const fname=`Neon_Repo_Export_${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+  const input=document.getElementById('neonExportName');
+  const fileSpan=document.getElementById('neonExportFile');
+  const countSpan=document.getElementById('neonExportCount');
+  input.value=fname;
+  fileSpan.textContent=fname+'.json';
+  // számoljuk a projekteket az aktuális repo-ban
+  if(typeof db!=='undefined' && db){
+    const tx=db.transaction(STORE,'readonly');
+    const st=tx.objectStore(STORE);
+    const idx=st.index('repo');
+    const req=idx.getAll(IDBKeyRange.only(currentDB));
+    req.onsuccess=()=>{
+      const arr=req.result||[];
+      countSpan.textContent=arr.length+' projekt JSON';
+    };
+  }
+  document.getElementById('neonExportModal').classList.add('open');
+  setTimeout(()=>{ input.focus(); input.select(); },100);
+}
+function doNeonExport(){
+  const name=document.getElementById('neonExportName').value.trim() || 'Neon_Repo_Export';
+  const fname=name.endsWith('.json')?name:name+'.json';
+  if(typeof db==='undefined' || !db){ alert('DB nincs betöltve'); return; }
+  const tx=db.transaction(STORE,'readonly');
+  const st=tx.objectStore(STORE);
+  const idx=st.index('repo');
+  const req=idx.getAll(IDBKeyRange.only(currentDB));
+  req.onsuccess=()=>{
+    const data=req.result||[];
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=fname;
+    a.click();
+    closeNeonExport();
+  };
+}
+// felülírjuk a régi export gombokat
+document.addEventListener('DOMContentLoaded', ()=>{
+  setTimeout(()=>{
+    document.querySelectorAll('button').forEach(btn=>{
+      const t=(btn.textContent||'').toLowerCase();
+      if(t.includes('export') && !btn.id.startsWith('neon')){
+        // ha ez a lila export gomb
+        if(btn.textContent.trim().toUpperCase()==='EXPORT'){
+          btn.onclick=(e)=>{ e.preventDefault(); openNeonExport(); };
+        }
+      }
+    });
+    // a felső sávban lévő EXPORT gombok is
+    const origExport = window.exportRepo;
+    if(typeof exportRepo==='function'){
+      window.exportRepo = ()=>openNeonExport();
+    }
+    // keresünk exportCurrent vagy hasonló függvényt
+    if(typeof window.doExport==='function'){
+      window._oldDoExport=window.doExport;
+      window.doExport=()=>openNeonExport();
+    }
+  },1000);
+});
+// ESC zárás
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeNeonExport(); });
+document.getElementById('neonExportModal').addEventListener('click', e=>{ if(e.target.id==='neonExportModal') closeNeonExport(); });
+</script>
+
+<script>
+let _exportMode='single'; // single vagy all100
+
+function openNeonExportAll100(){
+  _exportMode='all100';
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  const fname=`Neon_Repo_ALL_100_Export_${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+  document.getElementById('neonExportBox').querySelector('h2').textContent='📥 EXPORT - NEON v1 - 100 REPO';
+  const input=document.getElementById('neonExportName');
+  const fileSpan=document.getElementById('neonExportFile');
+  const countSpan=document.getElementById('neonExportCount');
+  input.value=fname;
+  fileSpan.textContent=fname+'.json';
+  // számoljuk összes
+  (async()=>{
+    let total=0; let repos=0;
+    for(let i=1;i<=100;i++){
+      let arr=await new Promise(res=>{
+        const tx=db.transaction(STORE,'readonly');
+        const st=tx.objectStore(STORE);
+        const idx=st.index('repo');
+        const req=idx.getAll(IDBKeyRange.only(i));
+        req.onsuccess=()=>res(req.result||[]);
+        req.onerror=()=>res([]);
+      });
+      if(arr.length){ repos++; total+=arr.length; }
+    }
+    countSpan.textContent=repos+' repo / '+total+' projekt JSON';
+  })();
+  document.getElementById('neonExportModal').classList.add('open');
+  setTimeout(()=>{ input.focus(); input.select(); },100);
+}
+
+function doNeonExport(){
+  const name=document.getElementById('neonExportName').value.trim() || 'Neon_Repo_Export';
+  const fname=name.endsWith('.json')?name:name+'.json';
+  if(typeof db==='undefined' || !db){ alert('DB nincs'); return; }
+  if(_exportMode==='all100'){
+    (async()=>{
+      let allRepos=[];
+      for(let i=1;i<=100;i++){
+        let arr=await new Promise(res=>{
+          const tx=db.transaction(STORE,'readonly');
+          const st=tx.objectStore(STORE);
+          const idx=st.index('repo');
+          const req=idx.getAll(IDBKeyRange.only(i));
+          req.onsuccess=()=>res(req.result||[]);
+          req.onerror=()=>res([]);
+        });
+        if(arr.length) allRepos.push({repo:i, data:arr});
+      }
+      if(!allRepos.length){ alert('Mind a 100 üres'); return; }
+      const str=JSON.stringify({repos:allRepos, exportedAt:Date.now()}, null, 2);
+      const blob=new Blob([str],{type:'application/json'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click();
+      closeNeonExport();
+    })();
+  }else{
+    const tx=db.transaction(STORE,'readonly');
+    const st=tx.objectStore(STORE);
+    const idx=st.index('repo');
+    const req=idx.getAll(IDBKeyRange.only(currentDB));
+    req.onsuccess=()=>{
+      const data=req.result||[];
+      const blob=new Blob([JSON.stringify({repo:currentDB, data},null,2)],{type:'application/json'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click();
+      closeNeonExport();
+    };
+  }
+}
+
+function interceptAllExports(){
+  document.querySelectorAll('button').forEach(btn=>{
+    const txt=(btn.textContent||'').toLowerCase();
+    if(txt.includes('export mind a') || txt.includes('export mind')){
+      btn.onclick=(e)=>{ e.preventDefault(); openNeonExportAll100(); };
+    }
+    if(txt.trim()==='export' && !btn.id.startsWith('neon')){
+      // ez a sima repo export - már felülírva
+      const parent=btn.closest('#neonExportBox');
+      if(!parent) btn.onclick=(e)=>{ e.preventDefault(); _exportMode='single'; openNeonExport(); };
+    }
+  });
+  if(typeof window.exportData==='function'){
+    window.exportData=()=>{ _exportMode='single'; openNeonExport(); };
+  }
+  if(typeof window.exportAll100==='function'){
+    window.exportAll100=()=>openNeonExportAll100();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{ setTimeout(interceptAllExports,1200); });
+
+// felülírjuk az openNeonExport hogy módot állítson
+function openNeonExport(){
+  _exportMode='single';
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  const fname=`Neon_Repo_Export_${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+  document.getElementById('neonExportBox').querySelector('h2').textContent='📥 EXPORT - NEON v1';
+  const input=document.getElementById('neonExportName');
+  const fileSpan=document.getElementById('neonExportFile');
+  const countSpan=document.getElementById('neonExportCount');
+  input.value=fname;
+  fileSpan.textContent=fname+'.json';
+  if(typeof db!=='undefined' && db){
+    const tx=db.transaction(STORE,'readonly');
+    const st=tx.objectStore(STORE);
+    const idx=st.index('repo');
+    const req=idx.getAll(IDBKeyRange.only(currentDB));
+    req.onsuccess=()=>{ const arr=req.result||[]; countSpan.textContent=arr.length+' projekt JSON'; };
+  }
+  document.getElementById('neonExportModal').classList.add('open');
+  setTimeout(()=>{ input.focus(); input.select(); },100);
+}
+</script>
+
+<script>
+(function(){
+  const origOpen = window.openNeonExport;
+  window.openNeonExport = function(){
+    _exportMode='single';
+    const box=document.getElementById('neonExportBox');
+    box.classList.remove('magenta');
+    const now=new Date(); const pad=n=>String(n).padStart(2,'0');
+    const fname=`Neon_Repo_Export_${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+    box.querySelector('h2').textContent='📥 EXPORT - NEON v1';
+    const input=document.getElementById('neonExportName');
+    const fileSpan=document.getElementById('neonExportFile');
+    const countSpan=document.getElementById('neonExportCount');
+    input.value=fname; fileSpan.textContent=fname+'.json';
+    if(typeof db!=='undefined' && db){
+      const tx=db.transaction(STORE,'readonly'); const st=tx.objectStore(STORE); const idx=st.index('repo');
+      const req=idx.getAll(IDBKeyRange.only(currentDB)); req.onsuccess=()=>{ const arr=req.result||[]; countSpan.textContent=arr.length+' projekt JSON'; };
+    }
+    document.getElementById('neonExportModal').classList.add('open');
+    setTimeout(()=>{ input.focus(); input.select(); },100);
+  };
+  window.openNeonExportAll100 = function(){
+    _exportMode='all100';
+    const box=document.getElementById('neonExportBox');
+    box.classList.add('magenta');
+    const now=new Date(); const pad=n=>String(n).padStart(2,'0');
+    const fname=`Neon_Repo_ALL_100_Export_${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+    box.querySelector('h2').textContent='💾 EXPORT - NEON v1 - 100 REPO';
+    box.querySelector('h2').style.color='#ff00ff';
+    const input=document.getElementById('neonExportName');
+    const fileSpan=document.getElementById('neonExportFile');
+    const countSpan=document.getElementById('neonExportCount');
+    input.value=fname; fileSpan.textContent=fname+'.json';
+    (async()=>{
+      let total=0, repos=0;
+      for(let i=1;i<=100;i++){
+        let arr=await new Promise(res=>{ const tx=db.transaction(STORE,'readonly'); const st=tx.objectStore(STORE); const idx=st.index('repo'); const req=idx.getAll(IDBKeyRange.only(i)); req.onsuccess=()=>res(req.result||[]); req.onerror=()=>res([]); });
+        if(arr.length){ repos++; total+=arr.length; }
+      }
+      countSpan.textContent=repos+' repo / '+total+' projekt JSON';
+    })();
+    document.getElementById('neonExportModal').classList.add('open');
+    setTimeout(()=>{ input.focus(); input.select(); },100);
+  };
+})();
+</script>
+
+<script>
+(function(){
+  window.openNeonExport = function(){
+    _exportMode='single';
+    const box=document.getElementById('neonExportBox');
+    box.classList.remove('magenta');
+    const badge=document.getElementById('neonExportRepoBadge');
+    const repoNumSpan=document.getElementById('neonExportRepoNum');
+    badge.style.display='block';
+    badge.style.background='#ffcc00';
+    repoNumSpan.textContent=currentDB+' . REPO - 500MB';
+    repoNumSpan.style.color='#000';
+    const now=new Date(); const pad=n=>String(n).padStart(2,'0');
+    const fname=`Neon_Repo_${currentDB}_Export_${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+    box.querySelector('h2').textContent='📥 EXPORT - NEON v1 - '+currentDB+'. REPO';
+    box.querySelector('h2').style.color='#00ffff';
+    const input=document.getElementById('neonExportName');
+    const fileSpan=document.getElementById('neonExportFile');
+    const countSpan=document.getElementById('neonExportCount');
+    input.value=fname;
+    fileSpan.textContent=fname+'.json';
+    if(typeof db!=='undefined' && db){
+      const tx=db.transaction(STORE,'readonly'); const st=tx.objectStore(STORE); const idx=st.index('repo');
+      const req=idx.getAll(IDBKeyRange.only(currentDB));
+      req.onsuccess=()=>{
+        const arr=req.result||[];
+        countSpan.textContent=arr.length+' projekt JSON a(z) '+currentDB+'. ablakból';
+        countSpan.style.color='#ffcc00';
+        countSpan.style.fontWeight='900';
+      };
+    }
+    document.getElementById('neonExportModal').classList.add('open');
+    setTimeout(()=>{ input.focus(); input.select(); },100);
+  };
+  // felülírjuk doNeonExport single ágát hogy repo szám benne legyen json-ban és filename-ban
+  const oldDo = window.doNeonExport;
+  window.doNeonExport = function(){
+    const name=document.getElementById('neonExportName').value.trim() || 'Neon_Repo_Export';
+    const fname=name.endsWith('.json')?name:name+'.json';
+    if(typeof db==='undefined' || !db){ alert('DB nincs'); return; }
+    if(_exportMode==='all100'){
+      (async()=>{
+        let allRepos=[];
+        for(let i=1;i<=100;i++){
+          let arr=await new Promise(res=>{ const tx=db.transaction(STORE,'readonly'); const st=tx.objectStore(STORE); const idx=st.index('repo'); const req=idx.getAll(IDBKeyRange.only(i)); req.onsuccess=()=>res(req.result||[]); req.onerror=()=>res([]); });
+          if(arr.length) allRepos.push({repo:i, ablak:i, data:arr});
+        }
+        if(!allRepos.length){ alert('Mind a 100 üres'); return; }
+        const str=JSON.stringify({type:'NeonRepo_ALL_100', exportedRepoCount:allRepos.length, exportedAt:new Date().toISOString(), repos:allRepos}, null, 2);
+        const blob=new Blob([str],{type:'application/json'});
+        const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click();
+        closeNeonExport();
+      })();
+    }else{
+      const tx=db.transaction(STORE,'readonly'); const st=tx.objectStore(STORE); const idx=st.index('repo');
+      const req=idx.getAll(IDBKeyRange.only(currentDB));
+      req.onsuccess=()=>{
+        const data=req.result||[];
+        const exportObj={
+          type:'NeonRepo_Single',
+          repo:currentDB,
+          ablak:currentDB,
+          ablakNev: currentDB+'. REPO - 500MB',
+          exportedAt: new Date().toISOString(),
+          projektSzam: data.length,
+          data: data
+        };
+        const blob=new Blob([JSON.stringify(exportObj,null,2)],{type:'application/json'});
+        const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click();
+        closeNeonExport();
+      };
+    }
+  };
+})();
 </script>
 </body></html>
