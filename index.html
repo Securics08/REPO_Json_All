@@ -1,280 +1,548 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
-body{margin:0;background:#050505;color:#fff;font-family:Segoe UI,sans-serif;display:flex;height:100vh;overflow:hidden}
-.sidebar{width:380px;background:#0a0a0a;border-right:2px solid #222;display:flex;flex-direction:column;padding:14px}
-.main{flex:1;display:flex;flex-direction:column;background:#000;overflow:hidden}
-h2{color:#ffea00;text-shadow:0 0 10px #ffea00;font-size:18px;margin:0 0 10px 0;text-align:center}
-.storage{font-size:11px;color:#ffea00;font-weight:bold;margin-bottom:4px}
-.bar{width:100%;height:8px;background:#111;border-radius:5px;overflow:hidden;margin-bottom:10px;border:1px solid #333}
-#fill{height:100%;width:0%;background:linear-gradient(90deg,#ffea00,#fff);box-shadow:0 0 6px #ffea00;transition:0.5s}
-input,textarea,button{background:#161616;color:#fff;border:1px solid #333;padding:10px;border-radius:8px;outline:none;margin-bottom:6px;font-size:13px}
-textarea{flex:1;width:100%;resize:none;font-family:Consolas,monospace;color:#0f0;font-size:13px;background:#000;border:1px solid #0f04;line-height:1.5}
-.toolbar{display:flex;gap:6px;margin-bottom:6px}
-button{cursor:pointer;font-weight:bold;font-size:11px;flex:1;border:1px solid transparent;transition:0.2s;text-transform:uppercase;padding:11px;border-radius:8px}
-button:hover{filter:brightness(1.2)}
-.btn-save{background:#ffea00;color:#000;box-shadow:0 0 10px #ffea00aa}
-.btn-new{background:#222;color:#fff;border:1px solid #444}
-.btn-del{background:#aa0000;border:1px solid #ff4444;color:#fff}
-.btn-imp{background:#ff8800;border:1px solid #ffaa00;color:#000}
-.btn-exp{background:#8800ff;border:1px solid #aa00ff;color:#fff}
-.btn-edge{background:#440000 !important;border:1px solid #880000 !important;color:#ffaaaa !important;}
-.btn-reset{background:#660000 !important;border:1px solid #ff0000 !important;color:#fff !important;}
-#fileList{flex:1;overflow-y:auto;padding-right:4px;margin-top:8px}
-.file-item{padding:10px;margin-bottom:8px;background:#141414;border-radius:8px;cursor:pointer;border:1px solid #222;border-left:5px solid #ffea00}
-.file-item.active{background:#222;border-color:#ffea00aa}
-.file-item strong{display:block;font-size:13px;margin-bottom:3px}
-.file-item small{color:#888;font-size:10px;font-family:monospace}
-.editor-sec{display:flex;flex-direction:column;padding:8px;border-bottom:2px solid #333;background:#000;overflow:hidden;height:45%;min-height:100px}
-#resizer{height:12px;background:#1a1a1a;cursor:row-resize;display:flex;align-items:center;justify-content:center;border-top:2px solid #333;border-bottom:2px solid #333;flex-shrink:0}
-#resizer:hover{background:#333}
-#resizer::after{content:"═══ HÚZD AZ ÁTMÉRETEZÉSHEZ ═══"; color:#666; font-size:9px; letter-spacing:1px}
-.preview-sec{flex:1;display:flex;flex-direction:column;background:#fff;overflow:hidden;min-height:100px}
-.preview-head{background:#0a0a0a;color:#0f0;padding:6px 12px;font-size:11px;font-weight:bold;border-bottom:1px solid #333;display:flex;justify-content:space-between}
-iframe.preview{flex:1;border:none;background:#fff;width:100%}
-.bottom-block{margin-top:auto;display:flex;flex-direction:column;gap:6px;padding-top:8px;border-top:1px solid #222}
+<!DOCTYPE html>
+<html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>NEON REPO FINAL NO WHITE</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;padding:0!important;overflow:hidden;font-family:monospace;border:0}
+.top-bar{display:flex;gap:8px;padding:8px;background:#000;border-bottom:2px solid #0f0;width:100vw;margin:0}
+.btn-top{flex:1;padding:14px 8px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
+.btn-blue{background:#0055ff;color:#fff}.btn-yellow{background:#ffdd00;color:#000}.btn-green{background:#00ff00;color:#000}.btn-magenta{background:#ff00ff;color:#fff}
+.color-bar{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#000;border-bottom:2px solid #0f0;width:100vw}
+.color-label{color:#0f0;font-size:11px;font-weight:900}
+.color-dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid #333}
+.color-dot.active{border-color:#fff;transform:scale(1.2)}
+.btn-save-color{margin-left:auto;background:#00ffff;color:#000;padding:10px 18px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
+.main{display:flex;height:calc(100vh - 96px);width:100vw;background:#000;margin:0;border:0}
+.sidebar{width:320px;background:#000;border-right:2px solid #0f0;display:flex;flex-direction:column}
+.folder-title{padding:16px;text-align:center;color:#00ffff;font-size:18px;font-weight:900}
+.storage{padding:0 12px 8px;color:#00ffff;font-size:13px;font-weight:900}
+.progress{margin:8px 12px;height:10px;background:#222;border-radius:5px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#00ff00,#00ffff);width:0%;transition:0.3s}
+.count{padding:8px 12px;color:#00ff00;font-size:12px;font-weight:900}
+.project-name{margin:12px;background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:12px;color:#fff;width:calc(100% - 24px);outline:none}
+.project-list{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.empty-msg{border:1px dashed #333;border-radius:12px;padding:30px 10px;text-align:center;color:#555;font-size:11px}
+.proj-card{background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:12px;cursor:pointer}
+.proj-card.active{border-color:#0f0;background:#0a1a0a}
+.proj-name{color:#0f0;font-weight:900;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-meta{color:#666;font-size:9px;margin-top:4px}
+.bottom-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px;border-top:1px solid #111}
+.bottom-btns2{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 8px}
+.btn-s{padding:12px 6px;border:none;border-radius:12px;font-weight:900;font-size:10px;cursor:pointer}
+.editor-area{flex:1;display:flex;flex-direction:column;background:#000;overflow:hidden}
+.editor-top{display:flex;justify-content:space-between;padding:8px 12px;background:#000;border-bottom:1px solid #003300}
+.editor-label{color:#ffdd00;font-size:10px;font-weight:900}
+.btn-copy{background:#0088ff;color:#fff;padding:10px 20px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
+.btn-run{background:#00ff00;color:#000;padding:10px 20px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
+.code-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#codeEditor{flex:1;background:#000;color:#0f0;border:none;outline:none;padding:12px;font-family:monospace;font-size:13px;resize:none;width:100%}
+#resizer{height:8px;background:#111;cursor:ns-resize;border-top:1px solid #0f0;border-bottom:1px solid #0f0;text-align:center;color:#0f0;font-size:10px}
+.preview-wrap{height:38%;display:flex;flex-direction:column;border-top:2px solid #0f0;background:#000}
+.preview-label{padding:6px 12px;background:#000;color:#00ff00;font-size:10px;font-weight:900}
+.preview-frame-wrap{flex:1;background:#000;overflow:hidden;border:none}
+.preview-frame-wrap iframe{width:100%;height:100%;border:none;background:#fff;display:block}
+#exportModal,#htmlExportModal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:9999}
+#exportModal.show,#htmlExportModal.show{display:flex}
+.export-box{width:520px;max-width:90vw;background:#0a0a0a;border:2px solid #00ffff;border-radius:16px;padding:24px;box-shadow:0 0 30px #00ffff44}
+.export-title{color:#00ffff;font-size:18px;font-weight:900;display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.export-input{width:100%;background:#000;border:1px solid #00ffff;border-radius:10px;padding:14px;color:#fff;font-family:monospace;font-size:13px;outline:none}
+.export-info{color:#888;font-size:11px;margin-top:10px;font-family:monospace}
+.export-btns{display:flex;gap:12px;margin-top:20px}
+.btn-cancel{flex:1;padding:14px;background:#222;color:#aaa;border:1px solid #444;border-radius:12px;font-weight:900;cursor:pointer}
+.btn-export{flex:1;padding:14px;background:#7700ff;color:#fff;border:none;border-radius:12px;font-weight:900;cursor:pointer}
 </style></head><body>
-<div class="sidebar">
-<h2>⚡ V10 - MŰKÖDŐ + HÚZHATÓ</h2>
-<div class="storage">TÁRHELY: <span id="stTxt">0 MB</span> | <span id="status" style="color:#0f0">OK</span></div><div class="bar"><div id="fill"></div></div>
-<input type="text" id="fileName" placeholder="Projekt neve...">
-<div id="fileList"></div>
-<div class="bottom-block">
-<div class="toolbar"><button class="btn-save" onclick="saveToDB()">MENTÉS + JSON</button><button class="btn-new" onclick="newProj()">ÚJ</button><button class="btn-del" onclick="deleteFromDB()">TÖRÖL</button></div>
-<div class="toolbar"><button class="btn-imp" onclick="importData()">IMPORT</button><button class="btn-exp" onclick="exportData()">EXPORT</button></div>
-<div class="toolbar"><button class="btn-edge" onclick="clearEdge()">🧹 EDGE TAKARÍTÁS</button><button class="btn-reset" onclick="clearAll()">RENDSZER RESET</button></div>
+<div class="top-bar">
+<button class="btn-top btn-blue" onclick="openHtmlExportModal()">LETÖLTÉS (100 ABLAK + UBLOCK FIX)</button>
+<button class="btn-top btn-yellow" onclick="safeCopy()">SAFE COPY</button>
+<button class="btn-top btn-green" onclick="runCode()">FUTTATÁS</button>
+<button class="btn-top btn-magenta" onclick="importJson()">HTML BETÖLTÉSE</button>
 </div>
+<div class="color-bar">
+<span class="color-label">NÉV SZÍNE</span>
+<div class="color-dot active" style="background:#fff" data-color="#ffffff" onclick="setColor('#ffffff',this)"></div>
+<div class="color-dot" style="background:#ff0040" data-color="#ff0040" onclick="setColor('#ff0040',this)"></div>
+<div class="color-dot" style="background:#ff6600" data-color="#ff6600" onclick="setColor('#ff6600',this)"></div>
+<div class="color-dot" style="background:#ffdd00" data-color="#ffdd00" onclick="setColor('#ffdd00',this)"></div>
+<div class="color-dot" style="background:#88ff00" data-color="#88ff00" onclick="setColor('#88ff00',this)"></div>
+<div class="color-dot" style="background:#00ff00" data-color="#00ff00" onclick="setColor('#00ff00',this)"></div>
+<div class="color-dot" style="background:#00ff88" data-color="#00ff88" onclick="setColor('#00ff88',this)"></div>
+<div class="color-dot" style="background:#00ffff" data-color="#00ffff" onclick="setColor('#00ffff',this)"></div>
+<div class="color-dot" style="background:#0088ff" data-color="#0088ff" onclick="setColor('#0088ff',this)"></div>
+<div class="color-dot" style="background:#6666ff" data-color="#6666ff" onclick="setColor('#6666ff',this)"></div>
+<div class="color-dot" style="background:#8800ff" data-color="#8800ff" onclick="setColor('#8800ff',this)"></div>
+<div class="color-dot" style="background:#ff00ff" data-color="#ff00ff" onclick="setColor('#ff00ff',this)"></div>
+<div class="color-dot" style="background:#ff0088" data-color="#ff0088" onclick="setColor('#ff0088',this)"></div>
+<div class="color-dot" style="background:#ff00aa" data-color="#ff00aa" onclick="setColor('#ff00aa',this)"></div>
+<div class="color-dot" style="background:#00ffaa" data-color="#00ffaa" onclick="setColor('#00ffaa',this)"></div>
+<div class="color-dot" style="background:#ffcc00" data-color="#ffcc00" onclick="setColor('#ffcc00',this)"></div>
+<button class="btn-save-color" onclick="saveCurrent()">MENTÉS</button>
 </div>
 <div class="main">
-<div class="editor-sec" id="editorSec"><div class="toolbar"><span style="color:#ffff00;font-size:11px;padding-top:8px;font-weight:bold">KÓD</span><button style="background:#0088ff" onclick="copyCode()">MÁSOLÁS</button><button style="background:#0f0;color:#000;flex:2" onclick="runCode()">▶ FUTTATÁS</button></div>
-<textarea id="editor" spellcheck="false" placeholder="Ide írd a HTML kódot..."></textarea></div>
-<div id="resizer"></div>
-<div class="preview-sec" id="previewSec"><div class="preview-head"><span>ELŐNÉZET - HÚZD FELÜL A CSÍKOT!</span><span style="color:#888">↕</span></div><iframe id="preview" class="preview"></iframe></div>
+<div class="sidebar">
+<div class="folder-title">📁 NEON REPO</div>
+<div class="storage" id="storageText">TÁRHELY: 0.00 MB / 500 MB</div>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<div class="count">📦 TÁROLT KÓDOK: <span id="countText">0 db • 0 char</span></div>
+<input class="project-name" id="projectName" placeholder="Projekt neve...">
+<div class="project-list" id="projectList"><div class="empty-msg">Nincs projekt - RESET után üres</div></div>
+<div class="bottom-btns">
+<button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS JSON</button>
+<button class="btn-s" style="background:#333;color:#fff" onclick="newProject()">ÚJ</button>
+<button class="btn-s" style="background:#cc0000;color:#fff" onclick="deleteProject()">TÖRÖL</button>
 </div>
+<div class="bottom-btns2">
+<button class="btn-s" style="background:#cc7700;color:#fff" onclick="importJson()">IMPORT</button>
+<button class="btn-s" style="background:#7700ff;color:#fff" onclick="exportAllJson()">EXPORT</button>
+</div>
+<div class="bottom-btns2">
+<button class="btn-s" style="background:#661111;color:#ff6666" onclick="edgeMode()">⚠️ EDGE</button>
+<button class="btn-s" style="background:#330000;color:#ff4444" onclick="resetAll()">RESET</button>
+</div>
+</div>
+<div class="editor-area">
+<div class="editor-top"><span class="editor-label">KÓD SZERKESZTŐ</span><div><button class="btn-copy" onclick="copyCode()">KÓD MÁSOLÁSA</button><button class="btn-run" onclick="runCode()">KÓD FUTTATÁSA</button></div></div>
+<div class="code-wrap" id="codeWrap"><textarea id="codeEditor" placeholder="Ide írd a HTML kódod..."></textarea></div>
+<div id="resizer">≡</div>
+<div class="preview-wrap" id="previewWrap"><div class="preview-label">ELŐNÉZET</div><div class="preview-frame-wrap"><iframe id="previewFrame"></iframe></div></div>
+</div>
+</div>
+
+<div id="exportModal" onclick="if(event.target===this) closeExportModal()">
+<div class="export-box">
+<div class="export-title">📥 EXPORT JSON</div>
+<input class="export-input" id="exportFileName" value="">
+<div class="export-info" id="exportInfo">Fájl: ...</div>
+<div class="export-btns">
+<button class="btn-cancel" onclick="closeExportModal()">MÉGSE</button>
+<button class="btn-export" onclick="doExport()">EXPORT</button>
+</div>
+</div>
+</div>
+
+<div id="htmlExportModal" onclick="if(event.target===this) closeHtmlExportModal()">
+<div class="export-box" style="border-color:#0055ff;box-shadow:0 0 30px #0055ff44">
+<div class="export-title" style="color:#0055ff">🌐 EXPORT HTML (100 ABLAK + UBLOCK FIX)</div>
+<input class="export-input" id="htmlExportFileName" value="" style="border-color:#0055ff">
+<div class="export-info" id="htmlExportInfo">Fájl: ...</div>
+<div class="export-btns">
+<button class="btn-cancel" onclick="closeHtmlExportModal()">MÉGSE</button>
+<button class="btn-export" style="background:#0055ff" onclick="doHtmlExport()">EXPORT HTML</button>
+</div>
+</div>
+</div>
+
+<input type="file" id="fileInput" accept=".json,.html,.htm" style="display:none">
 <script>
-let db=null; let activeId=null;
-const STORE="projects";
-const DB_NAME="NeonRepoV10_FINAL";
-const neonColors=["#ffea00","#00f6ff","#ff00ff","#00ff88","#ff8800"];
+let projects=[];
+let currentId=null;
+let currentColor='#00ff00';
+let exportMode='all';
+const DB_NAME='neonRepoDB_final_fixed';
+const LS_KEY='neon_final_projects';
+const LS_CUR='neon_final_cur';
+const LS_COL='neon_final_col';
 
-function setStatus(t){document.getElementById('status').textContent=t;}
-
-function initDB(){
-  const req=indexedDB.open(DB_NAME,1);
-  req.onupgradeneeded=e=>{const d=e.target.result; if(!d.objectStoreNames.contains(STORE)) d.createObjectStore(STORE,{keyPath:"id",autoIncrement:true});};
-  req.onsuccess=e=>{db=e.target.result; setStatus("DB OK"); loadList();};
-  req.onerror=e=>{setStatus("DB HIBA: "+e.target.error); alert("DB hiba: Edge-ben engedélyezd a fájl hozzáférést!");};
+function normalize(o){
+  if(!o || typeof o!=='object') return null;
+  let bestCode='';
+  let keys=['code','html','content','source','data','body','htmlContent','value','text','fileContent'];
+  for(let k of keys){
+    if(typeof o[k]==='string' && o[k].length>bestCode.length) bestCode=o[k];
+  }
+  if(!bestCode){
+    for(let k in o){
+      let v=o[k];
+      if(typeof v==='string' && v.length>bestCode.length) bestCode=v;
+    }
+  }
+  let bestName='';
+  let nKeys=['name','title','filename','fileName','projectName','label'];
+  for(let k of nKeys){
+    if(typeof o[k]==='string' && o[k].length>0 && o[k].length<300){ bestName=o[k]; break; }
+  }
+  if(!bestName) bestName='Projekt_'+Date.now();
+  if(!bestCode) return null;
+  return {id:Date.now()+Math.floor(Math.random()*999999),name:bestName,code:bestCode,color:o.color||currentColor||'#00ff00',charCount:bestCode.length};
 }
 
-function downloadFile(content,fileName){
-  const blob=new Blob([content],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download=fileName;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-}
-
-function saveToDB(){
-  if(!db){alert("DB még nem nyílt meg, várj 1 mp!"); return;}
-  const name=document.getElementById("fileName").value.trim() || "NeonRepo_"+Date.now();
-  const code=document.getElementById("editor").value;
-  if(!code.trim()){alert("Üres a kód! Írj valamit!"); return;}
-  const color=neonColors[Math.floor(Math.random()*neonColors.length)];
-  const tx=db.transaction(STORE,"readwrite");
-  const store=tx.objectStore(STORE);
-  const data={name,code,color,time:new Date().toLocaleString("hu-HU")};
-  if(activeId) data.id=activeId;
-  const req=store.put(data);
-  req.onsuccess=e=>{
-    activeId=activeId||e.target.result;
-    loadList();
-    const now=new Date(); const pad=n=>String(n).padStart(2,'0');
-    const d=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate());
-    const t=pad(now.getHours())+"-"+pad(now.getMinutes())+"-"+pad(now.getSeconds());
-    const fname=name.replace(/\s+/g,'_')+"_"+d+"_"+t+".json";
-    downloadFile(JSON.stringify(data,null,2), fname);
-    setStatus("MENTVE: "+name);
-  };
-  req.onerror=()=>{alert("Mentés hiba!");};
-}
-
-function loadList(){
-  if(!db) return;
-  const tx=db.transaction(STORE,"readonly");
-  const store=tx.objectStore(STORE);
-  const req=store.getAll();
-  req.onsuccess=e=>{
-    const list=document.getElementById("fileList");
-    list.innerHTML="";
-    let size=0;
-    const items=e.target.result;
-    items.forEach(item=>{
-      size+=new Blob([item.code]).size;
-      const div=document.createElement("div");
-      div.className="file-item"+(activeId===item.id?" active":"");
-      div.style.borderLeftColor=item.color;
-      div.innerHTML="<strong style='color:"+item.color+"'>"+item.name+"</strong><small>"+item.time+"</small>";
-      div.onclick=()=>{
-        activeId=item.id;
-        document.getElementById("fileName").value=item.name;
-        document.getElementById("editor").value=item.code;
-        loadList();
-        runCode();
-      };
-      list.appendChild(div);
+function parseUniversal(text){
+  if(!text) return [];
+  let clean=text.trim();
+  let results=[];
+  try{
+    let j=JSON.parse(clean);
+    if(Array.isArray(j)){
+      j.forEach(function(item){ let n=normalize(item); if(n) results.push(n); });
+      if(results.length>0) return results;
+    }
+    let keys=['projects','data','items','codes','files','list','entries'];
+    for(let ck of keys){
+      if(j[ck] && Array.isArray(j[ck])){
+        j[ck].forEach(function(item){ let n=normalize(item); if(n) results.push(n); });
+        if(results.length>0) return results;
+      }
+    }
+    let single=normalize(j);
+    if(single) return [single];
+  }catch(e){}
+  try{
+    let t=clean;
+    if(t.startsWith('[') && t.endsWith(']')) t=t.slice(1,-1);
+    let parts=[];
+    let depth=0;
+    let inStr=false;
+    let esc=false;
+    let start=0;
+    for(let i=0;i<t.length;i++){
+      let ch=t[i];
+      if(esc){ esc=false; continue; }
+      if(ch==='\\'){ esc=true; continue; }
+      if(ch==='"'){ inStr=!inStr; continue; }
+      if(inStr) continue;
+      if(ch==='{') depth++;
+      if(ch==='}'){ depth--; if(depth===0){ let part=t.slice(start,i+1).trim(); if(part.startsWith(',')) part=part.slice(1); parts.push(part); start=i+1; } }
+    }
+    parts.forEach(function(p){
+      try{ let obj=JSON.parse(p); let n=normalize(obj); if(n) results.push(n); }catch(e){}
     });
-    const mb=(size/(1024*1024)).toFixed(2);
-    document.getElementById("stTxt").textContent=mb+" MB / 500 MB";
-    document.getElementById("fill").style.width=Math.min((size/(500*1024*1024))*100,100)+"%";
-    try{parent.postMessage({type:"count", module:0, count:items.length},"*");}catch(ex){}
+    if(results.length>0) return results;
+  }catch(e){}
+  return results;
+}
+
+function saveLS(){
+  try{
+    let idx=projects.map(function(p){ return {id:p.id,name:p.name,color:p.color,charCount:p.charCount}; });
+    localStorage.setItem(LS_KEY+'_index', JSON.stringify(idx));
+    if(currentId) localStorage.setItem(LS_CUR, currentId);
+    localStorage.setItem(LS_COL, currentColor);
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(projects)); }catch(q){ localStorage.removeItem(LS_KEY); }
+  }catch(e){}
+}
+
+function loadLS(){
+  try{
+    let p=localStorage.getItem(LS_KEY);
+    if(p) projects=JSON.parse(p);
+    let c=localStorage.getItem(LS_CUR);
+    if(c) currentId=c;
+    let col=localStorage.getItem(LS_COL);
+    if(col) currentColor=col;
+  }catch(e){}
+}
+
+function saveDB(){
+  let req=indexedDB.open(DB_NAME,1);
+  req.onupgradeneeded=function(e){ let db=e.target.result; if(!db.objectStoreNames.contains('projects')) db.createObjectStore('projects',{keyPath:'id'}); };
+  req.onsuccess=function(e){ let db=e.target.result; let tx=db.transaction('projects','readwrite'); let st=tx.objectStore('projects'); st.clear(); projects.forEach(function(pr){ st.put(pr); }); };
+}
+
+function loadDB(){
+  let req=indexedDB.open(DB_NAME,1);
+  req.onupgradeneeded=function(e){ let db=e.target.result; if(!db.objectStoreNames.contains('projects')) db.createObjectStore('projects',{keyPath:'id'}); };
+  req.onsuccess=function(e){
+    let db=e.target.result;
+    let tx=db.transaction('projects','readonly');
+    let st=tx.objectStore('projects');
+    let ga=st.getAll();
+    ga.onsuccess=function(){
+      if(ga.result && ga.result.length>0){ projects=ga.result; render(); if(!currentId && projects.length>0) selectProject(projects[0].id); }
+    };
   };
+}
+
+function render(){
+  let list=document.getElementById('projectList');
+  let count=document.getElementById('countText');
+  let storage=document.getElementById('storageText');
+  let bar=document.getElementById('progressBar');
+  let totalChar=0;
+  projects.forEach(function(p){ totalChar+= (p.charCount||0); });
+  let totalMB=(totalChar/1024/1024).toFixed(2);
+  storage.textContent='TÁRHELY: '+totalMB+' MB / 500 MB';
+  bar.style.width=Math.min((parseFloat(totalMB)/500*100),100)+'%';
+  count.textContent=projects.length+' db • '+totalChar+' char';
+  if(projects.length===0){ list.innerHTML='<div class="empty-msg">Nincs projekt - RESET után üres</div>'; return; }
+  list.innerHTML='';
+  projects.forEach(function(p,i){
+    let d=document.createElement('div');
+    d.className='proj-card'+(p.id==currentId?' active':'');
+    d.onclick=function(){ selectProject(p.id); };
+    d.innerHTML='<div class="proj-name" style="color:'+p.color+'">'+(i+1)+'. '+p.name+'</div><div class="proj-meta">'+(p.charCount||0)+' char • '+p.color+'</div>';
+    list.appendChild(d);
+  });
+}
+
+function selectProject(id){
+  let p=projects.find(function(x){ return x.id==id; });
+  if(!p) return;
+  currentId=id;
+  document.getElementById('projectName').value=p.name;
+  document.getElementById('codeEditor').value=p.code;
+  currentColor=p.color||'#00ff00';
+  document.querySelectorAll('.color-dot').forEach(function(d){ d.classList.toggle('active', d.dataset.color===currentColor); });
+  render();
+  runCode();
+  saveLS();
+  saveDB();
+}
+
+function setColor(col,el){
+  currentColor=col;
+  document.querySelectorAll('.color-dot').forEach(function(d){ d.classList.remove('active'); });
+  if(el) el.classList.add('active');
+  if(currentId){
+    let pr=projects.find(function(x){ return x.id==currentId; });
+    if(pr){ pr.color=col; render(); saveLS(); saveDB(); }
+  }
+}
+
+function saveCurrent(){
+  let nameEl=document.getElementById('projectName');
+  let codeEl=document.getElementById('codeEditor');
+  let name=nameEl.value.trim()|| ((projects.length+1)+'. Projekt');
+  let code=codeEl.value;
+  if(!code.trim()){ alert('Üres kód!'); return; }
+  if(currentId){
+    let pr=projects.find(function(x){ return x.id==currentId; });
+    if(pr){ pr.name=name; pr.code=code; pr.color=currentColor; pr.charCount=code.length; }
+  } else {
+    let np={id:Date.now(),name:name,code:code,color:currentColor,charCount:code.length};
+    projects.push(np);
+    currentId=np.id;
+  }
+  saveLS();
+  saveDB();
+  render();
+}
+
+function newProject(){
+  currentId=null;
+  let next=projects.length+1;
+  let el=document.getElementById('projectName');
+  el.placeholder=next+'. Projekt neve...';
+  el.value='';
+  document.getElementById('codeEditor').value='';
+  document.getElementById('previewFrame').srcdoc='';
+  render();
+}
+
+function deleteProject(){
+  if(!currentId){ alert('Nincs kiválasztva'); return; }
+  if(!confirm('Törlöd?')) return;
+  projects=projects.filter(function(p){ return p.id!=currentId; });
+  currentId=null;
+  document.getElementById('projectName').value='';
+  document.getElementById('codeEditor').value='';
+  document.getElementById('previewFrame').srcdoc='';
+  saveLS();
+  saveDB();
+  render();
+}
+
+function saveAndExport(){
+  saveCurrent();
+  if(!currentId){ alert('Nincs kiválasztva'); return; }
+  exportMode='single';
+  let p=projects.find(function(x){ return x.id==currentId; });
+  if(!p) return;
+  let now=new Date();
+  let pad=function(n){ return String(n).padStart(2,'0'); };
+  let fname=(p.name||'projekt').replace(/[^a-zA-Z0-9_ -]/g,'').slice(0,40)+'_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
+  document.getElementById('exportFileName').value=fname;
+  document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: 1 projekt • '+(p.charCount||0)+' char (csak ez)';
+  document.getElementById('exportModal').classList.add('show');
+}
+
+function exportAllJson(){
+  if(projects.length===0){ alert('Nincs mit exportálni'); return; }
+  exportMode='all';
+  let now=new Date();
+  let pad=function(n){ return String(n).padStart(2,'0'); };
+  let fname='Html_adatbazis_Export_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes())+'-'+pad(now.getSeconds());
+  document.getElementById('exportFileName').value=fname;
+  let totalChar=projects.reduce(function(a,b){ return a+(b.charCount||0); },0);
+  document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: '+projects.length+' projekt • '+(totalChar>1000000?(totalChar/1000000).toFixed(2)+'M':totalChar)+' char';
+  document.getElementById('exportModal').classList.add('show');
+}
+
+function closeExportModal(){ document.getElementById('exportModal').classList.remove('show'); }
+
+function doExport(){
+  let fname=document.getElementById('exportFileName').value.trim()||'export';
+  if(!fname.toLowerCase().endsWith('.json')) fname+='.json';
+  let dataToExport=projects;
+  if(exportMode==='single' && currentId){
+    let p=projects.find(function(x){ return x.id==currentId; });
+    if(p) dataToExport=[p];
+  }
+  let blob=new Blob([JSON.stringify(dataToExport,null,2)],{type:'application/json'});
+  let a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=fname;
+  a.click();
+  closeExportModal();
+}
+
+function openHtmlExportModal(){
+  let code=document.getElementById('codeEditor').value;
+  if(!code.trim()){ alert('Üres kód!'); return; }
+  let now=new Date();
+  let pad=function(n){ return String(n).padStart(2,'0'); };
+  let p=projects.find(function(x){ return x.id==currentId; });
+  let baseName=(p?p.name:'Html_export')+'_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes())+'-'+pad(now.getSeconds());
+  baseName=baseName.replace(/[^a-zA-Z0-9_ -]/g,'').slice(0,50);
+  document.getElementById('htmlExportFileName').value=baseName;
+  document.getElementById('htmlExportInfo').innerHTML='Fájl: '+baseName+'.html<br>Tartalom: 1 HTML • '+code.length+' char + 100 ablak + uBlock fix';
+  document.getElementById('htmlExportModal').classList.add('show');
+}
+
+function closeHtmlExportModal(){ document.getElementById('htmlExportModal').classList.remove('show'); }
+
+function doHtmlExport(){
+  let code=document.getElementById('codeEditor').value;
+  let fname=document.getElementById('htmlExportFileName').value.trim()||'export';
+  if(!fname.toLowerCase().endsWith('.html')) fname+='.html';
+  let fixScript="<!-- 100 ABLAK + UBLOCK FIX -->\n<script>\n(function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();\n<\/script>\n";
+  let finalCode=code;
+  if(finalCode.toLowerCase().indexOf('</head>')!==-1){
+    finalCode=finalCode.replace(/<\/head>/i, fixScript+'</head>');
+  } else if(finalCode.toLowerCase().indexOf('<html')!==-1){
+    finalCode=finalCode.replace(/<html[^>]*>/i, function(m){ return m+'\n<head>'+fixScript+'</head>'; });
+  } else {
+    finalCode=fixScript+'\n'+finalCode;
+  }
+  let blob=new Blob([finalCode],{type:'text/html'});
+  let a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=fname;
+  a.click();
+  closeHtmlExportModal();
+}
+
+function importJson(){
+  let inp=document.getElementById('fileInput');
+  inp.value='';
+  inp.click();
+}
+
+document.getElementById('fileInput').addEventListener('change', function(e){
+  let f=e.target.files[0];
+  if(!f) return;
+  let reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      let txt=ev.target.result;
+      let parsed=parseUniversal(txt);
+      if(parsed.length>0){
+        parsed.forEach(function(p){ projects.push(p); });
+        saveLS();
+        saveDB();
+        render();
+        alert('IMPORT OK: '+parsed.length+' db\nTartalom: '+projects.length+' projekt');
+        if(projects.length>0) selectProject(projects[0].id);
+      } else { alert('Nem sikerült beolvasni'); }
+    }catch(err){ alert('Import hiba: '+err.message); }
+  };
+  reader.readAsText(f);
+});
+
+function copyCode(){
+  let c=document.getElementById('codeEditor').value;
+  navigator.clipboard.writeText(c).then(function(){ alert('Másolva!'); });
 }
 
 function runCode(){
-  const code=document.getElementById("editor").value;
-  if(!code.trim()){alert("Nincs kód!"); return;}
-  const blob=new Blob([code],{type:'text/html'});
-  const url=URL.createObjectURL(blob);
-  document.getElementById("preview").src=url;
+  let c=document.getElementById('codeEditor').value;
+  let fr=document.getElementById('previewFrame');
+  if(!c.trim()){ fr.srcdoc='<html><body style="background:#fff;color:#888;padding:20px">Üres</body></html>'; return; }
+  fr.srcdoc=c;
 }
 
-function newProj(){
-  activeId=null;
-  document.getElementById("fileName").value="";
-  document.getElementById("editor").value="";
-  document.getElementById("preview").src="about:blank";
-  loadList();
-  setStatus("ÚJ projekt");
-}
-
-function deleteFromDB(){
-  if(!activeId){alert("Válassz ki egy projektet a listából!"); return;}
-  if(!confirm("Törlöd?")) return;
-  const tx=db.transaction(STORE,"readwrite");
-  tx.objectStore(STORE).delete(activeId).onsuccess=()=>{
-    newProj();
-    setStatus("TÖRÖLVE");
+function safeCopy(){ copyCode(); }
+function edgeMode(){ alert('EDGE mód: ne file://'); }
+function resetAll(){
+  if(!confirm('RESET?')) return;
+  projects=[];
+  currentId=null;
+  localStorage.removeItem(LS_KEY);
+  localStorage.removeItem(LS_KEY+'_index');
+  localStorage.removeItem(LS_CUR);
+  let req=indexedDB.deleteDatabase(DB_NAME);
+  req.onsuccess=function(){
+    render();
+    document.getElementById('codeEditor').value='';
+    document.getElementById('projectName').value='';
+    document.getElementById('previewFrame').srcdoc='';
   };
+  render();
 }
 
-function exportData(){
-  if(!db){alert("DB nem nyílt"); return;}
-  const now=new Date(); const pad=n=>String(n).padStart(2,'0');
-  const dateStr=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate());
-  const timeStr=pad(now.getHours())+":"+pad(now.getMinutes())+":"+pad(now.getSeconds());
-  const timeFile=pad(now.getHours())+"-"+pad(now.getMinutes())+"-"+pad(now.getSeconds());
-  const baseName=document.getElementById("fileName").value.trim()||"NeonRepo_Export";
-  const defName=baseName.replace(/\s+/g,'_')+"_"+dateStr+"_"+timeFile;
-  let name=prompt("Export fájl neve (név_dátum_idő):", defName);
-  if(!name) return;
-  if(!name.endsWith(".json")) name+=".json";
-  const tx=db.transaction(STORE,"readonly");
-  tx.objectStore(STORE).getAll().onsuccess=e=>{
-    const data=e.target.result;
-    if(!data.length){alert("Nincs mentett adat!"); return;}
-    const exportObj={
-      exportName:name,
-      exportDate:dateStr,
-      exportTime:timeStr,
-      exportDateTime:now.toLocaleString("hu-HU"),
-      count:data.length,
-      data:data
-    };
-    downloadFile(JSON.stringify(exportObj,null,2), name);
-    setStatus("EXPORT: "+name);
-  };
-}
-
-function importData(){
-  const input=document.createElement("input");
-  input.type="file";
-  input.accept=".json";
-  input.onchange=e=>{
-    const file=e.target.files[0];
-    if(!file) return;
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      try{
-        const parsed=JSON.parse(ev.target.result);
-        let arr=parsed.data||parsed;
-        if(!Array.isArray(arr)) arr=[arr];
-        const tx=db.transaction(STORE,"readwrite");
-        const store=tx.objectStore(STORE);
-        arr.forEach(it=>{delete it.id; store.put(it);});
-        tx.oncomplete=()=>{
-          loadList();
-          alert("Import kész: "+arr.length+" db");
-          setStatus("IMPORT: "+arr.length);
-        };
-      }catch(err){alert("Import hiba: "+err.message);}
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-}
-
-function clearEdge(){
-  if(!confirm("EDGE takarítás - törlöd a listát?")) return;
-  clearAll();
-}
-
-function clearAll(){
-  if(!confirm("MINDEN TÖRLŐDIK! Biztos?")) return;
-  const tx=db.transaction(STORE,"readwrite");
-  tx.objectStore(STORE).clear().onsuccess=()=>{
-    newProj();
-    setStatus("RESET kész");
-  };
-}
-
-function copyCode(){
-  const ed=document.getElementById("editor");
-  ed.select();
-  document.execCommand("copy");
-  setStatus("MÁSOLVA!");
-  setTimeout(()=>setStatus("DB OK"),1500);
-}
-
-// Resizer - húzható előnézet
 (function(){
-  const resizer=document.getElementById('resizer');
-  const editorSec=document.getElementById('editorSec');
-  const previewSec=document.getElementById('previewSec');
-  let dragging=false;
-  let startY=0;
-  let startEditorH=0;
-
-  resizer.addEventListener('mousedown', (e)=>{
-    dragging=true;
+  let resizer=document.getElementById('resizer');
+  let codeWrap=document.getElementById('codeWrap');
+  let previewWrap=document.getElementById('previewWrap');
+  let isDragging=false;
+  let startY,startHCode,startHPrev;
+  resizer.addEventListener('mousedown', function(e){
+    isDragging=true;
     startY=e.clientY;
-    startEditorH=editorSec.offsetHeight;
-    document.body.style.cursor='row-resize';
+    startHCode=codeWrap.offsetHeight;
+    startHPrev=previewWrap.offsetHeight;
+    document.body.style.cursor='ns-resize';
     document.body.style.userSelect='none';
-    e.preventDefault();
   });
-
-  document.addEventListener('mousemove', (e)=>{
-    if(!dragging) return;
-    const dy=e.clientY - startY;
-    let newH=startEditorH + dy;
-    const total=document.querySelector('.main').offsetHeight;
-    if(newH < 80) newH=80;
-    if(newH > total - 80) newH=total-80;
-    editorSec.style.height=newH+'px';
-    editorSec.style.flex='none';
-    previewSec.style.flex='1';
+  document.addEventListener('mousemove', function(e){
+    if(!isDragging) return;
+    let dy=e.clientY-startY;
+    let newCodeH=Math.max(100, startHCode+dy);
+    let newPrevH=Math.max(100, startHPrev-dy);
+    codeWrap.style.flex='none';
+    codeWrap.style.height=newCodeH+'px';
+    previewWrap.style.flex='none';
+    previewWrap.style.height=newPrevH+'px';
   });
-
-  document.addEventListener('mouseup', ()=>{
-    if(dragging){
-      dragging=false;
+  document.addEventListener('mouseup', function(){
+    if(isDragging){
+      isDragging=false;
       document.body.style.cursor='';
       document.body.style.userSelect='';
+      localStorage.setItem('neon_preview_heights', JSON.stringify({code:codeWrap.offsetHeight, preview:previewWrap.offsetHeight}));
     }
   });
+  try{
+    let saved=JSON.parse(localStorage.getItem('neon_preview_heights')||'null');
+    if(saved){ codeWrap.style.flex='none'; codeWrap.style.height=saved.code+'px'; previewWrap.style.flex='none'; previewWrap.style.height=saved.preview+'px'; }
+  }catch(e){}
 })();
 
-// Init
-initDB();
-</script></body></html>
+loadLS();
+render();
+loadDB();
+document.getElementById('codeEditor').addEventListener('input', function(){
+  if(currentId){
+    let pr=projects.find(function(x){ return x.id==currentId; });
+    if(pr){ pr.code=document.getElementById('codeEditor').value; pr.charCount=pr.code.length; render(); }
+  }
+  clearTimeout(window._saveT);
+  window._saveT=setTimeout(function(){ saveLS(); saveDB(); },250);
+});
+document.addEventListener('dragover', function(e){ e.preventDefault(); });
+document.addEventListener('drop', function(e){
+  e.preventDefault();
+  let f=e.dataTransfer.files[0];
+  if(!f) return;
+  let r=new FileReader();
+  r.onload=function(ev){
+    let parsed=parseUniversal(ev.target.result);
+    if(parsed.length>0){
+      parsed.forEach(function(p){ projects.push(p); });
+      saveLS();
+      saveDB();
+      render();
+      alert('Drop OK: '+parsed.length+' db');
+    }
+  };
+  r.readAsText(f);
+});
+</script>
+</body></html>
