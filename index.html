@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>NEON REPO FINAL NO WHITE</title>
+<html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>NEON REPO FINAL - MINDEN GOMB JAVÍTVA</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;padding:0!important;overflow:hidden;font-family:monospace;border:0}
@@ -16,7 +16,7 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 .folder-title{padding:16px;text-align:center;color:#00ffff;font-size:18px;font-weight:900}
 .storage{padding:0 12px 8px;color:#00ffff;font-size:13px;font-weight:900}
 .progress{margin:8px 12px;height:10px;background:#222;border-radius:5px;overflow:hidden}
-.progress-bar{height:100%;background:linear-gradient(90deg,#00ff00,#00ffff);width:0%;transition:0.3s}
+.progress-bar{transition:width 0.4s, background 0.4s} .progress-bar{height:100%;background:linear-gradient(90deg,#00ff00,#00ffff);width:0%;transition:0.3s}
 .count{padding:8px 12px;color:#00ff00;font-size:12px;font-weight:900}
 .project-name{margin:12px;background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:12px;color:#fff;width:calc(100% - 24px);outline:none}
 .project-list{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
@@ -26,7 +26,7 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 .proj-name{color:#0f0;font-weight:900;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .proj-meta{color:#666;font-size:9px;margin-top:4px}
 .bottom-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px;border-top:1px solid #111}
-.bottom-btns2{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 8px}
+.bottom-btns2{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 8px; margin-bottom:4px}
 .btn-s{padding:12px 6px;border:none;border-radius:12px;font-weight:900;font-size:10px;cursor:pointer}
 .editor-area{flex:1;display:flex;flex-direction:column;background:#000;overflow:hidden}
 .editor-top{display:flex;justify-content:space-between;padding:8px 12px;background:#000;border-bottom:1px solid #003300}
@@ -49,7 +49,60 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 .export-btns{display:flex;gap:12px;margin-top:20px}
 .btn-cancel{flex:1;padding:14px;background:#222;color:#aaa;border:1px solid #444;border-radius:12px;font-weight:900;cursor:pointer}
 .btn-export{flex:1;padding:14px;background:#7700ff;color:#fff;border:none;border-radius:12px;font-weight:900;cursor:pointer}
-</style></head><body>
+
+.sidebar{padding-bottom:16px;}
+.bottom-btns2:last-child{margin-bottom:12px; padding-bottom:12px; background:#000;}
+
+/* ALSÓ GOMBOK LÁTHATÓSÁG JAVÍTVA + fél cm fekete */
+
+/* ALSÓ GOMBOK JAVÍTVA - ne csússzanak le, fél cm fekete alul */
+.sidebar{
+  display:flex !important;
+  flex-direction:column !important;
+  height:calc(100vh - 60px) !important;
+  overflow:hidden !important;
+  background:#000 !important;
+}
+.project-list{
+  flex:1 1 auto !important;
+  overflow-y:auto !important;
+  min-height:100px !important;
+}
+.bottom-btns{
+  display:grid !important;
+  grid-template-columns:1fr 1fr 1fr !important;
+  gap:8px !important;
+  padding:10px !important;
+  border-top:1px solid #111 !important;
+  background:#000 !important;
+  flex-shrink:0 !important;
+}
+.bottom-btns2{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:8px !important;
+  padding:0 10px 8px 10px !important;
+  background:#000 !important;
+  flex-shrink:0 !important;
+}
+.bottom-btns2:last-of-type{
+  padding-bottom:calc(0.5cm + 12px) !important;
+  background:#000 !important;
+  border-bottom:0.5cm solid #000 !important;
+}
+.btn-s{
+  min-height:38px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+</style>
+<!-- 100 ABLAK + UBLOCK FIX -->
+<script>
+(function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();
+</script>
+</head><body>
 <div class="top-bar">
 <button class="btn-top btn-blue" onclick="openHtmlExportModal()">LETÖLTÉS (100 ABLAK + UBLOCK FIX)</button>
 <button class="btn-top btn-yellow" onclick="safeCopy()">SAFE COPY</button>
@@ -78,11 +131,11 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 </div>
 <div class="main">
 <div class="sidebar">
-<div class="folder-title">📁 NEON REPO</div>
+<div class="folder-title">📁 Bálint Antal Neon Repo_01</div>
 <div class="storage" id="storageText">TÁRHELY: 0.00 MB / 500 MB</div>
 <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 <div class="count">📦 TÁROLT KÓDOK: <span id="countText">0 db • 0 char</span></div>
-<input class="project-name" id="projectName" placeholder="Projekt neve...">
+<input class="project-name" id="projectName" placeholder="Bálint Antal Neon Repo_01">
 <div class="project-list" id="projectList"><div class="empty-msg">Nincs projekt - RESET után üres</div></div>
 <div class="bottom-btns">
 <button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS JSON</button>
@@ -130,8 +183,36 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 </div>
 </div>
 
-<input type="file" id="fileInput" accept=".json,.html,.htm" style="display:none">
+<div id="exportModal" onclick="if(event.target===this) closeExportModal()">
+<div class="export-box">
+<div class="export-title">📥 EXPORT JSON</div>
+<input class="export-input" id="exportFileName" value="">
+<div class="export-info" id="exportInfo">Fájl: ...</div>
+<div class="export-btns">
+<button class="btn-cancel" onclick="closeExportModal()">MÉGSE</button>
+<button class="btn-export" onclick="doExport()">EXPORT</button>
+</div>
+</div>
+</div>
+
+<div id="htmlExportModal" onclick="if(event.target===this) closeHtmlExportModal()">
+<div class="export-box" style="border-color:#0055ff;box-shadow:0 0 30px #0055ff44">
+<div class="export-title" style="color:#0055ff">🌐 EXPORT HTML (100 ABLAK + UBLOCK FIX)</div>
+<input class="export-input" id="htmlExportFileName" value="" style="border-color:#0055ff">
+<div class="export-info" id="htmlExportInfo">Fájl: ...</div>
+<div class="export-btns">
+<button class="btn-cancel" onclick="closeHtmlExportModal()">MÉGSE</button>
+<button class="btn-export" style="background:#0055ff" onclick="doHtmlExport()">EXPORT HTML</button>
+</div>
+</div>
+</div>
+
+
+<input type="file" id="fileInput" accept=".json,.html,.htm,.txt" multiple style="display:none">
+</body>
+
 <script>
+
 let projects=[];
 let currentId=null;
 let currentColor='#00ff00';
@@ -145,68 +226,61 @@ function normalize(o){
   if(!o || typeof o!=='object') return null;
   let bestCode='';
   let keys=['code','html','content','source','data','body','htmlContent','value','text','fileContent'];
-  for(let k of keys){
-    if(typeof o[k]==='string' && o[k].length>bestCode.length) bestCode=o[k];
-  }
-  if(!bestCode){
-    for(let k in o){
-      let v=o[k];
-      if(typeof v==='string' && v.length>bestCode.length) bestCode=v;
-    }
-  }
+  for(let k of keys){ if(typeof o[k]==='string' && o[k].length>bestCode.length) bestCode=o[k]; }
+  if(!bestCode){ for(let k in o){ let v=o[k]; if(typeof v==='string' && v.length>bestCode.length) bestCode=v; } }
   let bestName='';
   let nKeys=['name','title','filename','fileName','projectName','label'];
-  for(let k of nKeys){
-    if(typeof o[k]==='string' && o[k].length>0 && o[k].length<300){ bestName=o[k]; break; }
-  }
+  for(let k of nKeys){ if(typeof o[k]==='string' && o[k].length>0 && o[k].length<300){ bestName=o[k]; break; } }
   if(!bestName) bestName='Projekt_'+Date.now();
   if(!bestCode) return null;
-  return {id:Date.now()+Math.floor(Math.random()*999999),name:bestName,code:bestCode,color:o.color||currentColor||'#00ff00',charCount:bestCode.length};
+  return {id:Date.now()+Math.floor(Math.random()*99999), name:bestName, code:bestCode, color:o.color||currentColor||'#00ff00', charCount:bestCode.length};
 }
 
 function parseUniversal(text){
   if(!text) return [];
   let clean=text.trim();
+  if(clean.charCodeAt(0)===0xFEFF) clean=clean.slice(1);
   let results=[];
-  try{
-    let j=JSON.parse(clean);
-    if(Array.isArray(j)){
-      j.forEach(function(item){ let n=normalize(item); if(n) results.push(n); });
-      if(results.length>0) return results;
-    }
-    let keys=['projects','data','items','codes','files','list','entries'];
-    for(let ck of keys){
-      if(j[ck] && Array.isArray(j[ck])){
-        j[ck].forEach(function(item){ let n=normalize(item); if(n) results.push(n); });
-        if(results.length>0) return results;
+  // ELŐSZÖR JSON - fontos! mert a JSON-ban is van <html> a code mezőben
+  if(clean.startsWith('[') || clean.startsWith('{')){
+    try{
+      let j=JSON.parse(clean);
+      if(Array.isArray(j)){
+        let res=[]; j.forEach(function(item){ let n=normalize(item); if(n) res.push(n); }); 
+        if(res.length>0){ console.log('JSON tömb szétbontva', res.length); return res; }
       }
+      let keys=['projects','data','items','codes','files','list','entries'];
+      for(let ck of keys){ if(j[ck] && Array.isArray(j[ck])){ let res=[]; j[ck].forEach(function(item){ let n=normalize(item); if(n) res.push(n); }); if(res.length>0) return res; } }
+      let single=normalize(j); if(single) return [single];
+    }catch(e){ console.log('JSON parse fail, megy HTML detektálásra', e.message); }
+  }
+  // CSAK HA NEM JSON, akkor HTML
+  let low=clean.toLowerCase();
+  if(low.startsWith('<!doctype') || low.startsWith('<html')){
+    let m=clean.match(/<title[^>]*>([^<]+)<\/title>/i);
+    let name=m?m[1].trim().slice(0,60):'HTML_'+Date.now(); // title fallback, de fileInputnál fájlnév lesz
+    return [{id:Date.now()+Math.floor(Math.random()*9999), name:name, code:clean, color:currentColor||'#ff00ff', charCount:clean.length}];
+  }
+  // Fallback - hosszú szöveg
+  if(clean.length>80){
+    // Ha JSON-nak tűnik de nem sikerült, még egyszer megpróbálja szétszedni vesszők mentén
+    if(clean.includes('"code"') && clean.includes('"name"')){
+      try{
+        // Próbálja meg tömbként értelmezni ha hiányzik a []
+        let t=clean;
+        if(!t.startsWith('[')) t='['+t+']';
+        let j=JSON.parse(t);
+        if(Array.isArray(j)){
+          let res=[]; j.forEach(function(item){ let n=normalize(item); if(n) res.push(n); });
+          if(res.length>0) return res;
+        }
+      }catch(e){}
     }
-    let single=normalize(j);
-    if(single) return [single];
-  }catch(e){}
-  try{
-    let t=clean;
-    if(t.startsWith('[') && t.endsWith(']')) t=t.slice(1,-1);
-    let parts=[];
-    let depth=0;
-    let inStr=false;
-    let esc=false;
-    let start=0;
-    for(let i=0;i<t.length;i++){
-      let ch=t[i];
-      if(esc){ esc=false; continue; }
-      if(ch==='\\'){ esc=true; continue; }
-      if(ch==='"'){ inStr=!inStr; continue; }
-      if(inStr) continue;
-      if(ch==='{') depth++;
-      if(ch==='}'){ depth--; if(depth===0){ let part=t.slice(start,i+1).trim(); if(part.startsWith(',')) part=part.slice(1); parts.push(part); start=i+1; } }
-    }
-    parts.forEach(function(p){
-      try{ let obj=JSON.parse(p); let n=normalize(obj); if(n) results.push(n); }catch(e){}
-    });
-    if(results.length>0) return results;
-  }catch(e){}
-  return results;
+    let m=clean.match(/<title[^>]*>([^<]+)<\/title>/i);
+    let name=m?m[1].trim().slice(0,60):'IMPORT_'+Date.now();
+    return [{id:Date.now()+Math.floor(Math.random()*9999), name:name, code:clean, color:currentColor||'#ff00ff', charCount:clean.length}];
+  }
+  return [];
 }
 
 function saveLS(){
@@ -215,202 +289,275 @@ function saveLS(){
     localStorage.setItem(LS_KEY+'_index', JSON.stringify(idx));
     if(currentId) localStorage.setItem(LS_CUR, currentId);
     localStorage.setItem(LS_COL, currentColor);
-    try{ localStorage.setItem(LS_KEY, JSON.stringify(projects)); }catch(q){ localStorage.removeItem(LS_KEY); }
-  }catch(e){}
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(projects)); }catch(q){ console.warn('LS full', q); }
+  }catch(e){ console.error('saveLS', e); }
 }
-
 function loadLS(){
   try{
     let p=localStorage.getItem(LS_KEY);
-    if(p) projects=JSON.parse(p);
-    let c=localStorage.getItem(LS_CUR);
-    if(c) currentId=c;
-    let col=localStorage.getItem(LS_COL);
-    if(col) currentColor=col;
-  }catch(e){}
+    if(p){
+      try{ projects=JSON.parse(p); }catch(e){ console.warn('LS parse fail, várunk DB-re'); projects=[]; }
+    }
+    let c=localStorage.getItem(LS_CUR); if(c) currentId=parseInt(c);
+    let col=localStorage.getItem(LS_COL); if(col) currentColor=col;
+  }catch(e){ console.warn('loadLS error', e); }
 }
-
 function saveDB(){
-  let req=indexedDB.open(DB_NAME,1);
-  req.onupgradeneeded=function(e){ let db=e.target.result; if(!db.objectStoreNames.contains('projects')) db.createObjectStore('projects',{keyPath:'id'}); };
-  req.onsuccess=function(e){ let db=e.target.result; let tx=db.transaction('projects','readwrite'); let st=tx.objectStore('projects'); st.clear(); projects.forEach(function(pr){ st.put(pr); }); };
+  try{
+    let req=indexedDB.open(DB_NAME,2);
+    req.onupgradeneeded=function(e){ let db=e.target.result; if(!db.objectStoreNames.contains('notes')) db.createObjectStore('notes'); };
+    req.onsuccess=function(e){
+      let db=e.target.result;
+      let tx=db.transaction(['notes'],'readwrite');
+      let put=tx.objectStore('notes').put(projects,'all_projects');
+      put.onsuccess=function(){ console.log('DB mentve:', projects.length+' db, '+(JSON.stringify(projects).length/1024).toFixed(1)+' KB'); };
+      put.onerror=function(err){ console.warn('DB put error', err); };
+    };
+    req.onerror=function(err){ console.warn('DB open error on save', err); };
+  }catch(e){ console.warn('saveDB error', e); }
+}
+function loadDB(){
+  try{
+    let req=indexedDB.open(DB_NAME,2);
+    req.onupgradeneeded=function(e){ 
+      let db=e.target.result; 
+      if(!db.objectStoreNames.contains('notes')) db.createObjectStore('notes'); 
+    };
+    req.onsuccess=function(e){
+      let db=e.target.result;
+      try{
+        let tx=db.transaction(['notes'],'readonly');
+        let get=tx.objectStore('notes').get('all_projects');
+        get.onsuccess=function(){ 
+          if(get.result && Array.isArray(get.result) && get.result.length>0){
+            console.log('DB-ben talált:', get.result.length+' db, visszatöltés...');
+            projects=get.result; 
+            render();
+            updateStorageInfo();
+            if(currentId){
+              let exists=projects.find(function(p){ return p.id==currentId; });
+              if(exists) selectProject(currentId);
+              else if(projects.length>0) selectProject(projects[projects.length-1].id);
+            } else if(projects.length>0){
+              selectProject(projects[projects.length-1].id);
+            }
+            console.log('✅ F5 UTÁN VISSZAÁLLÍTVA:', projects.length+' db');
+          } else {
+            console.log('DB üres - nincs mentett import');
+          }
+        };
+        get.onerror=function(){ console.warn('DB get error'); };
+      }catch(err){ console.warn('loadDB tx error', err); }
+    };
+    req.onerror=function(e){ console.warn('DB open error', e); };
+  }catch(e){ console.warn('loadDB outer error', e); }
 }
 
-function loadDB(){
-  let req=indexedDB.open(DB_NAME,1);
-  req.onupgradeneeded=function(e){ let db=e.target.result; if(!db.objectStoreNames.contains('projects')) db.createObjectStore('projects',{keyPath:'id'}); };
-  req.onsuccess=function(e){
-    let db=e.target.result;
-    let tx=db.transaction('projects','readonly');
-    let st=tx.objectStore('projects');
-    let ga=st.getAll();
-    ga.onsuccess=function(){
-      if(ga.result && ga.result.length>0){ projects=ga.result; render(); if(!currentId && projects.length>0) selectProject(projects[0].id); }
+// VISSZAÁLLÍTÓ FUNKCIÓ - ha eltűnt
+function forceRestoreDB(){
+  console.log('FORCE RESTORE...');
+  try{
+    let req=indexedDB.open(DB_NAME,2);
+    req.onsuccess=function(e){
+      let db=e.target.result;
+      let tx=db.transaction(['notes'],'readonly');
+      let get=tx.objectStore('notes').get('all_projects');
+      get.onsuccess=function(){
+        if(get.result && get.result.length>0){
+          projects=get.result;
+          saveLS();
+          render();
+          alert('✅ VISSZAÁLLÍTVA DB-BŐL: '+projects.length+' db projekt! Most már F5 után is megmarad.');
+        } else {
+          alert('❌ DB is üres - nincs mentés. Importáld újra a JSON-t!');
+        }
+      };
     };
-  };
+  }catch(e){ alert('Restore hiba: '+e.message); }
 }
 
 function render(){
   let list=document.getElementById('projectList');
-  let count=document.getElementById('countText');
-  let storage=document.getElementById('storageText');
-  let bar=document.getElementById('progressBar');
-  let totalChar=0;
-  projects.forEach(function(p){ totalChar+= (p.charCount||0); });
-  let totalMB=(totalChar/1024/1024).toFixed(2);
-  storage.textContent='TÁRHELY: '+totalMB+' MB / 500 MB';
-  bar.style.width=Math.min((parseFloat(totalMB)/500*100),100)+'%';
-  count.textContent=projects.length+' db • '+totalChar+' char';
-  if(projects.length===0){ list.innerHTML='<div class="empty-msg">Nincs projekt - RESET után üres</div>'; return; }
+  if(!list) return;
   list.innerHTML='';
-  projects.forEach(function(p,i){
-    let d=document.createElement('div');
-    d.className='proj-card'+(p.id==currentId?' active':'');
-    d.onclick=function(){ selectProject(p.id); };
-    d.innerHTML='<div class="proj-name" style="color:'+p.color+'">'+(i+1)+'. '+p.name+'</div><div class="proj-meta">'+(p.charCount||0)+' char • '+p.color+'</div>';
-    list.appendChild(d);
-  });
+  if(projects.length===0){
+    list.innerHTML='<div class="empty-msg">Nincs projekt<br>IMPORT-tal tölts be HTML-t!</div>';
+  } else {
+    // FORDÍTOTT LISTA - legutolsó felül
+    let reversed=[...projects].reverse();
+    reversed.forEach(function(p, rIdx){
+      let idx=projects.length-1-rIdx;
+      let div=document.createElement('div');
+      div.className='proj-card'+(p.id==currentId?' active':'');
+      // SORSZÁMOZÁS + VALÓDI NÉV
+      let displayName=(idx+1)+'. '+(p.name||'Névtelen');
+      div.innerHTML='<div class="proj-name" style="color:'+(p.color||'#0f0')+'">'+displayName+'</div><div class="proj-meta">'+(p.charCount||0)+' char</div>';
+      div.onclick=function(){ selectProject(p.id); };
+      list.appendChild(div);
+    });
+  }
+  // JAVÍTVA - jó ID-k
+  let countEl=document.getElementById('countText');
+  if(countEl){
+    let totalChar=projects.reduce(function(a,b){ return a+(b.charCount||0); },0);
+    countEl.textContent=projects.length+' db • '+totalChar+' char';
+  }
+  let storageEl=document.getElementById('storageText');
+  if(storageEl){
+    let kb=(JSON.stringify(projects).length/1024).toFixed(1);
+    storageEl.textContent='TÁRHELY: '+kb+' KB / 500 MB';
+  }
+  let bar=document.getElementById('progressBar');
+  if(bar){ 
+    let pct=Math.min(100, (JSON.stringify(projects).length/5000000)*100); 
+    bar.style.width=pct+'%';
+    // SZÍN LOGIKA: sok szabadhely zöld, közepes sárga, kevés piros
+    let freePct=100-pct;
+    if(freePct>60){
+      bar.style.background='linear-gradient(90deg,#00ff00,#00cc00)';
+      bar.style.backgroundColor='#00ff00';
+    } else if(freePct>20){
+      bar.style.background='linear-gradient(90deg,#ffcc00,#ffaa00)';
+      bar.style.backgroundColor='#ffcc00';
+    } else {
+      bar.style.background='linear-gradient(90deg,#ff0000,#cc0000)';
+      bar.style.backgroundColor='#ff0000';
+    }
+  }
 }
-
 function selectProject(id){
+  currentId=id;
   let p=projects.find(function(x){ return x.id==id; });
   if(!p) return;
-  currentId=id;
   document.getElementById('projectName').value=p.name;
   document.getElementById('codeEditor').value=p.code;
-  currentColor=p.color||'#00ff00';
-  document.querySelectorAll('.color-dot').forEach(function(d){ d.classList.toggle('active', d.dataset.color===currentColor); });
+  if(p.color){
+    currentColor=p.color;
+    document.querySelectorAll('.color-dot').forEach(function(d){ d.classList.toggle('active', d.dataset.color==p.color); });
+  }
   render();
   runCode();
   saveLS();
-  saveDB();
 }
-
 function setColor(col,el){
   currentColor=col;
   document.querySelectorAll('.color-dot').forEach(function(d){ d.classList.remove('active'); });
   if(el) el.classList.add('active');
+  localStorage.setItem(LS_COL, col);
   if(currentId){
-    let pr=projects.find(function(x){ return x.id==currentId; });
-    if(pr){ pr.color=col; render(); saveLS(); saveDB(); }
+    let p=projects.find(function(x){ return x.id==currentId; });
+    if(p){ p.color=col; saveLS(); saveDB(); render(); }
   }
 }
-
 function saveCurrent(){
   let nameEl=document.getElementById('projectName');
   let codeEl=document.getElementById('codeEditor');
-  let name=nameEl.value.trim()|| ((projects.length+1)+'. Projekt');
+  let name=nameEl.value.trim()||'Névtelen_'+Date.now();
   let code=codeEl.value;
-  if(!code.trim()){ alert('Üres kód!'); return; }
+  if(!code.trim()){ alert('Üres kód, nem mentem'); return; }
   if(currentId){
-    let pr=projects.find(function(x){ return x.id==currentId; });
-    if(pr){ pr.name=name; pr.code=code; pr.color=currentColor; pr.charCount=code.length; }
+    let p=projects.find(function(x){ return x.id==currentId; });
+    if(p){ p.name=name; p.code=code; p.charCount=code.length; p.color=currentColor; }
   } else {
-    let np={id:Date.now(),name:name,code:code,color:currentColor,charCount:code.length};
-    projects.push(np);
-    currentId=np.id;
+    let proj={id:Date.now(), name:name, code:code, color:currentColor, charCount:code.length};
+    projects.push(proj);
+    currentId=proj.id;
   }
-  saveLS();
-  saveDB();
-  render();
+  saveLS(); saveDB(); render();
+  console.log('Mentve', name);
 }
-
 function newProject(){
+  console.log('newProject');
   currentId=null;
-  let next=projects.length+1;
+  // SORSZÁMOZÁS JAVÍTVA - keresi a legnagyobb számot
+  let base='Bálint Antal Neon Repo';
+  let maxNum=0;
+  projects.forEach(function(p){
+    let m=p.name.match(/Bálint Antal Neon Repo[_ ]?(\d+)/i);
+    if(m){ let n=parseInt(m[1]); if(n>maxNum) maxNum=n; }
+  });
+  let nextNum=(maxNum+1).toString().padStart(2,'0');
+  let newName=base+'_'+nextNum;
   let el=document.getElementById('projectName');
-  el.placeholder=next+'. Projekt neve...';
-  el.value='';
+  el.value=newName;
+  el.placeholder=newName;
   document.getElementById('codeEditor').value='';
   document.getElementById('previewFrame').srcdoc='';
   render();
 }
-
 function deleteProject(){
-  if(!currentId){ alert('Nincs kiválasztva'); return; }
+  if(!currentId){ alert('Nincs kiválasztva projekt'); return; }
   if(!confirm('Törlöd?')) return;
   projects=projects.filter(function(p){ return p.id!=currentId; });
   currentId=null;
   document.getElementById('projectName').value='';
   document.getElementById('codeEditor').value='';
   document.getElementById('previewFrame').srcdoc='';
-  saveLS();
-  saveDB();
-  render();
+  saveLS(); saveDB(); render();
 }
-
 function saveAndExport(){
   saveCurrent();
   if(!currentId){ alert('Nincs kiválasztva'); return; }
   exportMode='single';
   let p=projects.find(function(x){ return x.id==currentId; });
   if(!p) return;
-  let now=new Date();
-  let pad=function(n){ return String(n).padStart(2,'0'); };
-  let fname=(p.name||'projekt').replace(/[^a-zA-Z0-9_ -]/g,'').slice(0,40)+'_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
+  let now=new Date(); let pad=function(n){ return String(n).padStart(2,'0'); };
+  let fname=(p.name||'projekt').replace(/[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜ -]/g,'').slice(0,60)+'_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
   document.getElementById('exportFileName').value=fname;
-  document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: 1 projekt • '+(p.charCount||0)+' char (csak ez)';
+  document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: 1 projekt • '+(p.charCount||0)+' char';
   document.getElementById('exportModal').classList.add('show');
 }
-
 function exportAllJson(){
   if(projects.length===0){ alert('Nincs mit exportálni'); return; }
   exportMode='all';
-  let now=new Date();
-  let pad=function(n){ return String(n).padStart(2,'0'); };
-  let fname='Html_adatbazis_Export_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes())+'-'+pad(now.getSeconds());
+  let now=new Date(); let pad=function(n){ return String(n).padStart(2,'0'); };
+  let fname='Html_adatbazis_Bálint_Antal_Export_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
   document.getElementById('exportFileName').value=fname;
   let totalChar=projects.reduce(function(a,b){ return a+(b.charCount||0); },0);
-  document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: '+projects.length+' projekt • '+(totalChar>1000000?(totalChar/1000000).toFixed(2)+'M':totalChar)+' char';
+  document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: '+projects.length+' projekt • '+totalChar+' char';
   document.getElementById('exportModal').classList.add('show');
 }
-
 function closeExportModal(){ document.getElementById('exportModal').classList.remove('show'); }
-
 function doExport(){
   let fname=document.getElementById('exportFileName').value.trim()||'export';
   if(!fname.toLowerCase().endsWith('.json')) fname+='.json';
-  let dataToExport=projects;
-  if(exportMode==='single' && currentId){
+  let data;
+  if(exportMode=='single'){
     let p=projects.find(function(x){ return x.id==currentId; });
-    if(p) dataToExport=[p];
-  }
-  let blob=new Blob([JSON.stringify(dataToExport,null,2)],{type:'application/json'});
+    data=[p];
+  } else { data=projects; }
+  let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   let a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
   a.download=fname;
   a.click();
   closeExportModal();
 }
-
 function openHtmlExportModal(){
   let code=document.getElementById('codeEditor').value;
   if(!code.trim()){ alert('Üres kód!'); return; }
-  let now=new Date();
-  let pad=function(n){ return String(n).padStart(2,'0'); };
+  let now=new Date(); let pad=function(n){ return String(n).padStart(2,'0'); };
   let p=projects.find(function(x){ return x.id==currentId; });
-  let baseName=(p?p.name:'Html_export')+'_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes())+'-'+pad(now.getSeconds());
-  baseName=baseName.replace(/[^a-zA-Z0-9_ -]/g,'').slice(0,50);
+  let realName=(p?p.name:'ALAP-REPO-V9-VALODI-NEV-SORSZAM');
+  let baseName='Bálint_Antal_Export'+realName.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60);
+  // Ha dátum is kell: baseName+='_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
+  baseName=baseName.replace(/__+/g,'_');
   document.getElementById('htmlExportFileName').value=baseName;
-  document.getElementById('htmlExportInfo').innerHTML='Fájl: '+baseName+'.html<br>Tartalom: 1 HTML • '+code.length+' char + 100 ablak + uBlock fix';
+  let realName2=(document.getElementById('projectName').value||'ALAP-REPO-V9-VALODI-NEV-SORSZAM');
+  let previewName='Bálint_Antal_Export'+realName2.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60)+'.html';
+  document.getElementById('htmlExportInfo').innerHTML='Fájl: '+previewName+'<br>Tartalom: 1 HTML • '+code.length+' char + 100 ablak + uBlock fix';
   document.getElementById('htmlExportModal').classList.add('show');
 }
-
 function closeHtmlExportModal(){ document.getElementById('htmlExportModal').classList.remove('show'); }
-
 function doHtmlExport(){
   let code=document.getElementById('codeEditor').value;
   let fname=document.getElementById('htmlExportFileName').value.trim()||'export';
   if(!fname.toLowerCase().endsWith('.html')) fname+='.html';
   let fixScript="<!-- 100 ABLAK + UBLOCK FIX -->\n<script>\n(function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();\n<\/script>\n";
   let finalCode=code;
-  if(finalCode.toLowerCase().indexOf('</head>')!==-1){
-    finalCode=finalCode.replace(/<\/head>/i, fixScript+'</head>');
-  } else if(finalCode.toLowerCase().indexOf('<html')!==-1){
-    finalCode=finalCode.replace(/<html[^>]*>/i, function(m){ return m+'\n<head>'+fixScript+'</head>'; });
-  } else {
-    finalCode=fixScript+'\n'+finalCode;
-  }
+  if(finalCode.toLowerCase().indexOf('</head>')!==-1){ finalCode=finalCode.replace(/<\/head>/i, fixScript+'</head>'); }
+  else if(finalCode.toLowerCase().indexOf('<html')!==-1){ finalCode=finalCode.replace(/<html[^>]*>/i, function(m){ return m+'\n<head>'+fixScript+'</head>'; }); }
+  else { finalCode=fixScript+'\n'+finalCode; }
   let blob=new Blob([finalCode],{type:'text/html'});
   let a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -418,131 +565,150 @@ function doHtmlExport(){
   a.click();
   closeHtmlExportModal();
 }
-
 function importJson(){
+  console.log('LILA IMPORT KATTINTVA');
   let inp=document.getElementById('fileInput');
+  if(!inp){ alert('fileInput nincs!'); return; }
   inp.value='';
   inp.click();
 }
-
-document.getElementById('fileInput').addEventListener('change', function(e){
-  let f=e.target.files[0];
-  if(!f) return;
-  let reader=new FileReader();
-  reader.onload=function(ev){
-    try{
-      let txt=ev.target.result;
-      let parsed=parseUniversal(txt);
-      if(parsed.length>0){
-        parsed.forEach(function(p){ projects.push(p); });
-        saveLS();
-        saveDB();
-        render();
-        alert('IMPORT OK: '+parsed.length+' db\nTartalom: '+projects.length+' projekt');
-        if(projects.length>0) selectProject(projects[0].id);
-      } else { alert('Nem sikerült beolvasni'); }
-    }catch(err){ alert('Import hiba: '+err.message); }
-  };
-  reader.readAsText(f);
-});
-
 function copyCode(){
   let c=document.getElementById('codeEditor').value;
-  navigator.clipboard.writeText(c).then(function(){ alert('Másolva!'); });
+  navigator.clipboard.writeText(c).then(function(){ alert('Másolva!'); }).catch(function(){ alert('Másolás nem sikerült'); });
 }
-
 function runCode(){
   let c=document.getElementById('codeEditor').value;
   let fr=document.getElementById('previewFrame');
+  if(!fr) return;
   if(!c.trim()){ fr.srcdoc='<html><body style="background:#fff;color:#888;padding:20px">Üres</body></html>'; return; }
   fr.srcdoc=c;
 }
-
 function safeCopy(){ copyCode(); }
-function edgeMode(){ alert('EDGE mód: ne file://'); }
+function edgeMode(){ alert('EDGE mód: ha file:// -ként nyitod, a preview nem megy. Használd http:// -n keresztül (Live Server)'); }
 function resetAll(){
-  if(!confirm('RESET?')) return;
-  projects=[];
-  currentId=null;
+  if(!confirm('RESET? Minden törlődik!')) return;
+  projects=[]; currentId=null;
   localStorage.removeItem(LS_KEY);
   localStorage.removeItem(LS_KEY+'_index');
   localStorage.removeItem(LS_CUR);
-  let req=indexedDB.deleteDatabase(DB_NAME);
-  req.onsuccess=function(){
-    render();
-    document.getElementById('codeEditor').value='';
-    document.getElementById('projectName').value='';
-    document.getElementById('previewFrame').srcdoc='';
-  };
+  try{ let req=indexedDB.deleteDatabase(DB_NAME); req.onsuccess=function(){ render(); }; }catch(e){}
+  document.getElementById('codeEditor').value='';
+  document.getElementById('projectName').value='';
+  document.getElementById('previewFrame').srcdoc='';
   render();
 }
 
-(function(){
+document.addEventListener('DOMContentLoaded', function(){
+  let inp=document.getElementById('fileInput');
+  if(inp){
+    inp.addEventListener('change', function(e){
+      console.log('fileInput change', e.target.files.length);
+      let files=e.target.files;
+      if(!files || files.length===0) return;
+      Array.from(files).forEach(function(f){
+        let reader=new FileReader();
+        reader.onload=function(ev){
+          try{
+            let raw=ev.target.result;
+            console.log('file loaded', f.name, raw.length);
+            let low=raw.trim().toLowerCase();
+            // VALÓDI FÁJLNÉV HASZNÁLATA HTML-NÉL - JAVÍTVA
+            if(f.name.toLowerCase().endsWith('.html') || f.name.toLowerCase().endsWith('.htm') || low.startsWith('<!doctype') || low.startsWith('<html')){
+              let realName=f.name.replace(/\.html?$/i,'').slice(0,80);
+              // Ha már van ilyen nevű, ne duplikáljon, hanem felülírja a sorszámozást
+              let proj={id:Date.now()+Math.floor(Math.random()*99999), name:realName, code:raw, color:currentColor||'#ff00ff', charCount:raw.length};
+              projects.push(proj);
+              saveLS(); saveDB(); render();
+              setTimeout(function(){ saveDB(); }, 200);
+              selectProject(proj.id);
+              alert('✅ IMPORT OK VALÓDI NÉVEN: '+realName+'\n'+f.name+' -> 1 projekt');
+              return;
+            }
+            let parsed=parseUniversal(raw);
+            if(parsed.length>0){
+              // JSON esetén is valós fájlnév ha nincs név?
+              parsed.forEach(function(p){
+                // Ha generált HTML_ név, cseréljük fájlnévre
+                if(p.name.startsWith('HTML_') || p.name.startsWith('IMPORT_')){
+                  p.name=f.name.replace(/\.[^/.]+$/,'').slice(0,80);
+                }
+                projects.push(p);
+              });
+              saveLS(); saveDB(); render();
+              selectProject(parsed[parsed.length-1].id);
+              alert('✅ IMPORT OK: '+f.name+' -> '+parsed.length+' projekt');
+            } else {
+              alert('Nem sikerült beolvasni: '+f.name);
+            }
+          }catch(err){ alert('Import hiba: '+err.message); console.error(err); }
+        };
+        reader.readAsText(f, 'UTF-8');
+      });
+    });
+  }
+  loadLS(); render(); 
+  // F5 utáni visszatöltés késleltetve is, hogy biztos betöltődjön
+  loadDB();
+  setTimeout(function(){ loadDB(); }, 500);
+  setTimeout(function(){ loadDB(); }, 1500);
+  
+  // Auto mentés 3 sec-enként - biztos ami biztos
+  setInterval(function(){ if(projects.length>0){ saveDB(); } }, 3000);
+  
+  // Mentés bezárás előtt
+  window.addEventListener('beforeunload', function(){ saveDB(); saveLS(); });
+
+  let codeEl=document.getElementById('codeEditor');
+  if(codeEl){
+    codeEl.addEventListener('input', function(){
+      if(currentId){
+        let pr=projects.find(function(x){ return x.id==currentId; });
+        if(pr){ pr.code=codeEl.value; pr.charCount=codeEl.value.length; render(); }
+      }
+      clearTimeout(window._saveT);
+      window._saveT=setTimeout(function(){ saveLS(); saveDB(); },250);
+    });
+  }
+  document.addEventListener('dragover', function(e){ e.preventDefault(); });
+  document.addEventListener('drop', function(e){
+    e.preventDefault();
+    let f=e.dataTransfer.files[0];
+    if(!f) return;
+    let r=new FileReader();
+    r.onload=function(ev){
+      let parsed=parseUniversal(ev.target.result);
+      if(parsed.length>0){
+        parsed.forEach(function(p){ projects.push(p); });
+        saveLS(); saveDB(); render();
+        selectProject(parsed[parsed.length-1].id);
+        alert('Drop OK: '+parsed.length+' db');
+      }
+    };
+    r.readAsText(f, 'UTF-8');
+  });
+  // resizer
   let resizer=document.getElementById('resizer');
   let codeWrap=document.getElementById('codeWrap');
   let previewWrap=document.getElementById('previewWrap');
-  let isDragging=false;
-  let startY,startHCode,startHPrev;
-  resizer.addEventListener('mousedown', function(e){
-    isDragging=true;
-    startY=e.clientY;
-    startHCode=codeWrap.offsetHeight;
-    startHPrev=previewWrap.offsetHeight;
-    document.body.style.cursor='ns-resize';
-    document.body.style.userSelect='none';
-  });
-  document.addEventListener('mousemove', function(e){
-    if(!isDragging) return;
-    let dy=e.clientY-startY;
-    let newCodeH=Math.max(100, startHCode+dy);
-    let newPrevH=Math.max(100, startHPrev-dy);
-    codeWrap.style.flex='none';
-    codeWrap.style.height=newCodeH+'px';
-    previewWrap.style.flex='none';
-    previewWrap.style.height=newPrevH+'px';
-  });
-  document.addEventListener('mouseup', function(){
-    if(isDragging){
-      isDragging=false;
-      document.body.style.cursor='';
-      document.body.style.userSelect='';
-      localStorage.setItem('neon_preview_heights', JSON.stringify({code:codeWrap.offsetHeight, preview:previewWrap.offsetHeight}));
-    }
-  });
-  try{
-    let saved=JSON.parse(localStorage.getItem('neon_preview_heights')||'null');
-    if(saved){ codeWrap.style.flex='none'; codeWrap.style.height=saved.code+'px'; previewWrap.style.flex='none'; previewWrap.style.height=saved.preview+'px'; }
-  }catch(e){}
-})();
-
-loadLS();
-render();
-loadDB();
-document.getElementById('codeEditor').addEventListener('input', function(){
-  if(currentId){
-    let pr=projects.find(function(x){ return x.id==currentId; });
-    if(pr){ pr.code=document.getElementById('codeEditor').value; pr.charCount=pr.code.length; render(); }
+  if(resizer && codeWrap && previewWrap){
+    let isDragging=false, startY, startHCode, startHPrev;
+    resizer.addEventListener('mousedown', function(e){
+      isDragging=true; startY=e.clientY; startHCode=codeWrap.offsetHeight; startHPrev=previewWrap.offsetHeight;
+      document.body.style.cursor='ns-resize'; document.body.style.userSelect='none';
+    });
+    document.addEventListener('mousemove', function(e){
+      if(!isDragging) return;
+      let dy=e.clientY-startY;
+      let newCodeH=Math.max(100, startHCode+dy);
+      let newPrevH=Math.max(100, startHPrev-dy);
+      codeWrap.style.flex='none'; codeWrap.style.height=newCodeH+'px';
+      previewWrap.style.flex='none'; previewWrap.style.height=newPrevH+'px';
+    });
+    document.addEventListener('mouseup', function(){
+      if(isDragging){ isDragging=false; document.body.style.cursor=''; document.body.style.userSelect=''; }
+    });
   }
-  clearTimeout(window._saveT);
-  window._saveT=setTimeout(function(){ saveLS(); saveDB(); },250);
 });
-document.addEventListener('dragover', function(e){ e.preventDefault(); });
-document.addEventListener('drop', function(e){
-  e.preventDefault();
-  let f=e.dataTransfer.files[0];
-  if(!f) return;
-  let r=new FileReader();
-  r.onload=function(ev){
-    let parsed=parseUniversal(ev.target.result);
-    if(parsed.length>0){
-      parsed.forEach(function(p){ projects.push(p); });
-      saveLS();
-      saveDB();
-      render();
-      alert('Drop OK: '+parsed.length+' db');
-    }
-  };
-  r.readAsText(f);
-});
+
 </script>
-</body></html>
+</html>
