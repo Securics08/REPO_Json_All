@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>NEON REPO FINAL - MINDEN GOMB JAVÍTVA</title>
+<html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bálint_Antal__Alap_Neon_Repo_02_-V15-IMPORT-_8_szin_</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;padding:0!important;overflow:hidden;font-family:monospace;border:0}
@@ -12,7 +12,11 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 .color-dot.active{border-color:#fff;transform:scale(1.2)}
 .btn-save-color{margin-left:auto;background:#00ffff;color:#000;padding:10px 18px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
 .main{display:flex;height:calc(100vh - 96px);width:100vw;background:#000;margin:0;border:0}
-.sidebar{width:320px;background:#000;border-right:2px solid #0f0;display:flex;flex-direction:column}
+.sidebar{width:320px;min-width:200px;max-width:600px;background:#000;border-right:2px solid #0f0;display:flex;flex-direction:column;position:relative;flex-shrink:0}
+#sidebarResizer{width:8px;background:transparent;cursor:ew-resize;position:relative;z-index:10;margin-left:-2px;border-right:2px solid #0a0a0a;transition:background 0.2s, border-color 0.2s}
+#sidebarResizer:hover, #sidebarResizer.dragging{background:#00ff0022;border-right:2px solid #0f0;box-shadow:0 0 10px #0f088}
+#sidebarResizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:40px;background:#0f0;opacity:0.3;border-radius:2px}
+#sidebarResizer:hover::after, #sidebarResizer.dragging::after{opacity:1;box-shadow:0 0 6px #0f0}
 .folder-title{padding:16px;text-align:center;color:#00ffff;font-size:18px;font-weight:900}
 .storage{padding:0 12px 8px;color:#00ffff;font-size:13px;font-weight:900}
 .progress{margin:8px 12px;height:10px;background:#222;border-radius:5px;overflow:hidden}
@@ -102,6 +106,10 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <script>
 (function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();
 </script>
+<!-- 100 ABLAK + UBLOCK FIX -->
+<script>
+(function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();
+</script>
 </head><body>
 <div class="top-bar">
 <button class="btn-top btn-blue" onclick="openHtmlExportModal()">LETÖLTÉS (100 ABLAK + UBLOCK FIX)</button>
@@ -111,31 +119,23 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 </div>
 <div class="color-bar">
 <span class="color-label">NÉV SZÍNE</span>
-<div class="color-dot active" style="background:#fff" data-color="#ffffff" onclick="setColor('#ffffff',this)"></div>
-<div class="color-dot" style="background:#ff0040" data-color="#ff0040" onclick="setColor('#ff0040',this)"></div>
-<div class="color-dot" style="background:#ff6600" data-color="#ff6600" onclick="setColor('#ff6600',this)"></div>
-<div class="color-dot" style="background:#ffdd00" data-color="#ffdd00" onclick="setColor('#ffdd00',this)"></div>
-<div class="color-dot" style="background:#88ff00" data-color="#88ff00" onclick="setColor('#88ff00',this)"></div>
-<div class="color-dot" style="background:#00ff00" data-color="#00ff00" onclick="setColor('#00ff00',this)"></div>
-<div class="color-dot" style="background:#00ff88" data-color="#00ff88" onclick="setColor('#00ff88',this)"></div>
-<div class="color-dot" style="background:#00ffff" data-color="#00ffff" onclick="setColor('#00ffff',this)"></div>
-<div class="color-dot" style="background:#0088ff" data-color="#0088ff" onclick="setColor('#0088ff',this)"></div>
-<div class="color-dot" style="background:#6666ff" data-color="#6666ff" onclick="setColor('#6666ff',this)"></div>
-<div class="color-dot" style="background:#8800ff" data-color="#8800ff" onclick="setColor('#8800ff',this)"></div>
+<div class="color-dot active" style="background:#ffffff" data-color="#ffffff" onclick="setColor('#ffffff',this)"></div>
+<div class="color-dot" style="background:#ff9900" data-color="#ff9900" onclick="setColor('#ff9900',this)"></div>
 <div class="color-dot" style="background:#ff00ff" data-color="#ff00ff" onclick="setColor('#ff00ff',this)"></div>
-<div class="color-dot" style="background:#ff0088" data-color="#ff0088" onclick="setColor('#ff0088',this)"></div>
-<div class="color-dot" style="background:#ff00aa" data-color="#ff00aa" onclick="setColor('#ff00aa',this)"></div>
-<div class="color-dot" style="background:#00ffaa" data-color="#00ffaa" onclick="setColor('#00ffaa',this)"></div>
-<div class="color-dot" style="background:#ffcc00" data-color="#ffcc00" onclick="setColor('#ffcc00',this)"></div>
+<div class="color-dot" style="background:#ffff00" data-color="#ffff00" onclick="setColor('#ffff00',this)"></div>
+<div class="color-dot" style="background:#00ff00" data-color="#00ff00" onclick="setColor('#00ff00',this)"></div>
+<div class="color-dot" style="background:#0055ff" data-color="#0055ff" onclick="setColor('#0055ff',this)"></div>
+<div class="color-dot" style="background:#ff0000" data-color="#ff0000" onclick="setColor('#ff0000',this)"></div>
+<div class="color-dot" style="background:#00ffff" data-color="#00ffff" onclick="setColor('#00ffff',this)"></div>
 <button class="btn-save-color" onclick="saveCurrent()">MENTÉS</button>
 </div>
 <div class="main">
 <div class="sidebar">
-<div class="folder-title">📁 Bálint Antal Neon Repo_01</div>
+<div class="folder-title">📁 Bálint Antal  Alap Neon Repo 02 -V15-IMPORT- 8 szin</div>
 <div class="storage" id="storageText">TÁRHELY: 0.00 MB / 500 MB</div>
 <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 <div class="count">📦 TÁROLT KÓDOK: <span id="countText">0 db • 0 char</span></div>
-<input class="project-name" id="projectName" placeholder="Bálint Antal Neon Repo_01">
+<input class="project-name" id="projectName" placeholder="Bálint Antal  Alap Neon Repo 02 -V15-IMPORT- 8 szin">
 <div class="project-list" id="projectList"><div class="empty-msg">Nincs projekt - RESET után üres</div></div>
 <div class="bottom-btns">
 <button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS JSON</button>
@@ -151,6 +151,7 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <button class="btn-s" style="background:#330000;color:#ff4444" onclick="resetAll()">RESET</button>
 </div>
 </div>
+<div id="sidebarResizer" title="Húzd jobbra-balra az ablakméret váltáshoz"></div>
 <div class="editor-area">
 <div class="editor-top"><span class="editor-label">KÓD SZERKESZTŐ</span><div><button class="btn-copy" onclick="copyCode()">KÓD MÁSOLÁSA</button><button class="btn-run" onclick="runCode()">KÓD FUTTATÁSA</button></div></div>
 <div class="code-wrap" id="codeWrap"><textarea id="codeEditor" placeholder="Ide írd a HTML kódod..."></textarea></div>
@@ -439,6 +440,71 @@ function selectProject(id){
   runCode();
   saveLS();
 }
+
+// SIDEBAR RESIZER - jobbra húzás ablakméret váltás
+(function(){
+  let isDraggingSidebar=false, startX=0, startWidth=0;
+  let sidebar=null, resizer=null;
+  function initSidebarResizer(){
+    sidebar=document.querySelector('.sidebar');
+    resizer=document.getElementById('sidebarResizer');
+    if(!sidebar||!resizer) return;
+    // betöltés mentett méretből
+    try{
+      let saved=localStorage.getItem('neon_sidebar_width');
+      if(saved){ sidebar.style.width=parseInt(saved)+'px'; }
+    }catch{}
+    resizer.addEventListener('mousedown', function(e){
+      isDraggingSidebar=true;
+      startX=e.clientX;
+      startWidth=sidebar.offsetWidth;
+      resizer.classList.add('dragging');
+      document.body.style.cursor='ew-resize';
+      document.body.style.userSelect='none';
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', function(e){
+      if(!isDraggingSidebar) return;
+      let diff=e.clientX-startX;
+      let newWidth=startWidth+diff;
+      newWidth=Math.max(200, Math.min(600, newWidth));
+      sidebar.style.width=newWidth+'px';
+    });
+    document.addEventListener('mouseup', function(){
+      if(isDraggingSidebar){
+        isDraggingSidebar=false;
+        resizer.classList.remove('dragging');
+        document.body.style.cursor='';
+        document.body.style.userSelect='';
+        try{ localStorage.setItem('neon_sidebar_width', sidebar.offsetWidth); }catch{}
+      }
+    });
+    // touch support
+    resizer.addEventListener('touchstart', function(e){
+      isDraggingSidebar=true;
+      startX=e.touches[0].clientX;
+      startWidth=sidebar.offsetWidth;
+      resizer.classList.add('dragging');
+    }, {passive:false});
+    document.addEventListener('touchmove', function(e){
+      if(!isDraggingSidebar) return;
+      let diff=e.touches[0].clientX-startX;
+      let newWidth=startWidth+diff;
+      newWidth=Math.max(200, Math.min(600, newWidth));
+      sidebar.style.width=newWidth+'px';
+      e.preventDefault();
+    }, {passive:false});
+    document.addEventListener('touchend', function(){
+      if(isDraggingSidebar){
+        isDraggingSidebar=false;
+        resizer.classList.remove('dragging');
+        try{ localStorage.setItem('neon_sidebar_width', sidebar.offsetWidth); }catch{}
+      }
+    });
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', initSidebarResizer); } else { initSidebarResizer(); }
+})();
+
 function setColor(col,el){
   currentColor=col;
   document.querySelectorAll('.color-dot').forEach(function(d){ d.classList.remove('active'); });
@@ -511,7 +577,7 @@ function exportAllJson(){
   if(projects.length===0){ alert('Nincs mit exportálni'); return; }
   exportMode='all';
   let now=new Date(); let pad=function(n){ return String(n).padStart(2,'0'); };
-  let fname='Html_adatbazis_Bálint_Antal_Export_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
+  let fname='Bálint_Antal__Alap_Neon_Repo_02_-V15-IMPORT-_8_szin__'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
   document.getElementById('exportFileName').value=fname;
   let totalChar=projects.reduce(function(a,b){ return a+(b.charCount||0); },0);
   document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: '+projects.length+' projekt • '+totalChar+' char';
@@ -539,12 +605,12 @@ function openHtmlExportModal(){
   let now=new Date(); let pad=function(n){ return String(n).padStart(2,'0'); };
   let p=projects.find(function(x){ return x.id==currentId; });
   let realName=(p?p.name:'ALAP-REPO-V9-VALODI-NEV-SORSZAM');
-  let baseName='Bálint_Antal_Export'+realName.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60);
+  let baseName='Bálint_Antal__Alap_Neon_Repo_02_-V15-IMPORT-_8_szin_'+realName.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60);
   // Ha dátum is kell: baseName+='_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
   baseName=baseName.replace(/__+/g,'_');
   document.getElementById('htmlExportFileName').value=baseName;
   let realName2=(document.getElementById('projectName').value||'ALAP-REPO-V9-VALODI-NEV-SORSZAM');
-  let previewName='Bálint_Antal_Export'+realName2.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60)+'.html';
+  let previewName='Bálint_Antal__Alap_Neon_Repo_02_-V15-IMPORT-_8_szin_'+realName2.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60)+'.html';
   document.getElementById('htmlExportInfo').innerHTML='Fájl: '+previewName+'<br>Tartalom: 1 HTML • '+code.length+' char + 100 ablak + uBlock fix';
   document.getElementById('htmlExportModal').classList.add('show');
 }
