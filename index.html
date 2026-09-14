@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bálint_Antal__Alap_Neon_Repo_02_-V15-IMPORT-_8_szin_</title>
+<html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;padding:0!important;overflow:hidden;font-family:monospace;border:0}
@@ -101,6 +101,57 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
   justify-content:center !important;
 }
 
+
+.btn-rgb-editor{background:#111;border:2px solid #ff00ff;color:#ff00ff;padding:4px 10px;border-radius:6px;font-weight:900;font-size:11px;cursor:pointer;margin-left:8px;transition:all 0.2s;letter-spacing:0.5px}
+.btn-rgb-editor:hover{background:#ff00ff;color:#000;box-shadow:0 0 15px #ff00ff;transform:scale(1.05)}
+/* RGB EDITOR MODAL */
+#rgbEditorModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100000;align-items:center;justify-content:center}
+#rgbEditorModal.show{display:flex}
+.rgb-box{background:#0a0a0a;border:2px solid #ff00ff;border-radius:12px;padding:20px;width:480px;max-width:95vw;box-shadow:0 0 40px #ff00ff66, inset 0 0 20px #ff00ff11}
+.rgb-title{color:#ff00ff;font-weight:900;font-size:16px;margin-bottom:15px;text-align:center;letter-spacing:1px;text-shadow:0 0 10px #ff00ff}
+.rgb-preview-wrap{display:flex;gap:15px;margin-bottom:18px}
+.rgb-preview{width:90px;height:90px;border-radius:10px;border:2px solid #333;box-shadow:0 0 20px currentColor, inset 0 0 20px rgba(255,255,255,0.1);transition:all 0.2s}
+.rgb-preview-info{flex:1;display:flex;flex-direction:column;gap:6px}
+.rgb-preview-hex{font-size:22px;font-weight:900;letter-spacing:1px;color:#fff}
+.rgb-preview-rgb{font-size:12px;color:#aaa;font-family:monospace}
+.rgb-sliders{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.rgb-slider-row{display:flex;align-items:center;gap:10px}
+.rgb-slider-label{width:18px;font-weight:900;font-size:14px;text-align:center}
+.rgb-slider-label.r{color:#ff4444} .rgb-slider-label.g{color:#44ff44} .rgb-slider-label.b{color:#4444ff}
+.rgb-slider{flex:1;height:8px;border-radius:4px;-webkit-appearance:none;appearance:none;outline:none;cursor:pointer}
+.rgb-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid currentColor;box-shadow:0 0 8px currentColor;cursor:pointer}
+.rgb-slider.r{background:linear-gradient(90deg, #000000, #ff0000)}
+.rgb-slider.g{background:linear-gradient(90deg, #000000, #00ff00)}
+.rgb-slider.b{background:linear-gradient(90deg, #000000, #0000ff)}
+.rgb-value{width:48px;background:#111;border:1px solid #333;color:#fff;text-align:center;border-radius:4px;padding:4px;font-weight:700;font-family:monospace}
+.rgb-converter{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;background:#111;border-radius:8px;padding:10px;border:1px solid #222}
+.rgb-conv-item{display:flex;flex-direction:column;gap:3px}
+.rgb-conv-label{font-size:9px;color:#666;letter-spacing:0.8px;font-weight:700}
+.rgb-conv-value{background:#000;border:1px solid #333;color:#0ff;padding:5px 7px;border-radius:4px;font-family:monospace;font-size:11px;cursor:text;user-select:all}
+.rgb-hex-row{display:flex;gap:8px;align-items:center;margin-bottom:14px}
+.rgb-hex-input{flex:1;background:#111;border:2px solid #333;color:#fff;padding:8px 10px;border-radius:6px;font-family:monospace;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.rgb-hex-input:focus{border-color:#ff00ff;outline:none;box-shadow:0 0 10px #ff00ff44}
+.rgb-actions{display:flex;gap:8px}
+.btn-rgb-cancel{flex:1;background:#222;border:1px solid #444;color:#aaa;padding:10px;border-radius:6px;font-weight:700;cursor:pointer}
+.btn-rgb-apply{flex:2;background:#ff00ff;border:2px solid #ff00ff;color:#000;padding:10px;border-radius:6px;font-weight:900;cursor:pointer;letter-spacing:0.5px;box-shadow:0 0 15px #ff00ff44}
+.btn-rgb-apply:hover{background:#ff44ff;box-shadow:0 0 25px #ff00ff}
+.rgb-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.rgb-preset{width:26px;height:26px;border-radius:50%;border:2px solid #333;cursor:pointer;transition:all 0.15s}
+.rgb-preset:hover{transform:scale(1.2);border-color:#fff;box-shadow:0 0 10px currentColor}
+
+
+/* GLOW TOGGLE INSIDE RGB EDITOR */
+.btn-glow-toggle{background:#111;border:2px solid #00ff00;color:#00ff00;padding:8px 14px;border-radius:6px;font-weight:900;font-size:12px;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;width:100%;margin-top:8px}
+.btn-glow-toggle:hover{background:#00ff00;color:#000;box-shadow:0 0 15px #00ff00}
+.btn-glow-toggle.off{border-color:#666;color:#666;background:#111}
+.btn-glow-toggle.off:hover{background:#333;color:#aaa;box-shadow:none}
+/* NO GLOW MODE */
+.no-glow .color-dot{box-shadow:none !important; filter:none !important}
+.no-glow .project-card{box-shadow:none !important; filter:none !important; text-shadow:none !important}
+.no-glow .folder-title, .no-glow .btn-s, .no-glow .btn-top, .no-glow .btn-rgb-editor, .no-glow .btn-save-color{box-shadow:none !important; text-shadow:none !important}
+.no-glow .rgb-preview{box-shadow:none !important}
+.no-glow .progress-bar, .no-glow .color-dot.active{box-shadow:none !important}
+
 </style>
 <!-- 100 ABLAK + UBLOCK FIX -->
 <script>
@@ -127,15 +178,16 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <div class="color-dot" style="background:#0055ff" data-color="#0055ff" onclick="setColor('#0055ff',this)"></div>
 <div class="color-dot" style="background:#ff0000" data-color="#ff0000" onclick="setColor('#ff0000',this)"></div>
 <div class="color-dot" style="background:#00ffff" data-color="#00ffff" onclick="setColor('#00ffff',this)"></div>
+<button class="btn-rgb-editor" onclick="openRgbEditor()" title="Fejlett RGB színeditor + konvertáló">🎨 RGB EDITOR</button>
 <button class="btn-save-color" onclick="saveCurrent()">MENTÉS</button>
 </div>
 <div class="main">
 <div class="sidebar">
-<div class="folder-title">📁 Bálint Antal  Alap Neon Repo 02 -V15-IMPORT- 8 szin</div>
+<div class="folder-title">📁 Bálint Antal Alap Neon Repo 03  Szinkalkulator 8 szin</div>
 <div class="storage" id="storageText">TÁRHELY: 0.00 MB / 500 MB</div>
 <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 <div class="count">📦 TÁROLT KÓDOK: <span id="countText">0 db • 0 char</span></div>
-<input class="project-name" id="projectName" placeholder="Bálint Antal  Alap Neon Repo 02 -V15-IMPORT- 8 szin">
+<input class="project-name" id="projectName" placeholder="Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin">
 <div class="project-list" id="projectList"><div class="empty-msg">Nincs projekt - RESET után üres</div></div>
 <div class="bottom-btns">
 <button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS JSON</button>
@@ -160,6 +212,44 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 </div>
 </div>
 
+
+<div id="rgbEditorModal" onclick="if(event.target===this) closeRgbEditor()">
+<div class="rgb-box">
+<div class="rgb-title">🎨 FEJLETT RGB SZÍNEDITOR + KONVERTÁLÓ</div>
+<div class="rgb-preview-wrap">
+<div class="rgb-preview" id="rgbPreview" style="background:#ff00ff;color:#ff00ff"></div>
+<div class="rgb-preview-info">
+<div class="rgb-preview-hex" id="rgbPreviewHex">#FF00FF</div>
+<div class="rgb-preview-rgb" id="rgbPreviewRgb">rgb(255, 0, 255)</div>
+<div class="rgb-preview-rgb" id="rgbPreviewHsl">hsl(300, 100%, 50%)</div>
+<div class="rgb-presets" id="rgbPresets"></div>
+</div>
+</div>
+<div class="rgb-hex-row">
+<input class="rgb-hex-input" id="rgbHexInput" value="#FF00FF" maxlength="7" placeholder="#RRGGBB" oninput="fromHexInput(this.value)">
+<input type="color" id="nativeColorPicker" value="#ff00ff" style="width:42px;height:38px;border:2px solid #333;border-radius:6px;background:#111;padding:2px;cursor:pointer" oninput="fromNativePicker(this.value)">
+</div>
+<div class="rgb-sliders">
+<div class="rgb-slider-row"><span class="rgb-slider-label r">R</span><input type="range" class="rgb-slider r" id="sliderR" min="0" max="255" value="255" style="color:#ff4444" oninput="updateFromSliders()"><input class="rgb-value" id="valueR" type="number" min="0" max="255" value="255" oninput="updateFromNumber('r')"></div>
+<div class="rgb-slider-row"><span class="rgb-slider-label g">G</span><input type="range" class="rgb-slider g" id="sliderG" min="0" max="255" value="0" style="color:#44ff44" oninput="updateFromSliders()"><input class="rgb-value" id="valueG" type="number" min="0" max="255" value="0" oninput="updateFromNumber('g')"></div>
+<div class="rgb-slider-row"><span class="rgb-slider-label b">B</span><input type="range" class="rgb-slider b" id="sliderB" min="0" max="255" value="255" style="color:#4444ff" oninput="updateFromSliders()"><input class="rgb-value" id="valueB" type="number" min="0" max="255" value="255" oninput="updateFromNumber('b')"></div>
+</div>
+<div class="rgb-converter">
+<div class="rgb-conv-item"><span class="rgb-conv-label">HEX</span><div class="rgb-conv-value" id="convHex" onclick="copyText(this)">#FF00FF</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">RGB</span><div class="rgb-conv-value" id="convRgb" onclick="copyText(this)">rgb(255, 0, 255)</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">HSL</span><div class="rgb-conv-value" id="convHsl" onclick="copyText(this)">hsl(300, 100%, 50%)</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">HSLA</span><div class="rgb-conv-value" id="convHsla" onclick="copyText(this)">hsla(300, 100%, 50%, 1)</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">CMYK (approx)</span><div class="rgb-conv-value" id="convCmyk" onclick="copyText(this)">0%, 100%, 0%, 0%</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">INT / DEC</span><div class="rgb-conv-value" id="convInt" onclick="copyText(this)">16711935</div></div>
+</div>
+<button class="btn-glow-toggle" id="glowToggleBtn" onclick="toggleGlow()" title="Neon glow ki/be - a teljes appban">💡 GLOW: BE - KATT A KIKAPCSOLÁSHOZ</button>
+<div class="rgb-actions">
+<button class="btn-rgb-cancel" onclick="closeRgbEditor()">MÉGSE</button>
+<button class="btn-rgb-apply" onclick="applyRgbColor()">✓ ALKALMAZÁS NÉV SZÍNEKÉNT</button>
+</div>
+</div>
+</div>
+
 <div id="exportModal" onclick="if(event.target===this) closeExportModal()">
 <div class="export-box">
 <div class="export-title">📥 EXPORT JSON</div>
@@ -180,6 +270,44 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <div class="export-btns">
 <button class="btn-cancel" onclick="closeHtmlExportModal()">MÉGSE</button>
 <button class="btn-export" style="background:#0055ff" onclick="doHtmlExport()">EXPORT HTML</button>
+</div>
+</div>
+</div>
+
+
+<div id="rgbEditorModal" onclick="if(event.target===this) closeRgbEditor()">
+<div class="rgb-box">
+<div class="rgb-title">🎨 FEJLETT RGB SZÍNEDITOR + KONVERTÁLÓ</div>
+<div class="rgb-preview-wrap">
+<div class="rgb-preview" id="rgbPreview" style="background:#ff00ff;color:#ff00ff"></div>
+<div class="rgb-preview-info">
+<div class="rgb-preview-hex" id="rgbPreviewHex">#FF00FF</div>
+<div class="rgb-preview-rgb" id="rgbPreviewRgb">rgb(255, 0, 255)</div>
+<div class="rgb-preview-rgb" id="rgbPreviewHsl">hsl(300, 100%, 50%)</div>
+<div class="rgb-presets" id="rgbPresets"></div>
+</div>
+</div>
+<div class="rgb-hex-row">
+<input class="rgb-hex-input" id="rgbHexInput" value="#FF00FF" maxlength="7" placeholder="#RRGGBB" oninput="fromHexInput(this.value)">
+<input type="color" id="nativeColorPicker" value="#ff00ff" style="width:42px;height:38px;border:2px solid #333;border-radius:6px;background:#111;padding:2px;cursor:pointer" oninput="fromNativePicker(this.value)">
+</div>
+<div class="rgb-sliders">
+<div class="rgb-slider-row"><span class="rgb-slider-label r">R</span><input type="range" class="rgb-slider r" id="sliderR" min="0" max="255" value="255" style="color:#ff4444" oninput="updateFromSliders()"><input class="rgb-value" id="valueR" type="number" min="0" max="255" value="255" oninput="updateFromNumber('r')"></div>
+<div class="rgb-slider-row"><span class="rgb-slider-label g">G</span><input type="range" class="rgb-slider g" id="sliderG" min="0" max="255" value="0" style="color:#44ff44" oninput="updateFromSliders()"><input class="rgb-value" id="valueG" type="number" min="0" max="255" value="0" oninput="updateFromNumber('g')"></div>
+<div class="rgb-slider-row"><span class="rgb-slider-label b">B</span><input type="range" class="rgb-slider b" id="sliderB" min="0" max="255" value="255" style="color:#4444ff" oninput="updateFromSliders()"><input class="rgb-value" id="valueB" type="number" min="0" max="255" value="255" oninput="updateFromNumber('b')"></div>
+</div>
+<div class="rgb-converter">
+<div class="rgb-conv-item"><span class="rgb-conv-label">HEX</span><div class="rgb-conv-value" id="convHex" onclick="copyText(this)">#FF00FF</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">RGB</span><div class="rgb-conv-value" id="convRgb" onclick="copyText(this)">rgb(255, 0, 255)</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">HSL</span><div class="rgb-conv-value" id="convHsl" onclick="copyText(this)">hsl(300, 100%, 50%)</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">HSLA</span><div class="rgb-conv-value" id="convHsla" onclick="copyText(this)">hsla(300, 100%, 50%, 1)</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">CMYK (approx)</span><div class="rgb-conv-value" id="convCmyk" onclick="copyText(this)">0%, 100%, 0%, 0%</div></div>
+<div class="rgb-conv-item"><span class="rgb-conv-label">INT / DEC</span><div class="rgb-conv-value" id="convInt" onclick="copyText(this)">16711935</div></div>
+</div>
+<button class="btn-glow-toggle" id="glowToggleBtn" onclick="toggleGlow()" title="Neon glow ki/be - a teljes appban">💡 GLOW: BE - KATT A KIKAPCSOLÁSHOZ</button>
+<div class="rgb-actions">
+<button class="btn-rgb-cancel" onclick="closeRgbEditor()">MÉGSE</button>
+<button class="btn-rgb-apply" onclick="applyRgbColor()">✓ ALKALMAZÁS NÉV SZÍNEKÉNT</button>
 </div>
 </div>
 </div>
@@ -505,6 +633,178 @@ function selectProject(id){
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', initSidebarResizer); } else { initSidebarResizer(); }
 })();
 
+
+let currentRgb = {r:255,g:0,b:255};
+
+
+let glowEnabled=true;
+function toggleGlow(){
+  glowEnabled=!glowEnabled;
+  let btn=document.getElementById('glowToggleBtn');
+  if(glowEnabled){
+    document.body.classList.remove('no-glow');
+    if(btn){ btn.textContent='💡 GLOW: BE - KATT A KIKAPCSOLÁSHOZ'; btn.classList.remove('off'); }
+    try{ localStorage.setItem('neon_glow_enabled','1'); }catch{}
+  } else {
+    document.body.classList.add('no-glow');
+    if(btn){ btn.textContent='💡 GLOW: KI - KATT A BEKAPCSOLÁSHOZ'; btn.classList.add('off'); }
+    try{ localStorage.setItem('neon_glow_enabled','0'); }catch{}
+  }
+}
+function initGlow(){
+  try{
+    let saved=localStorage.getItem('neon_glow_enabled');
+    if(saved==='0'){
+      glowEnabled=true;
+      // small delay to ensure btn exists
+      setTimeout(()=>{ toggleGlow(); }, 100);
+    }
+  }catch{}
+}
+
+function openRgbEditor(){
+  let cur = window.currentColor || '#ff00ff';
+  try{
+    let rgb = hexToRgb(cur);
+    if(rgb){ currentRgb={r:rgb.r,g:rgb.g,b:rgb.b}; }
+  }catch{}
+  syncRgbUI();
+  document.getElementById('rgbEditorModal').classList.add('show');
+  buildPresets();
+}
+function closeRgbEditor(){ document.getElementById('rgbEditorModal').classList.remove('show'); }
+
+function hexToRgb(hex){
+  hex=hex.replace('#','').trim();
+  if(hex.length===3) hex=hex.split('').map(c=>c+c).join('');
+  if(hex.length!==6) return null;
+  let r=parseInt(hex.slice(0,2),16), g=parseInt(hex.slice(2,4),16), b=parseInt(hex.slice(4,6),16);
+  if(isNaN(r)||isNaN(g)||isNaN(b)) return null;
+  return {r,g,b};
+}
+function rgbToHex(r,g,b){
+  return '#'+[r,g,b].map(x=>{ let h=Math.max(0,Math.min(255,x)).toString(16); return h.length===1?'0'+h:h; }).join('').toUpperCase();
+}
+function rgbToHsl(r,g,b){
+  r/=255; g/=255; b/=255;
+  let max=Math.max(r,g,b), min=Math.min(r,g,b), h,s,l=(max+min)/2;
+  if(max===min){ h=s=0; } else {
+    let d=max-min;
+    s=l>0.5? d/(2-max-min) : d/(max+min);
+    switch(max){
+      case r: h=(g-b)/d + (g<b?6:0); break;
+      case g: h=(b-r)/d + 2; break;
+      case b: h=(r-g)/d + 4; break;
+    }
+    h/=6;
+  }
+  return {h:Math.round(h*360), s:Math.round(s*100), l:Math.round(l*100)};
+}
+function syncRgbUI(){
+  let r=currentRgb.r, g=currentRgb.g, b=currentRgb.b;
+  document.getElementById('sliderR').value=r; document.getElementById('valueR').value=r;
+  document.getElementById('sliderG').value=g; document.getElementById('valueG').value=g;
+  document.getElementById('sliderB').value=b; document.getElementById('valueB').value=b;
+  let hex=rgbToHex(r,g,b);
+  document.getElementById('rgbHexInput').value=hex;
+  try{ document.getElementById('nativeColorPicker').value=hex; }catch{}
+  let preview=document.getElementById('rgbPreview');
+  preview.style.background=hex; preview.style.color=hex;
+  document.getElementById('rgbPreviewHex').textContent=hex;
+  document.getElementById('rgbPreviewRgb').textContent='rgb('+r+', '+g+', '+b+')';
+  let hsl=rgbToHsl(r,g,b);
+  document.getElementById('rgbPreviewHsl').textContent='hsl('+hsl.h+','+hsl.s+'%,'+hsl.l+'%)';
+  // converters
+  document.getElementById('convHex').textContent=hex;
+  document.getElementById('convRgb').textContent='rgb('+r+', '+g+', '+b+')';
+  document.getElementById('convHsl').textContent='hsl('+hsl.h+', '+hsl.s+'%, '+hsl.l+'%)';
+  document.getElementById('convHsla').textContent='hsla('+hsl.h+', '+hsl.s+'%, '+hsl.l+'%, 1)';
+  // cmyk approx
+  let r1=r/255, g1=g/255, b1=b/255;
+  let k=1-Math.max(r1,g1,b1);
+  let c=k===1?0:(1-r1-k)/(1-k); let m=k===1?0:(1-g1-k)/(1-k); let y=k===1?0:(1-b1-k)/(1-k);
+  document.getElementById('convCmyk').textContent=Math.round(c*100)+'%, '+Math.round(m*100)+'%, '+Math.round(y*100)+'%, '+Math.round(k*100)+'%';
+  document.getElementById('convInt').textContent=(r<<16)|(g<<8)|b;
+  // update slider backgrounds to show current color mix
+  document.getElementById('sliderR').style.background='linear-gradient(90deg, rgb(0,'+g+','+b+'), rgb(255,'+g+','+b+'))';
+  document.getElementById('sliderG').style.background='linear-gradient(90deg, rgb('+r+',0,'+b+'), rgb('+r+',255,'+b+'))';
+  document.getElementById('sliderB').style.background='linear-gradient(90deg, rgb('+r+','+g+',0), rgb('+r+','+g+',255))';
+}
+function updateFromSliders(){
+  currentRgb.r=parseInt(document.getElementById('sliderR').value)||0;
+  currentRgb.g=parseInt(document.getElementById('sliderG').value)||0;
+  currentRgb.b=parseInt(document.getElementById('sliderB').value)||0;
+  syncRgbUI();
+}
+function updateFromNumber(ch){
+  let v=parseInt(document.getElementById('value'+ch.toUpperCase()).value)||0;
+  v=Math.max(0,Math.min(255,v));
+  currentRgb[ch]=v;
+  syncRgbUI();
+}
+function fromHexInput(val){
+  val=val.trim();
+  if(!val.startsWith('#')) val='#'+val;
+  if(val.length===4 || val.length===7){
+    let rgb=hexToRgb(val);
+    if(rgb){ currentRgb=rgb; syncRgbUI(); }
+  }
+}
+function fromNativePicker(val){
+  let rgb=hexToRgb(val);
+  if(rgb){ currentRgb=rgb; syncRgbUI(); }
+}
+function buildPresets(){
+  let presets=['#ffffff','#ff9900','#ff00ff','#ffff00','#00ff00','#0055ff','#ff0000','#00ffff','#ff0040','#88ff00','#0088ff','#ff0088','#000000','#333333','#888888','#ffdd00'];
+  let cont=document.getElementById('rgbPresets');
+  cont.innerHTML='';
+  presets.forEach(c=>{
+    let d=document.createElement('div');
+    d.className='rgb-preset';
+    d.style.background=c;
+    d.style.color=c;
+    d.title=c;
+    d.onclick=()=>{ let rgb=hexToRgb(c); if(rgb){ currentRgb=rgb; syncRgbUI(); } };
+    cont.appendChild(d);
+  });
+}
+function copyText(el){
+  try{ navigator.clipboard.writeText(el.textContent); el.style.color='#0f0'; setTimeout(()=>el.style.color='#0ff',800); }catch{ let r=document.createRange(); r.selectNodeContents(el); let s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+}
+function applyRgbColor(){
+  let hex=rgbToHex(currentRgb.r,currentRgb.g,currentRgb.b);
+  // Use existing setColor logic
+  try{
+    window.currentColor=hex;
+    if(typeof setColor==='function'){
+      // create fake dot
+      let fake={}; 
+      document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));
+      // if custom color dot exists, update it, otherwise create new visual custom dot
+      let existing=document.getElementById('customColorDot');
+      if(!existing){
+        let bar=document.querySelector('.color-bar');
+        existing=document.createElement('div');
+        existing.id='customColorDot';
+        existing.className='color-dot active';
+        existing.style.background=hex;
+        existing.setAttribute('data-color',hex);
+        existing.onclick=function(){ setColor(hex,this); };
+        // insert before rgb button
+        let btn=document.querySelector('.btn-rgb-editor');
+        bar.insertBefore(existing, btn);
+      } else {
+        existing.style.background=hex;
+        existing.setAttribute('data-color',hex);
+        existing.classList.add('active');
+        existing.onclick=function(){ setColor(hex,this); };
+      }
+      if(typeof setColor==='function') setColor(hex, existing);
+    }
+  }catch(e){ console.error(e); }
+  closeRgbEditor();
+}
+
 function setColor(col,el){
   currentColor=col;
   document.querySelectorAll('.color-dot').forEach(function(d){ d.classList.remove('active'); });
@@ -577,7 +877,7 @@ function exportAllJson(){
   if(projects.length===0){ alert('Nincs mit exportálni'); return; }
   exportMode='all';
   let now=new Date(); let pad=function(n){ return String(n).padStart(2,'0'); };
-  let fname='Bálint_Antal__Alap_Neon_Repo_02_-V15-IMPORT-_8_szin__'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
+  let fname='Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
   document.getElementById('exportFileName').value=fname;
   let totalChar=projects.reduce(function(a,b){ return a+(b.charCount||0); },0);
   document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: '+projects.length+' projekt • '+totalChar+' char';
@@ -605,12 +905,12 @@ function openHtmlExportModal(){
   let now=new Date(); let pad=function(n){ return String(n).padStart(2,'0'); };
   let p=projects.find(function(x){ return x.id==currentId; });
   let realName=(p?p.name:'ALAP-REPO-V9-VALODI-NEV-SORSZAM');
-  let baseName='Bálint_Antal__Alap_Neon_Repo_02_-V15-IMPORT-_8_szin_'+realName.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60);
+  let baseName='Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin_'+realName.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60);
   // Ha dátum is kell: baseName+='_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
   baseName=baseName.replace(/__+/g,'_');
   document.getElementById('htmlExportFileName').value=baseName;
   let realName2=(document.getElementById('projectName').value||'ALAP-REPO-V9-VALODI-NEV-SORSZAM');
-  let previewName='Bálint_Antal__Alap_Neon_Repo_02_-V15-IMPORT-_8_szin_'+realName2.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60)+'.html';
+  let previewName='Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin'+realName2.replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60)+'.html';
   document.getElementById('htmlExportInfo').innerHTML='Fájl: '+previewName+'<br>Tartalom: 1 HTML • '+code.length+' char + 100 ablak + uBlock fix';
   document.getElementById('htmlExportModal').classList.add('show');
 }
