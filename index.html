@@ -190,7 +190,7 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <input class="project-name" id="projectName" placeholder="Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin">
 <div class="project-list" id="projectList"><div class="empty-msg">Nincs projekt - RESET után üres</div></div>
 <div class="bottom-btns">
-<button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS JSON</button>
+<button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS + JSON</button>
 <button class="btn-s" style="background:#333;color:#fff" onclick="newProject()">ÚJ</button>
 <button class="btn-s" style="background:#cc0000;color:#fff" onclick="deleteProject()">TÖRÖL</button>
 </div>
@@ -199,8 +199,8 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <button class="btn-s" style="background:#7700ff;color:#fff" onclick="exportAllJson()">EXPORT</button>
 </div>
 <div class="bottom-btns2">
-<button class="btn-s" style="background:#661111;color:#ff6666" onclick="edgeMode()">⚠️ EDGE</button>
-<button class="btn-s" style="background:#330000;color:#ff4444" onclick="resetAll()">RESET</button>
+<button class="btn-s" style="background:#550000;color:#ffaa00" onclick="if(typeof openEdgeModal==='function') openEdgeModal(); else alert('EDGE modal')">⚠️ EDGE</button>
+<button class="btn-s" style="background:#330000;color:#ff4444" onclick="if(confirm('BIZTOS TÖRLÖD AZ ÖSSZESET?')){localStorage.clear(); try{indexedDB.deleteDatabase('neonRepo');}catch{}; location.reload();}">RESET</button>
 </div>
 </div>
 <div id="sidebarResizer" title="Húzd jobbra-balra az ablakméret váltáshoz"></div>
@@ -877,28 +877,40 @@ function exportAllJson(){
   if(projects.length===0){ alert('Nincs mit exportálni'); return; }
   exportMode='all';
   let now=new Date(); let pad=function(n){ return String(n).padStart(2,'0'); };
-  let fname='Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
+  let db=projects.length;
+  let fname='Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin_'+db+'db_'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'_'+pad(now.getHours())+'-'+pad(now.getMinutes());
   document.getElementById('exportFileName').value=fname;
   let totalChar=projects.reduce(function(a,b){ return a+(b.charCount||0); },0);
-  document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: '+projects.length+' projekt • '+totalChar+' char';
+  document.getElementById('exportInfo').innerHTML='Fájl: '+fname+'.json<br>Tartalom: '+db+' db projekt • '+totalChar+' char (TELJES LISTA)';
   document.getElementById('exportModal').classList.add('show');
 }
+
 function closeExportModal(){ document.getElementById('exportModal').classList.remove('show'); }
 function doExport(){
   let fname=document.getElementById('exportFileName').value.trim()||'export';
   if(!fname.toLowerCase().endsWith('.json')) fname+='.json';
   let data;
+  let meta={};
   if(exportMode=='single'){
     let p=projects.find(function(x){ return x.id==currentId; });
+    if(!p){ alert('Nincs kiválasztott projekt'); return; }
     data=[p];
-  } else { data=projects; }
-  let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    meta={export_tipus:'1db', darab:1, export_datum:new Date().toISOString(), nev:'Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin'};
+  } else {
+    data=projects;
+    meta={export_tipus:'TELJES_LISTA', darab:projects.length, ossz_char:projects.reduce(function(a,b){return a+(b.charCount||0);},0), export_datum:new Date().toISOString(), nev:'Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin'};
+  }
+  console.log('EXPORT:', exportMode, meta);
+  let exportObj={_meta:meta, _darab:meta.darab, projektek:data};
+  let blob=new Blob([JSON.stringify(exportObj,null,2)],{type:'application/json'});
   let a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
   a.download=fname;
   a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
   closeExportModal();
 }
+
 function openHtmlExportModal(){
   let code=document.getElementById('codeEditor').value;
   if(!code.trim()){ alert('Üres kód!'); return; }
