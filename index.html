@@ -161,6 +161,10 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <script>
 (function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();
 </script>
+<!-- 100 ABLAK + UBLOCK FIX -->
+<script>
+(function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();
+</script>
 </head><body>
 <div class="top-bar">
 <button class="btn-top btn-blue" onclick="openHtmlExportModal()">LETÖLTÉS (100 ABLAK + UBLOCK FIX)</button>
@@ -190,7 +194,7 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <input class="project-name" id="projectName" placeholder="Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin">
 <div class="project-list" id="projectList"><div class="empty-msg">Nincs projekt - RESET után üres</div></div>
 <div class="bottom-btns">
-<button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS + JSON</button>
+<button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS JSON</button>
 <button class="btn-s" style="background:#333;color:#fff" onclick="newProject()">ÚJ</button>
 <button class="btn-s" style="background:#cc0000;color:#fff" onclick="deleteProject()">TÖRÖL</button>
 </div>
@@ -199,8 +203,8 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <button class="btn-s" style="background:#7700ff;color:#fff" onclick="exportAllJson()">EXPORT</button>
 </div>
 <div class="bottom-btns2">
-<button class="btn-s" style="background:#550000;color:#ffaa00" onclick="if(typeof openEdgeModal==='function') openEdgeModal(); else alert('EDGE modal')">⚠️ EDGE</button>
-<button class="btn-s" style="background:#330000;color:#ff4444" onclick="if(confirm('BIZTOS TÖRLÖD AZ ÖSSZESET?')){localStorage.clear(); try{indexedDB.deleteDatabase('neonRepo');}catch{}; location.reload();}">RESET</button>
+<button class="btn-s" style="background:#661111;color:#ff6666" onclick="edgeMode()">⚠️ EDGE</button>
+<button class="btn-s" style="background:#330000;color:#ff4444" onclick="resetAll()">RESET</button>
 </div>
 </div>
 <div id="sidebarResizer" title="Húzd jobbra-balra az ablakméret váltáshoz"></div>
@@ -378,8 +382,17 @@ function parseUniversal(text){
         let res=[]; j.forEach(function(item){ let n=normalize(item); if(n) res.push(n); }); 
         if(res.length>0){ console.log('JSON tömb szétbontva', res.length); return res; }
       }
-      let keys=['projects','data','items','codes','files','list','entries'];
+      let keys=['projektek','projects','data','items','codes','files','list','entries'];
       for(let ck of keys){ if(j[ck] && Array.isArray(j[ck])){ let res=[]; j[ck].forEach(function(item){ let n=normalize(item); if(n) res.push(n); }); if(res.length>0) return res; } }
+      // ÚJ WRAPPER: {_meta, _darab, projektek}
+      if(j.projektek && Array.isArray(j.projektek)){
+        let res=[]; j.projektek.forEach(function(item){ let n=normalize(item); if(n) res.push(n); });
+        if(res.length>0){ console.log('WRAPPER projektek szétbontva', res.length, j._darab||''); return res; }
+      }
+      if(j._meta && j.projektek){
+        let res=[]; j.projektek.forEach(function(item){ let n=normalize(item); if(n) res.push(n); });
+        if(res.length>0) return res;
+      }
       let single=normalize(j); if(single) return [single];
     }catch(e){ console.log('JSON parse fail, megy HTML detektálásra', e.message); }
   }
@@ -890,27 +903,17 @@ function doExport(){
   let fname=document.getElementById('exportFileName').value.trim()||'export';
   if(!fname.toLowerCase().endsWith('.json')) fname+='.json';
   let data;
-  let meta={};
   if(exportMode=='single'){
     let p=projects.find(function(x){ return x.id==currentId; });
-    if(!p){ alert('Nincs kiválasztott projekt'); return; }
     data=[p];
-    meta={export_tipus:'1db', darab:1, export_datum:new Date().toISOString(), nev:'Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin'};
-  } else {
-    data=projects;
-    meta={export_tipus:'TELJES_LISTA', darab:projects.length, ossz_char:projects.reduce(function(a,b){return a+(b.charCount||0);},0), export_datum:new Date().toISOString(), nev:'Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin'};
-  }
-  console.log('EXPORT:', exportMode, meta);
-  let exportObj={_meta:meta, _darab:meta.darab, projektek:data};
-  let blob=new Blob([JSON.stringify(exportObj,null,2)],{type:'application/json'});
+  } else { data=projects; }
+  let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   let a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
   a.download=fname;
   a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
   closeExportModal();
 }
-
 function openHtmlExportModal(){
   let code=document.getElementById('codeEditor').value;
   if(!code.trim()){ alert('Üres kód!'); return; }
@@ -964,17 +967,40 @@ function runCode(){
 function safeCopy(){ copyCode(); }
 function edgeMode(){ alert('EDGE mód: ha file:// -ként nyitod, a preview nem megy. Használd http:// -n keresztül (Live Server)'); }
 function resetAll(){
-  if(!confirm('RESET? Minden törlődik!')) return;
+  if(!confirm('RESET? Minden törlődik! GitHub-on is?')) return;
   projects=[]; currentId=null;
-  localStorage.removeItem(LS_KEY);
-  localStorage.removeItem(LS_KEY+'_index');
-  localStorage.removeItem(LS_CUR);
-  try{ let req=indexedDB.deleteDatabase(DB_NAME); req.onsuccess=function(){ render(); }; }catch(e){}
+  try{
+    // Töröljük az összes neon-os kulcsot
+    let keys=[];
+    for(let i=0;i<localStorage.length;i++){ keys.push(localStorage.key(i)); }
+    keys.forEach(k=>{ if(k && k.startsWith('neon_')) localStorage.removeItem(k); });
+    localStorage.removeItem(LS_KEY);
+    localStorage.removeItem(LS_KEY+'_index');
+    localStorage.removeItem(LS_CUR);
+    localStorage.removeItem('neon_glow_enabled');
+  }catch(e){ console.error(e); }
+  try{
+    // A jó DB nevet töröljük - mindkettőt próba
+    let dbs=['neonRepoDB_final_fixed','neonRepo','neonRepoDB'];
+    dbs.forEach(dbName=>{
+      try{
+        let req=indexedDB.deleteDatabase(dbName);
+        req.onsuccess=function(){ console.log('DB törölve:',dbName); };
+        req.onerror=function(){ console.log('DB törlés hiba:',dbName); };
+      }catch(e){}
+    });
+  }catch(e){}
   document.getElementById('codeEditor').value='';
   document.getElementById('projectName').value='';
-  document.getElementById('previewFrame').srcdoc='';
+  let fr=document.getElementById('previewFrame');
+  if(fr) fr.srcdoc='';
   render();
+  setTimeout(()=>{ location.reload(); }, 600);
 }
+function hardResetGitHub(){
+  resetAll();
+}
+
 
 document.addEventListener('DOMContentLoaded', function(){
   let inp=document.getElementById('fileInput');
