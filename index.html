@@ -253,7 +253,7 @@ function exportMegaJSON(){
 </div>
 <div class="bottom-btns2">
 <button class="btn-s" style="background:#7700ff;color:#fff" onclick="exportAllJson()">EXPORT</button>
-<button class="btn-s" style="background:#661111;color:#ff6666" onclick="edgeMode()">⚠️ EDGE</button>
+<button class="btn-s" style="background:#b00020;color:#fff" onclick="deleteProject()">🗑️ TÖRLÉS</button>
 <button class="btn-s" style="background:#0088ff;color:#fff" onclick="window.open('https://mega.nz','_blank')">MEGA</button>
 </div>
 <div class="bottom-btns2">
@@ -606,20 +606,19 @@ function renderColorLegend(){
   let box=document.getElementById('colorLegend');
   if(!box) return;
   box.innerHTML='';
-  // FIX - DUPLA BADGE SOR
   PALETTE_8.forEach(function(hex){
     let item=document.createElement('div');
     let active=colorFilter===hex;
-    item.style.cssText='display:flex;align-items:center;gap:10px;background:#111;border:2px solid '+(active?hex:hex+'99')+';border-width:'+(active?'4px':'2px')+';border-radius:16px;padding:8px 16px;cursor:pointer;box-shadow:0 0 12px '+hex+'44;';
+    item.style.cssText='display:flex;align-items:center;gap:4px;background:#0a0a0a;border:1px solid '+(active?hex:hex+'55')+';border-width:'+(active?'2px':'1px')+';border-radius:6px;padding:3px 6px;cursor:pointer;';
     let cnt=projects.filter(function(p){ return nearestPaletteColor(p.color)===hex; }).length;
     let dot=document.createElement('span');
-    dot.style.cssText='width:20px;height:20px;border-radius:50%;background:'+hex+';box-shadow:0 0 8px '+hex+';flex-shrink:0;display:inline-block;border:2px solid #fff;';
+    dot.style.cssText='width:10px;height:10px;border-radius:50%;background:'+hex+';box-shadow:0 0 4px '+hex+';flex-shrink:0;display:inline-block;';
     let label=document.createElement('span');
-    label.style.cssText='font-size:20px;color:'+hex+';font-weight:800;white-space:nowrap;text-shadow:0 0 6px '+hex+'88;';
+    label.style.cssText='font-size:10px;color:'+hex+';font-weight:bold;white-space:nowrap;';
     label.textContent=(colorLabels[hex]||hex)+(cnt>0?' ('+cnt+')':'');
     let edit=document.createElement('span');
     edit.textContent='✏️';
-    edit.style.cssText='font-size:18px;opacity:.8;margin-left:4px;';
+    edit.style.cssText='font-size:9px;opacity:.6;margin-left:2px;';
     edit.onclick=function(ev){
       ev.stopPropagation();
       let val=prompt('Címke ehhez a színhez ('+hex+'):', colorLabels[hex]||'');
