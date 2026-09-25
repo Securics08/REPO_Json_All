@@ -3,20 +3,20 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;padding:0!important;overflow:hidden;font-family:monospace;border:0}
-.top-bar{display:flex;gap:8px;padding:8px;background:#000;border-bottom:2px solid #0f0;width:100vw;margin:0}
+.top-bar{display:flex;gap:8px;padding:8px;background:#000;border-bottom:2px solid #00ff00;width:100vw;margin:0}
 .btn-top{flex:1;padding:14px 8px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
-.btn-blue{background:#0055ff;color:#fff}.btn-yellow{background:#ffdd00;color:#000}.btn-green{background:#00ff00;color:#000}.btn-magenta{background:#ff00ff;color:#fff}
-.color-bar{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#000;border-bottom:2px solid #0f0;width:100vw;flex-wrap:wrap;row-gap:6px}
-.color-label{color:#0f0;font-size:11px;font-weight:900}
+.btn-blue{background:#00ff00;color:#fff}.btn-yellow{background:#ffdd00;color:#000}.btn-green{background:#00ff00;color:#000}.btn-magenta{background:#ff00ff;color:#fff}
+.color-bar{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#000;border-bottom:2px solid #00ff00;width:100vw;flex-wrap:wrap;row-gap:6px}
+.color-label{color:#00ff00;font-size:11px;font-weight:900}
 .color-dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid #333}
 .color-dot.active{border-color:#fff;transform:scale(1.2)}
 .btn-save-color{margin-left:auto;background:#00ffff;color:#000;padding:10px 18px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
 .main{display:flex;height:calc(100vh - 96px);width:100vw;background:#000;margin:0;border:0}
-.sidebar{width:320px;min-width:200px;max-width:600px;background:#000;border-right:2px solid #0f0;display:flex;flex-direction:column;position:relative;flex-shrink:0}
+.sidebar{width:280px;min-width:200px;max-width:600px;background:#000;border-right:2px solid #00ff00;display:flex;flex-direction:column;position:relative;flex-shrink:0}
 #sidebarResizer{width:8px;background:transparent;cursor:ew-resize;position:relative;z-index:10;margin-left:-2px;border-right:2px solid #0a0a0a;transition:background 0.2s, border-color 0.2s}
-#sidebarResizer:hover, #sidebarResizer.dragging{background:#00ff0022;border-right:2px solid #0f0;box-shadow:0 0 10px #0f088}
-#sidebarResizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:40px;background:#0f0;opacity:0.3;border-radius:2px}
-#sidebarResizer:hover::after, #sidebarResizer.dragging::after{opacity:1;box-shadow:0 0 6px #0f0}
+#sidebarResizer:hover, #sidebarResizer.dragging{background:#00ff0022;border-right:2px solid #00ff00;box-shadow:0 0 10px #00ff0088}
+#sidebarResizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:40px;background:#00ff00;opacity:0.3;border-radius:2px}
+#sidebarResizer:hover::after, #sidebarResizer.dragging::after{opacity:1;box-shadow:0 0 6px #00ff00}
 .folder-title{padding:16px;text-align:center;color:#00ffff;font-size:18px;font-weight:900}
 .storage{padding:0 12px 8px;color:#00ffff;font-size:13px;font-weight:900}
 .progress{margin:8px 12px;height:10px;background:#222;border-radius:5px;overflow:hidden}
@@ -26,8 +26,8 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 .project-list{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
 .empty-msg{border:1px dashed #333;border-radius:12px;padding:30px 10px;text-align:center;color:#555;font-size:11px}
 .proj-card{background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:12px;cursor:pointer}
-.proj-card.active{border-color:#0f0;background:#0a1a0a}
-.proj-name{color:#0f0;font-weight:900;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-card.active{border-color:#00ff00;background:#0a1a0a}
+.proj-name{color:#00ff00;font-weight:900;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .proj-meta{color:#666;font-size:9px;margin-top:4px}
 .bottom-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px;border-top:1px solid #111}
 .bottom-btns2{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 8px; margin-bottom:4px}
@@ -35,12 +35,12 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 .editor-area{flex:1;display:flex;flex-direction:column;background:#000;overflow:hidden}
 .editor-top{display:flex;justify-content:space-between;padding:8px 12px;background:#000;border-bottom:1px solid #003300}
 .editor-label{color:#ffdd00;font-size:10px;font-weight:900}
-.btn-copy{background:#0088ff;color:#fff;padding:10px 20px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
+.btn-copy{background:#00ff00;color:#fff;padding:10px 20px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
 .btn-run{background:#00ff00;color:#000;padding:10px 20px;border:none;border-radius:12px;font-weight:900;font-size:11px;cursor:pointer}
 .code-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden}
-#codeEditor{flex:1;background:#000;color:#0f0;border:none;outline:none;padding:12px;font-family:monospace;font-size:13px;resize:none;width:100%}
-#resizer{height:8px;background:#111;cursor:ns-resize;border-top:1px solid #0f0;border-bottom:1px solid #0f0;text-align:center;color:#0f0;font-size:10px}
-.preview-wrap{height:38%;display:flex;flex-direction:column;border-top:2px solid #0f0;background:#000}
+#codeEditor{flex:1;background:#000;color:#00ff00;border:none;outline:none;padding:12px;font-family:monospace;font-size:13px;resize:none;width:100%}
+#resizer{height:8px;background:#111;cursor:ns-resize;border-top:1px solid #00ff00;border-bottom:1px solid #00ff00;text-align:center;color:#00ff00;font-size:10px}
+.preview-wrap{height:38%;display:flex;flex-direction:column;border-top:2px solid #00ff00;background:#000}
 .preview-label{padding:6px 12px;background:#000;color:#00ff00;font-size:10px;font-weight:900}
 .preview-frame-wrap{flex:1;background:#000;overflow:hidden;border:none}
 .preview-frame-wrap iframe{width:100%;height:100%;border:none;background:#fff;display:block}
@@ -152,18 +152,69 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 .no-glow .rgb-preview{box-shadow:none !important}
 .no-glow .progress-bar, .no-glow .color-dot.active{box-shadow:none !important}
 
+
+/* KÉRÉS SZERINT: zöld alap, vékony egyenletes, RESET MENTÉS mellé */
+.top-bar{border-bottom:3px solid #00ff00 !important}
+.color-bar{border-bottom:3px solid #00ff00 !important}
+.sidebar{border-right:3px solid #00ff00 !important}
+.btn-top{flex:1 1 0 !important; padding:8px 4px !important; font-size:10px !important; border-radius:8px !important; height:34px !important; min-height:32px !important}
+.btn-s{padding:8px 4px !important; font-size:10px !important; border-radius:10px !important; height:36px !important; min-height:32px !important; font-weight:800 !important; display:flex; align-items:center; justify-content:center}
+.bottom-btns{display:grid !important; grid-template-columns:1fr 1fr 1fr !important; gap:6px !important; padding:8px !important}
+.bottom-btns2{display:grid !important; grid-template-columns:1fr 1fr 1fr !important; gap:6px !important; padding:0 8px 8px !important}
 </style>
 <!-- 100 ABLAK + UBLOCK FIX -->
 <script>
 (function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();
+
+function exportMegaJSON(){
+  if(projects.length===0){ alert('Nincs projekt!'); return; }
+  let dataStr = JSON.stringify(projects, null, 2);
+  let blob = new Blob([dataStr], {type:'application/json'});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement('a');
+  a.href = url;
+  a.download = 'Mentett_Json_Filek_MEGA_'+new Date().toISOString().slice(0,10)+'_'+projects.length+'db.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  alert('☁️ EXPORT MEGA kész: '+a.download+'\nMost húzd be a MEGA Mentett_Json_Filek mappába: https://mega.nz/fm/hs1VwSoA - Drag and drop!');
+}
+
 </script>
 <!-- 100 ABLAK + UBLOCK FIX -->
 <script>
 (function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();
+
+function exportMegaJSON(){
+  if(projects.length===0){ alert('Nincs projekt!'); return; }
+  let dataStr = JSON.stringify(projects, null, 2);
+  let blob = new Blob([dataStr], {type:'application/json'});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement('a');
+  a.href = url;
+  a.download = 'Mentett_Json_Filek_MEGA_'+new Date().toISOString().slice(0,10)+'_'+projects.length+'db.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  alert('☁️ EXPORT MEGA kész: '+a.download+'\nMost húzd be a MEGA Mentett_Json_Filek mappába: https://mega.nz/fm/hs1VwSoA - Drag and drop!');
+}
+
 </script>
 <!-- 100 ABLAK + UBLOCK FIX -->
 <script>
 (function(){ var _open=window.open; window.open=function(u,n,s){ try{ return _open.call(window,u,n,s); }catch(e){ var a=document.createElement('a'); a.href=u; a.target=n||'_blank'; a.click(); return null; } }; })();
+
+function exportMegaJSON(){
+  if(projects.length===0){ alert('Nincs projekt!'); return; }
+  let dataStr = JSON.stringify(projects, null, 2);
+  let blob = new Blob([dataStr], {type:'application/json'});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement('a');
+  a.href = url;
+  a.download = 'Mentett_Json_Filek_MEGA_'+new Date().toISOString().slice(0,10)+'_'+projects.length+'db.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  alert('☁️ EXPORT MEGA kész: '+a.download+'\nMost húzd be a MEGA Mentett_Json_Filek mappába: https://mega.nz/fm/hs1VwSoA - Drag and drop!');
+}
+
 </script>
 </head><body>
 <div class="top-bar">
@@ -175,11 +226,11 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <div class="color-bar">
 <span class="color-label">NÉV SZÍNE</span>
 <div class="color-dot active" style="background:#ffffff" data-color="#ffffff" onclick="setColor('#ffffff',this)"></div>
-<div class="color-dot" style="background:#ff9900" data-color="#ff9900" onclick="setColor('#ff9900',this)"></div>
+<div class="color-dot" style="background:#ff8b00" data-color="#ff8b00" onclick="setColor('#ff8b00',this)"></div>
 <div class="color-dot" style="background:#ff00ff" data-color="#ff00ff" onclick="setColor('#ff00ff',this)"></div>
 <div class="color-dot" style="background:#ffff00" data-color="#ffff00" onclick="setColor('#ffff00',this)"></div>
 <div class="color-dot" style="background:#00ff00" data-color="#00ff00" onclick="setColor('#00ff00',this)"></div>
-<div class="color-dot" style="background:#0055ff" data-color="#0055ff" onclick="setColor('#0055ff',this)"></div>
+<div class="color-dot" style="background:#0000ff" data-color="#0000ff" onclick="setColor('#0000ff',this)"></div>
 <div class="color-dot" style="background:#ff0000" data-color="#ff0000" onclick="setColor('#ff0000',this)"></div>
 <div class="color-dot" style="background:#00ffff" data-color="#00ffff" onclick="setColor('#00ffff',this)"></div>
 <button class="btn-rgb-editor" onclick="openRgbEditor()" title="Fejlett RGB színeditor + konvertáló">🎨 RGB EDITOR</button>
@@ -194,19 +245,23 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 <div class="count">📦 TÁROLT KÓDOK: <span id="countText">0 db • 0 char</span></div>
 <input class="project-name" id="projectName" placeholder="Bálint_Antal_Alap_Neon_Repo_03__Szinkalkukator_8_szin">
 <div class="project-list" id="projectList"><div class="empty-msg">Nincs projekt - RESET után üres</div></div>
+
 <div class="bottom-btns">
 <button class="btn-s" style="background:#0066ff;color:#fff" onclick="saveAndExport()">MENTÉS JSON</button>
 <button class="btn-s" style="background:#333;color:#fff" onclick="newProject()">ÚJ</button>
-<button class="btn-s" style="background:#cc0000;color:#fff" onclick="deleteProject()">TÖRÖL</button>
-</div>
-<div class="bottom-btns2">
 <button class="btn-s" style="background:#cc7700;color:#fff" onclick="importJson()">IMPORT</button>
-<button class="btn-s" style="background:#7700ff;color:#fff" onclick="exportAllJson()">EXPORT</button>
 </div>
 <div class="bottom-btns2">
+<button class="btn-s" style="background:#7700ff;color:#fff" onclick="exportAllJson()">EXPORT</button>
 <button class="btn-s" style="background:#661111;color:#ff6666" onclick="edgeMode()">⚠️ EDGE</button>
-<button class="btn-s" style="background:#330000;color:#ff4444" onclick="resetAll()">RESET</button>
+<button class="btn-s" style="background:#0088ff;color:#fff" onclick="window.open('https://mega.nz','_blank')">MEGA</button>
 </div>
+<div class="bottom-btns2">
+<button class="btn-s" style="background:#8800ff;color:#fff" onclick="window.open('https://github.com','_blank')">GitHub</button>
+<button class="btn-s" style="background:#00ffff;color:#000" onclick="saveCurrent()">MENTÉS</button>
+<button class="btn-s" style="background:#ff0000;color:#fff" onclick="resetAll()">🔴 RESET</button>
+</div>
+
 </div>
 <div id="sidebarResizer" title="Húzd jobbra-balra az ablakméret váltáshoz"></div>
 <div class="editor-area">
@@ -268,13 +323,13 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 </div>
 
 <div id="htmlExportModal" onclick="if(event.target===this) closeHtmlExportModal()">
-<div class="export-box" style="border-color:#0055ff;box-shadow:0 0 30px #0055ff44">
-<div class="export-title" style="color:#0055ff">🌐 EXPORT HTML (100 ABLAK + UBLOCK FIX)</div>
-<input class="export-input" id="htmlExportFileName" value="" style="border-color:#0055ff">
+<div class="export-box" style="border-color:#00ff00;box-shadow:0 0 30px #00ff0044">
+<div class="export-title" style="color:#00ff00">🌐 EXPORT HTML (100 ABLAK + UBLOCK FIX)</div>
+<input class="export-input" id="htmlExportFileName" value="" style="border-color:#00ff00">
 <div class="export-info" id="htmlExportInfo">Fájl: ...</div>
 <div class="export-btns">
 <button class="btn-cancel" onclick="closeHtmlExportModal()">MÉGSE</button>
-<button class="btn-export" style="background:#0055ff" onclick="doHtmlExport()">EXPORT HTML</button>
+<button class="btn-export" style="background:#00ff00" onclick="doHtmlExport()">EXPORT HTML</button>
 </div>
 </div>
 </div>
@@ -294,7 +349,7 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 </div>
 <div class="rgb-hex-row">
 <input class="rgb-hex-input" id="rgbHexInput" value="#FF00FF" maxlength="7" placeholder="#RRGGBB" oninput="fromHexInput(this.value)">
-<input type="color" id="nativeColorPicker" value="#ff00ff" style="width:42px;height:38px;border:2px solid #333;border-radius:6px;background:#111;padding:2px;cursor:pointer" oninput="fromNativePicker(this.value)">
+<input type="color" id="nativeColorPicker2" value="#ff00ff" style="width:42px;height:38px;border:2px solid #333;border-radius:6px;background:#111;padding:2px;cursor:pointer" oninput="fromNativePicker(this.value)">
 </div>
 <div class="rgb-sliders">
 <div class="rgb-slider-row"><span class="rgb-slider-label r">R</span><input type="range" class="rgb-slider r" id="sliderR" min="0" max="255" value="255" style="color:#ff4444" oninput="updateFromSliders()"><input class="rgb-value" id="valueR" type="number" min="0" max="255" value="255" oninput="updateFromNumber('r')"></div>
@@ -330,13 +385,13 @@ html,body{width:100vw;height:100vh;background:#000!important;margin:0!important;
 </div>
 
 <div id="htmlExportModal" onclick="if(event.target===this) closeHtmlExportModal()">
-<div class="export-box" style="border-color:#0055ff;box-shadow:0 0 30px #0055ff44">
-<div class="export-title" style="color:#0055ff">🌐 EXPORT HTML (100 ABLAK + UBLOCK FIX)</div>
-<input class="export-input" id="htmlExportFileName" value="" style="border-color:#0055ff">
+<div class="export-box" style="border-color:#00ff00;box-shadow:0 0 30px #00ff0044">
+<div class="export-title" style="color:#00ff00">🌐 EXPORT HTML (100 ABLAK + UBLOCK FIX)</div>
+<input class="export-input" id="htmlExportFileName" value="" style="border-color:#00ff00">
 <div class="export-info" id="htmlExportInfo">Fájl: ...</div>
 <div class="export-btns">
 <button class="btn-cancel" onclick="closeHtmlExportModal()">MÉGSE</button>
-<button class="btn-export" style="background:#0055ff" onclick="doHtmlExport()">EXPORT HTML</button>
+<button class="btn-export" style="background:#00ff00" onclick="doHtmlExport()">EXPORT HTML</button>
 </div>
 </div>
 </div>
@@ -519,7 +574,7 @@ function forceRestoreDB(){
   }catch(e){ alert('Restore hiba: '+e.message); }
 }
 
-let PALETTE_8=['#ffffff','#ff9900','#ff00ff','#ffff00','#00ff00','#0055ff','#ff0000','#00ffff'];
+let PALETTE_8=['#ffffff','#ff8b00','#ff00ff','#ffff00','#00ff00','#0000ff','#ff0000','#00ffff'];
 let colorFilter=null;
 let colorLabels={};
 try{ let s=localStorage.getItem('neon_color_labels'); if(s) colorLabels=JSON.parse(s); }catch(e){}
@@ -551,19 +606,20 @@ function renderColorLegend(){
   let box=document.getElementById('colorLegend');
   if(!box) return;
   box.innerHTML='';
+  // FIX - DUPLA BADGE SOR
   PALETTE_8.forEach(function(hex){
     let item=document.createElement('div');
     let active=colorFilter===hex;
-    item.style.cssText='display:flex;align-items:center;gap:4px;background:#0a0a0a;border:1px solid '+(active?hex:hex+'55')+';border-width:'+(active?'2px':'1px')+';border-radius:6px;padding:3px 6px;cursor:pointer;';
+    item.style.cssText='display:flex;align-items:center;gap:10px;background:#111;border:2px solid '+(active?hex:hex+'99')+';border-width:'+(active?'4px':'2px')+';border-radius:16px;padding:8px 16px;cursor:pointer;box-shadow:0 0 12px '+hex+'44;';
     let cnt=projects.filter(function(p){ return nearestPaletteColor(p.color)===hex; }).length;
     let dot=document.createElement('span');
-    dot.style.cssText='width:10px;height:10px;border-radius:50%;background:'+hex+';box-shadow:0 0 4px '+hex+';flex-shrink:0;display:inline-block;';
+    dot.style.cssText='width:20px;height:20px;border-radius:50%;background:'+hex+';box-shadow:0 0 8px '+hex+';flex-shrink:0;display:inline-block;border:2px solid #fff;';
     let label=document.createElement('span');
-    label.style.cssText='font-size:10px;color:'+hex+';font-weight:bold;white-space:nowrap;';
+    label.style.cssText='font-size:20px;color:'+hex+';font-weight:800;white-space:nowrap;text-shadow:0 0 6px '+hex+'88;';
     label.textContent=(colorLabels[hex]||hex)+(cnt>0?' ('+cnt+')':'');
     let edit=document.createElement('span');
     edit.textContent='✏️';
-    edit.style.cssText='font-size:9px;opacity:.6;margin-left:2px;';
+    edit.style.cssText='font-size:18px;opacity:.8;margin-left:4px;';
     edit.onclick=function(ev){
       ev.stopPropagation();
       let val=prompt('Címke ehhez a színhez ('+hex+'):', colorLabels[hex]||'');
@@ -584,7 +640,7 @@ function renderColorLegend(){
   if(colorFilter){
     let clearBtn=document.createElement('div');
     clearBtn.textContent='✕ ÖSSZES';
-    clearBtn.style.cssText='display:flex;align-items:center;font-size:10px;color:#0f0;font-weight:bold;cursor:pointer;padding:3px 8px;border:1px solid #0f0;border-radius:6px;';
+    clearBtn.style.cssText='display:flex;align-items:center;font-size:10px;color:#00ff00;font-weight:bold;cursor:pointer;padding:3px 8px;border:1px solid #00ff00;border-radius:6px;';
     clearBtn.onclick=function(){ colorFilter=null; render(); };
     box.appendChild(clearBtn);
   }
@@ -606,7 +662,7 @@ function render(){
       div.className='proj-card'+(p.id==currentId?' active':'');
       // SORSZÁMOZÁS + VALÓDI NÉV
       let displayName=(idx+1)+'. '+(p.name||'Névtelen');
-      div.innerHTML='<div class="proj-name" style="color:'+(p.color||'#0f0')+'">'+displayName+'</div><div class="proj-meta">'+(p.charCount||0)+' char</div>';
+      div.innerHTML='<div class="proj-name" style="color:'+(p.color||'#00ff00')+'">'+displayName+'</div><div class="proj-meta">'+(p.charCount||0)+' char</div>';
       div.onclick=function(){ selectProject(p.id); };
       list.appendChild(div);
     });
@@ -841,7 +897,7 @@ function fromNativePicker(val){
   if(rgb){ currentRgb=rgb; syncRgbUI(); }
 }
 function buildPresets(){
-  let presets=['#ffffff','#ff9900','#ff00ff','#ffff00','#00ff00','#0055ff','#ff0000','#00ffff','#ff0040','#88ff00','#0088ff','#ff0088','#000000','#333333','#888888','#ffdd00'];
+  let presets=['#ffffff','#ff8b00','#ff00ff','#ffff00','#00ff00','#0000ff','#ff0000','#00ffff','#ff0040','#88ff00','#00ff00','#ff0088','#000000','#333333','#888888','#ffdd00'];
   let cont=document.getElementById('rgbPresets');
   cont.innerHTML='';
   presets.forEach(c=>{
@@ -855,7 +911,7 @@ function buildPresets(){
   });
 }
 function copyText(el){
-  try{ navigator.clipboard.writeText(el.textContent); el.style.color='#0f0'; setTimeout(()=>el.style.color='#0ff',800); }catch{ let r=document.createRange(); r.selectNodeContents(el); let s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  try{ navigator.clipboard.writeText(el.textContent); el.style.color='#00ff00'; setTimeout(()=>el.style.color='#0ff',800); }catch{ let r=document.createRange(); r.selectNodeContents(el); let s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }
 }
 function applyRgbColor(){
   let hex=rgbToHex(currentRgb.r,currentRgb.g,currentRgb.b);
@@ -1147,7 +1203,36 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
   document.addEventListener('dragover', function(e){ e.preventDefault(); });
-  document.addEventListener('drop', function(e){
+  
+document.addEventListener('drop', function(e){
+  e.preventDefault();
+  let files = Array.from(e.dataTransfer.files||[]);
+  let jsonFile = files.find(f=>f.name.toLowerCase().endsWith('.json'));
+  if(jsonFile){
+    let r=new FileReader();
+    r.onload=function(ev){
+      try{
+        let imported=JSON.parse(ev.target.result);
+        if(Array.isArray(imported)){
+          let cnt=0;
+          imported.forEach(p=>{
+            if(p && (p.code || p.dataUrl)){
+              // Ha képtároló JSON (dataUrl), alakítsuk kóddá
+              if(p.dataUrl && !p.code){ p.code = '<img src="'+p.dataUrl+'" style="max-width:100%">'; }
+              projects.push({id:Date.now()+Math.floor(Math.random()*99999), name:p.name||('IMPORT_'+(projects.length+1)), code:p.code||'', color:p.color||'#ff0000', charCount:(p.code||'').length});
+              cnt++;
+            }
+          });
+          saveLS(); saveDB(); render();
+          alert('✅ MEGA JSON IMPORT: '+cnt+' db betöltve Letöltések mappából!');
+        }
+      }catch(err){ alert('JSON import hiba: '+err.message+'\nTipp: MEGA-ban Download gombbal töltsd le, ne preview-t másold!'); }
+    };
+    r.readAsText(jsonFile, 'UTF-8');
+    return;
+  }
+  // eredeti logika folytatása
+
     e.preventDefault();
     let f=e.dataTransfer.files[0];
     if(!f) return;
@@ -1186,6 +1271,495 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 });
+
+
+function exportMegaJSON(){
+  if(projects.length===0){ alert('Nincs projekt!'); return; }
+  let dataStr = JSON.stringify(projects, null, 2);
+  let blob = new Blob([dataStr], {type:'application/json'});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement('a');
+  a.href = url;
+  a.download = 'Mentett_Json_Filek_MEGA_'+new Date().toISOString().slice(0,10)+'_'+projects.length+'db.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  alert('☁️ EXPORT MEGA kész: '+a.download+'\nMost húzd be a MEGA Mentett_Json_Filek mappába: https://mega.nz/fm/hs1VwSoA - Drag and drop!');
+}
+</script>
+<script>
+/* ===== DC MENTÉS – egységes Discord modul (12in1) =====
+   TXT mentés + EREDETI megjelenítés (PNG) + JSON + KÉP → Discord webhook
+   Lebegő panel: nem változtatja meg az eredeti elrendezést. */
+(function () {
+  'use strict';
+  if (window.__DCM__) return;
+  window.__DCM__ = true;
+
+  var LS_KEY = 'discord_webhook_url';
+  var MAX_BYTES = 7.5 * 1024 * 1024;           // biztonságos Discord melléklet-limit
+  var WH_RE = /^https:\/\/(?:(?:canary|ptb)\.)?discord(?:app)?\.com\/api\/webhooks\/\d+\/[\w-]+/i;
+  var mem = {};
+
+  /* ---------- kis segédek ---------- */
+  function lsGet(k) { try { var v = localStorage.getItem(k); return v == null ? (mem[k] || '') : v; } catch (e) { return mem[k] || ''; } }
+  function lsSet(k, v) { mem[k] = v; try { localStorage.setItem(k, v); } catch (e) {} }
+  function $(s) { return document.querySelector(s); }
+  function G(name) { try { return new Function('return typeof ' + name + '!=="undefined"?' + name + ':undefined')(); } catch (e) { return undefined; } }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function stamp() { var d = new Date(); return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '_' + pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds()); }
+  function safe(s) { return String(s || 'mentes').replace(/[\\\/:*?"<>|\r\n\t]+/g, '_').replace(/\s+/g, ' ').trim().slice(0, 80) || 'mentes'; }
+  function toBlobPng(canvas) { return new Promise(function (r) { canvas.toBlob(r, 'image/png'); }); }
+  function dataUrlToBlob(d) {
+    try {
+      var a = d.split(','), m = (a[0].match(/:(.*?);/) || [])[1] || 'application/octet-stream';
+      var b = atob(a[1]), n = b.length, u = new Uint8Array(n);
+      while (n--) u[n] = b.charCodeAt(n);
+      return new Blob([u], { type: m });
+    } catch (e) { return null; }
+  }
+  function download(blob, name) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  }
+  function txtBlob(s) { return new Blob(['\ufeff' + s], { type: 'text/plain;charset=utf-8' }); }
+
+  /* ---------- állapotsor ---------- */
+  var statusEl = null;
+  function setStatus(msg, kind) {
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.style.color = kind === 'ok' ? '#3ddc84' : kind === 'err' ? '#ff6b6b' : '#aab';
+  }
+
+  /* ---------- webhook ---------- */
+  function getWebhook() {
+    var inp = document.getElementById('dcm-wh');
+    return ((inp && inp.value) || lsGet(LS_KEY) || '').trim();
+  }
+
+  /* ---------- küldés (429-kezeléssel, harmadik fél proxy nélkül) ---------- */
+  async function post(url, form) {
+    for (var i = 0; i < 4; i++) {
+      var r = await fetch(url, { method: 'POST', body: form });
+      if (r.status === 429) {
+        var j = {}; try { j = await r.json(); } catch (e) {}
+        var wait = Math.ceil((j.retry_after || 1) * 1000);
+        setStatus('⏳ Discord limit – várok ' + Math.ceil(wait / 1000) + ' mp…');
+        await sleep(wait + 250);
+        continue;
+      }
+      return r;
+    }
+    throw new Error('Túl sok kérés (429)');
+  }
+  function errText(status) {
+    if (status === 404 || status === 401) return 'a webhook érvénytelen vagy törölve lett';
+    if (status === 413) return 'a fájl túl nagy a Discord-nak';
+    if (status === 400) return 'a Discord elutasította a kérést';
+    return 'HTTP ' + status;
+  }
+  /* files: [{blob,name}] – content: üzenet szöveg */
+  async function sendFiles(files, content) {
+    var wh = getWebhook();
+    if (!wh) { setStatus('❌ Nincs webhook – illeszd be, majd 💾', 'err'); return false; }
+    if (!WH_RE.test(wh)) { setStatus('❌ Ez nem Discord webhook URL', 'err'); return false; }
+    try {
+      var form = new FormData();
+      files.forEach(function (f, i) { form.append('files[' + i + ']', f.blob, f.name); });
+      form.append('payload_json', JSON.stringify({ content: String(content || '').slice(0, 1900) }));
+      var r = await post(wh, form);
+      if (r.ok) return true;
+      setStatus('❌ Nem sikerült: ' + errText(r.status), 'err');
+      return false;
+    } catch (e) {
+      setStatus('❌ Hálózati hiba / blokkolva (adblock? offline?) – ' + (e && e.message || e), 'err');
+      return false;
+    }
+  }
+  async function sendText(text) {
+    var wh = getWebhook();
+    if (!wh) { setStatus('❌ Nincs webhook', 'err'); return false; }
+    try {
+      var r = await post(wh, (function () { var f = new FormData(); f.append('payload_json', JSON.stringify({ content: String(text).slice(0, 1900) })); return f; })());
+      return r.ok;
+    } catch (e) { return false; }
+  }
+
+  /* ---------- szöveg darabolás (nagy szövegnél több .txt) ---------- */
+  function splitText(text, base) {
+    var CH = 2500000, out = [];
+    if (text.length <= CH) return [{ blob: txtBlob(text), name: base + '.txt' }];
+    for (var i = 0, n = 1; i < text.length; i += CH, n++) out.push({ blob: txtBlob(text.slice(i, i + CH)), name: base + '_' + n + '.txt' });
+    return out;
+  }
+  /* ---------- JSON darabolás ---------- */
+  function splitJson(data, base) {
+    var whole = JSON.stringify(data, null, 1);
+    if (whole.length < MAX_BYTES / 3) return [{ blob: new Blob([whole], { type: 'application/json' }), name: base + '.json' }];
+    var arr = Array.isArray(data) ? data : Object.keys(data).map(function (k) { var o = {}; o[k] = data[k]; return o; });
+    var parts = [], cur = [], size = 0;
+    arr.forEach(function (it) {
+      var s = JSON.stringify(it); 
+      if (cur.length && size + s.length > MAX_BYTES) { parts.push(cur); cur = []; size = 0; }
+      cur.push(it); size += s.length;
+    });
+    if (cur.length) parts.push(cur);
+    return parts.map(function (p, i) {
+      var d = Array.isArray(data) ? p : Object.assign.apply(null, [{}].concat(p));
+      return { blob: new Blob([JSON.stringify(d)], { type: 'application/json' }), name: base + '_' + (i + 1) + 'of' + parts.length + '.json' };
+    });
+  }
+
+  /* ---------- html2canvas betöltés ha nincs ---------- */
+  function ensureH2C() {
+    if (window.html2canvas) return Promise.resolve(true);
+    return new Promise(function (res) {
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload = function () { res(!!window.html2canvas); };
+      s.onerror = function () { res(false); };
+      document.head.appendChild(s);
+      setTimeout(function () { res(!!window.html2canvas); }, 9000);
+    });
+  }
+  function ignorePanel(el) { return el && el.id === 'dcm-root'; }
+
+  /* ---------- tartalék: szöveg → PNG (ha nincs html2canvas) ---------- */
+  function textToPng(text) {
+    var W = 1100, pad = 24, lh = 22, c = document.createElement('canvas'), x = c.getContext('2d');
+    x.font = '15px monospace';
+    var lines = [];
+    String(text).split('\n').forEach(function (ln) {
+      if (!ln) { lines.push(''); return; }
+      var cur = '';
+      ln.split('').forEach(function (ch) { if (x.measureText(cur + ch).width > W - pad * 2) { lines.push(cur); cur = ch; } else cur += ch; });
+      lines.push(cur);
+    });
+    lines = lines.slice(0, 350);
+    c.width = W; c.height = lines.length * lh + pad * 2;
+    x.fillStyle = '#0a0a0a'; x.fillRect(0, 0, c.width, c.height);
+    x.fillStyle = '#e8e8e8'; x.font = '15px monospace';
+    lines.forEach(function (l, i) { x.fillText(l, pad, pad + 15 + i * lh); });
+    return toBlobPng(c);
+  }
+
+  /* ================= ADAPTEREK (eszközönként) =================
+     text(): {name,text}   png(): Promise<Blob|null>   json(): {name,data}
+     image(): Promise<{blob,name}|null>                                     */
+  function h2c(el, opt) {
+    return window.html2canvas(el, Object.assign({ backgroundColor: '#0a0a0a', scale: 2, useCORS: true, logging: false, ignoreElements: ignorePanel }, opt || {}))
+      .then(toBlobPng);
+  }
+  async function shotBody() {
+    if (!(await ensureH2C())) return null;
+    return h2c(document.body, { windowWidth: document.documentElement.clientWidth, windowHeight: document.documentElement.clientHeight });
+  }
+  async function shotFrame(id) {
+    var fr = document.getElementById(id);
+    try {
+      var d = fr && fr.contentDocument;
+      if (d && d.body && d.body.innerHTML.trim() && (await ensureH2C())) {
+        return await h2c(d.documentElement, { backgroundColor: null });
+      }
+    } catch (e) {}
+    return null;
+  }
+  function vaultDump(n, depth) {
+    if (!n) return '';
+    var ind = new Array(depth + 1).join('  '), out = '';
+    if (n.id !== 'root') {
+      out += ind + (n.type === 'folder' ? '[MAPPA] ' : '[JEGYZET] ') + (n.name || '') + '\n';
+      if (n.link) out += ind + '  link: ' + n.link + '\n';
+      if (n.content) out += n.content.split('\n').map(function (l) { return ind + '  ' + l; }).join('\n') + '\n';
+    }
+    (n.children || []).forEach(function (c) { out += vaultDump(c, n.id === 'root' ? depth : depth + 1); });
+    return out;
+  }
+  function vaultClean(n) {
+    if (!n || typeof n !== 'object') return n;
+    var c = Object.assign({}, n); delete c.pass;
+    if (c.children) c.children = c.children.map(vaultClean);
+    return c;
+  }
+  function areaText(id) { var e = document.getElementById(id); return e ? (e.value != null && e.tagName !== 'DIV' ? e.value : e.innerText) || '' : ''; }
+
+  var ADAPTERS = {
+    jegyzet: { /* Végtelen Jegyzet PRO */
+      test: function () { return $('#highlight') && $('#editor') && $('#editor').tagName === 'TEXTAREA'; },
+      text: function () { var n = G('current') || 'jegyzet'; return { name: n, text: $('#editor').value }; },
+      png: async function () {
+        if (!(await ensureH2C())) return null;
+        var src = $('#highlight'); if (!src) return null;
+        var bg = (getComputedStyle(document.body).getPropertyValue('--bg') || '').trim() || '#0c0c0c';
+        var cl = src.cloneNode(true);
+        cl.style.cssText += ';position:fixed;left:-99999px;top:0;width:' + src.clientWidth + 'px;height:auto;max-height:none;overflow:visible;white-space:pre-wrap;background:' + bg + ';padding:16px';
+        document.body.appendChild(cl);
+        try { return await h2c(cl, { backgroundColor: bg }); } finally { cl.remove(); }
+      },
+      json: function () { return { name: 'jegyzetek', data: G('notes') }; }
+    },
+    ultra: { /* ULTRA-NOTE PNG */
+      test: function () { return $('#editorHeader') && $('#editor') && $('#editor').isContentEditable; },
+      text: function () {
+        var h = ($('#editorHeader').innerText || '').trim(), p = h.split(' - ');
+        return { name: p[1] || 'jegyzet', text: (h ? h + '\n\n' : '') + $('#editor').innerText };
+      },
+      png: async function () {
+        if (!(await ensureH2C())) return null;
+        var ed = $('#editor'), hd = $('#editorHeader');
+        var full = document.createElement('div');
+        full.style.cssText = 'position:fixed;left:-10000px;top:0;width:' + window.innerWidth + 'px;padding:40px;display:block;background:#050505';
+        var hdr = document.createElement('div'); hdr.innerHTML = hd.innerHTML || '';
+        hdr.style.cssText = 'margin-bottom:20px;padding-bottom:10px;border-bottom:1px dashed #333';
+        var edt = document.createElement('div'); edt.innerHTML = ed.innerHTML || '<br>';
+        edt.style.cssText = 'font-family:' + (ed.style.fontFamily || 'Arial') + ';font-size:' + (ed.style.fontSize || '20px') + ';line-height:1.1;white-space:pre-wrap;height:auto;overflow:visible';
+        full.appendChild(hdr); full.appendChild(edt); document.body.appendChild(full);
+        try { return await h2c(full, { backgroundColor: '#050505', width: window.innerWidth }); } finally { full.remove(); }
+      },
+      json: function () { return { name: 'jegyzetek', data: G('notes') }; }
+    },
+    ocr: { /* Photo Translator OCR */
+      test: function () { return $('#ocrResult') && $('#imgCanvas'); },
+      text: function () {
+        var s = [], a = areaText('ocrResult').trim(), b = areaText('manualFix').trim(), t = (($('#translationBox') || {}).innerText || '').trim();
+        if (a) s.push('=== OCR EREDMÉNY ===\n' + a);
+        if (b) s.push('=== MANUÁLIS JAVÍTÁS ===\n' + b);
+        if (t && !/^Fordítás itt/i.test(t)) s.push('=== FORDÍTÁS ===\n' + t);
+        return { name: 'ocr', text: s.join('\n\n') };
+      },
+      png: shotBody,
+      json: function () { return { name: 'ocr_jegyzetek', data: G('notes') }; },
+      image: async function () {
+        var c = $('#imgCanvas'); if (!c || !c.width) return null;
+        var b = await toBlobPng(c); return b ? { blob: b, name: 'kep_' + stamp() + '.png' } : null;
+      }
+    },
+    vault: { /* Neon Vault */
+      test: function () { return $('#display-grid') && $('#editor-modal'); },
+      text: function () {
+        var v = G('vault'), open = $('#edit-content') && $('#edit-content').value.trim();
+        if (open && $('#editor-modal') && getComputedStyle($('#editor-modal')).display !== 'none')
+          return { name: safe($('#edit-name') && $('#edit-name').value || 'jegyzet'), text: $('#edit-content').value };
+        return { name: 'vault_lista', text: vaultDump(v, 0) };
+      },
+      png: shotBody,
+      json: function () { return { name: 'vault', data: vaultClean(G('vault')) }; }
+    },
+    dtools: { /* Discord Tools */
+      test: function () { return $('#inNeon') && $('#txAnsi'); },
+      text: function () {
+        var p = [['NEON', 'inNeon'], ['ANSI', 'txAnsi'], ['INI', 'txIni']], s = [];
+        p.forEach(function (x) { var v = areaText(x[1]).trim(); if (v) s.push('=== ' + x[0] + ' ===\n' + v); });
+        return { name: 'discord_tools', text: s.join('\n\n') };
+      },
+      png: shotBody
+    },
+    screenshot: { /* RGB Gamer Screenshot */
+      test: function () { return $('#wS') && $('#hS') && !$('textarea'); },
+      emptyMsg: '🎮 Itt a képernyőmentés a szerkesztőben lévő „📤 DC” gombbal megy (Teljes kép vágása ablak).',
+      text: function () { return { name: 'screenshot', text: '' }; },
+      png: async function () { return null; }
+    },
+    coderepo: { /* Neon Repo 03 – Színkalkulátor (f0) */
+      test: function () { return $('#codeEditor'); },
+      text: function () { var n = ($('#projectName') && $('#projectName').value.trim()) || 'repo'; return { name: n, text: $('#codeEditor').value }; },
+      png: async function () { return (await shotFrame('previewFrame')) || shotBody(); },
+      json: function () { return { name: 'repo', data: G('projects') }; }
+    },
+    v10: { /* V10 kód szerkesztő */
+      test: function () { return $('#preview') && $('#fileName') && $('#editor'); },
+      text: function () { return { name: ($('#fileName').value || 'kod').trim(), text: $('#editor').value }; },
+      png: async function () { return (await shotFrame('preview')) || shotBody(); }
+    },
+    galeria: { /* Képtároló DB (f4) */
+      test: function () { return $('#fileImportImg'); },
+      text: function () {
+        var P = G('PROJECTS') || [];
+        var s = P.map(function (p, i) { return (p.sorszam || i + 1) + '. ' + (p.name || '') + ' | ' + (p.size || '') + ' | ' + (p.color || ''); }).join('\n');
+        return { name: 'kepek_lista', text: s };
+      },
+      png: async function () { var im = await ADAPTERS.galeria.image(); return im ? im.blob : shotBody(); },
+      json: function () { return { name: 'kepek', data: G('PROJECTS') }; },
+      image: async function () {
+        var P = G('PROJECTS') || [], i = G('curIndex'), p = P[i];
+        if (!p || !p.dataUrl) return null;
+        var b = dataUrlToBlob(p.dataUrl); return b ? { blob: b, name: p.name || ('kep_' + stamp() + '.png') } : null;
+      }
+    },
+    coderepo2: { /* Neon Repo 2-es CYAN (f8) */
+      test: function () { return $('#fileImportHtml') && $('#previewFrame'); },
+      text: function () {
+        var P = G('PROJECTS') || [], i = G('curIndex'), p = P[i];
+        if (p && p.code) return { name: p.name || 'repo', text: p.code };
+        return { name: 'repo_lista', text: P.map(function (x, k) { return (x.sorszam || k + 1) + '. ' + x.name; }).join('\n') };
+      },
+      png: async function () { return (await shotFrame('previewFrame')) || shotBody(); },
+      json: function () { return { name: 'repo', data: G('PROJECTS') }; }
+    }
+  };
+  var ORDER = ['jegyzet', 'ultra', 'ocr', 'vault', 'dtools', 'screenshot', 'coderepo', 'v10', 'galeria', 'coderepo2'];
+  var AD = null;
+  function adapter() {
+    if (AD) return AD;
+    for (var i = 0; i < ORDER.length; i++) { try { if (ADAPTERS[ORDER[i]].test()) { AD = ADAPTERS[ORDER[i]]; return AD; } } catch (e) {} }
+    AD = { text: function () { return { name: 'oldal', text: (document.body.innerText || '').trim() }; }, png: shotBody };
+    return AD;
+  }
+  function getText() { try { var t = adapter().text(); t.text = String(t.text || ''); t.name = safe(t.name); return t; } catch (e) { return { name: 'mentes', text: '' }; } }
+  async function getPng(text) {
+    var b = null;
+    try { b = await adapter().png(); } catch (e) { b = null; }
+    if (!b && text && text.trim()) { try { b = await textToPng(text); } catch (e) {} }
+    return b;
+  }
+
+  /* ================= MŰVELETEK ================= */
+  var busy = false;
+  async function guard(fn) {
+    if (busy) { setStatus('⏳ Egy művelet még fut…'); return; }
+    busy = true;
+    try { await fn(); } catch (e) { setStatus('❌ ' + (e && e.message || e), 'err'); }
+    busy = false;
+  }
+  function need(t) { if (!t.text.trim()) { setStatus(adapter().emptyMsg || '⚠️ Üres – nincs mit menteni', 'err'); return false; } return true; }
+
+  async function actTxt() {
+    var t = getText(); if (!need(t)) return;
+    setStatus('⏳ TXT küldése…');
+    var base = t.name + '_' + stamp(), parts = splitText(t.text, base);
+    var ok = true;
+    for (var i = 0; i < parts.length && ok; i++) { ok = await sendFiles([parts[i]], '📝 **' + t.name + '** – ' + t.text.length + ' karakter' + (parts.length > 1 ? ' (' + (i + 1) + '/' + parts.length + ')' : '')); if (i < parts.length - 1) await sleep(700); }
+    if (ok) setStatus('✅ TXT elküldve Discordra: ' + t.name + '.txt', 'ok');
+    else { parts.forEach(function (p) { download(p.blob, p.name); }); setStatus('⬇️ Nem ment el – TXT letöltve, húzd Discordba', 'err'); }
+  }
+  async function actOriginal() {
+    var t = getText(), base = t.name + '_' + stamp();
+    setStatus('⏳ Eredeti megjelenítés készül…');
+    var png = await getPng(t.text);
+    var files = [];
+    if (t.text.trim()) files = files.concat(splitText(t.text, base).slice(0, 1));
+    if (png) files.push({ blob: png, name: base + '_eredeti.png' });
+    if (!files.length) { setStatus(adapter().emptyMsg || '⚠️ Nincs mit menteni (üres)', 'err'); return; }
+    setStatus('⏳ Küldés Discordra…');
+    var ok = await sendFiles(files, '🎨 **' + t.name + '** – eredeti megjelenítés' + (t.text.trim() ? ' + TXT' : ''));
+    if (ok) setStatus('✅ Eredeti (PNG' + (t.text.trim() ? ' + TXT' : '') + ') elküldve Discordra', 'ok');
+    else { files.forEach(function (f) { download(f.blob, f.name); }); setStatus('⬇️ Nem ment el – fájlok letöltve, húzd Discordba', 'err'); }
+  }
+  async function actJson() {
+    var a = adapter(), j = null, t = getText();
+    try { j = a.json && a.json(); } catch (e) {}
+    var data = j && j.data, name = (j && j.name) || t.name;
+    if (data == null || (Array.isArray(data) && !data.length) || (typeof data === 'object' && !Array.isArray(data) && !Object.keys(data).length)) {
+      if (!t.text.trim()) { setStatus('⚠️ Nincs adat a JSON-hoz', 'err'); return; }
+      data = { name: t.name, text: t.text, date: new Date().toISOString() };
+    }
+    setStatus('⏳ JSON küldése…');
+    var parts = splitJson(data, safe(name) + '_' + stamp()), ok = true;
+    for (var i = 0; i < parts.length && ok; i++) { ok = await sendFiles([parts[i]], '📦 JSON: **' + safe(name) + '**' + (parts.length > 1 ? ' (' + (i + 1) + '/' + parts.length + ')' : '')); if (i < parts.length - 1) await sleep(700); }
+    if (ok) setStatus('✅ JSON elküldve Discordra (' + parts.length + ' fájl)', 'ok');
+    else { parts.forEach(function (p) { download(p.blob, p.name); }); setStatus('⬇️ Nem ment el – JSON letöltve', 'err'); }
+  }
+  async function actImage() {
+    var a = adapter(), im = a.image ? await a.image() : null;
+    if (!im) { setStatus('⚠️ Nincs kiválasztott / betöltött kép ebben az eszközben', 'err'); return; }
+    if (im.blob.size > MAX_BYTES * 1.3) { download(im.blob, im.name); setStatus('⬇️ A kép nagyobb, mint a Discord limit – letöltve', 'err'); return; }
+    setStatus('⏳ Kép küldése…');
+    var ok = await sendFiles([im], '📸 ' + im.name);
+    if (ok) setStatus('✅ Kép elküldve Discordra: ' + im.name, 'ok');
+    else { download(im.blob, im.name); setStatus('⬇️ Nem ment el – kép letöltve', 'err'); }
+  }
+  async function actDlTxt() { var t = getText(); if (!need(t)) return; splitText(t.text, t.name + '_' + stamp()).forEach(function (p) { download(p.blob, p.name); }); setStatus('⬇️ TXT letöltve', 'ok'); }
+  async function actDlPng() {
+    var t = getText(); setStatus('⏳ PNG készül…'); var b = await getPng(t.text);
+    if (!b) { setStatus('⚠️ Nem készíthető PNG (nincs tartalom / html2canvas nem töltődött be)', 'err'); return; }
+    download(b, t.name + '_' + stamp() + '_eredeti.png'); setStatus('⬇️ PNG letöltve', 'ok');
+  }
+  async function actTest() {
+    var wh = getWebhook(); if (!wh) { setStatus('❌ Nincs webhook', 'err'); return; }
+    if (!WH_RE.test(wh)) { setStatus('❌ Ez nem Discord webhook URL', 'err'); return; }
+    setStatus('⏳ Teszt…'); var ok = await sendText('🧪 12in1 teszt – a webhook működik (' + new Date().toLocaleString('hu-HU') + ')');
+    setStatus(ok ? '✅ Teszt üzenet elment!' : '❌ A teszt nem ment el', ok ? 'ok' : 'err');
+  }
+  function actSaveWh() {
+    var inp = document.getElementById('dcm-wh'), v = (inp.value || '').trim();
+    if (!v) { setStatus('❌ Webhook URL kell!', 'err'); return; }
+    if (!WH_RE.test(v)) { setStatus('❌ Ez nem Discord webhook URL', 'err'); return; }
+    lsSet(LS_KEY, v); setStatus('✅ Webhook mentve (minden fülön érvényes)', 'ok');
+  }
+
+  /* ================= FELÜLET ================= */
+  function build() {
+    if (document.getElementById('dcm-root') || !document.body) return;
+    var css = document.createElement('style');
+    css.textContent =
+      '#dcm-root{position:fixed;right:14px;bottom:14px;z-index:2147483000;font-family:Segoe UI,Arial,sans-serif;text-align:left}' +
+      '#dcm-root *{box-sizing:border-box}' +
+      '#dcm-fab{width:auto;height:44px;padding:0 16px;border-radius:22px;border:2px solid #5865f2;background:linear-gradient(135deg,#1b1c33,#0f0f1a);color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 4px 18px rgba(88,101,242,.55);letter-spacing:.3px}' +
+      '#dcm-fab:hover{background:#5865f2}' +
+      '#dcm-panel{display:none;width:330px;max-width:calc(100vw - 28px);background:#0f0f1a;border:2px solid #5865f2;border-radius:14px;padding:12px;box-shadow:0 8px 40px rgba(0,0,0,.85),0 0 22px rgba(88,101,242,.4);color:#fff}' +
+      '#dcm-root.open #dcm-panel{display:block}#dcm-root.open #dcm-fab{display:none}' +
+      '.dcm-h{display:flex;align-items:center;justify-content:space-between;color:#7d88ff;font-weight:900;font-size:13px;margin-bottom:8px;letter-spacing:.4px}' +
+      '.dcm-x{background:none;border:none;color:#aab;font-size:18px;cursor:pointer;line-height:1;padding:0 4px}.dcm-x:hover{color:#fff}' +
+      '.dcm-row{display:flex;gap:6px;margin-top:6px}' +
+      '#dcm-wh{flex:1;min-width:0;background:#000;color:#fff;border:1px solid #5865f2;border-radius:8px;padding:8px;font-size:11px}' +
+      '.dcm-b{flex:1;border:none;border-radius:8px;padding:10px 6px;font-weight:900;font-size:11px;cursor:pointer;transition:transform .12s,filter .12s;color:#000}' +
+      '.dcm-b:hover{transform:translateY(-1px);filter:brightness(1.12)}.dcm-b:active{transform:none}' +
+      '.dcm-sm{flex:0 0 auto;padding:8px 10px;background:#5865f2;color:#fff}' +
+      '#dcm-st{margin-top:8px;font-size:11px;line-height:1.35;min-height:15px;white-space:pre-wrap;word-break:break-word;color:#aab}' +
+      '@media(max-width:520px){#dcm-panel{width:calc(100vw - 28px)}}';
+    document.head.appendChild(css);
+
+    var root = document.createElement('div'); root.id = 'dcm-root';
+    root.innerHTML =
+      '<button id="dcm-fab" title="Discord mentés">📤 DC</button>' +
+      '<div id="dcm-panel">' +
+      '<div class="dcm-h"><span>📤 DISCORD MENTÉS</span><button class="dcm-x" id="dcm-close" title="Bezár">✕</button></div>' +
+      '<div class="dcm-row" style="margin-top:0"><input id="dcm-wh" placeholder="https://discord.com/api/webhooks/..." autocomplete="off" spellcheck="false">' +
+      '<button class="dcm-b dcm-sm" id="dcm-save" title="Webhook mentése">💾</button><button class="dcm-b dcm-sm" id="dcm-test" title="Teszt üzenet">🧪</button></div>' +
+      '<div class="dcm-row"><button class="dcm-b" id="dcm-txt" style="background:#aa88ff">📝 TXT → DC</button>' +
+      '<button class="dcm-b" id="dcm-orig" style="background:linear-gradient(45deg,#00ff88,#00aaff)">🎨 EREDETI → DC</button></div>' +
+      '<div class="dcm-row"><button class="dcm-b" id="dcm-json" style="background:#ff00ff;color:#fff">📦 JSON → DC</button>' +
+      '<button class="dcm-b" id="dcm-img" style="background:#00ff00">📸 KÉP → DC</button></div>' +
+      '<div class="dcm-row"><button class="dcm-b" id="dcm-dtxt" style="background:#ffcc00">⬇️ TXT letöltés</button>' +
+      '<button class="dcm-b" id="dcm-dpng" style="background:#ffcc00">⬇️ PNG letöltés</button></div>' +
+      '<div id="dcm-st"></div></div>';
+    document.body.appendChild(root);
+    statusEl = document.getElementById('dcm-st');
+    document.getElementById('dcm-wh').value = lsGet(LS_KEY);
+
+    function on(id, fn) { document.getElementById(id).addEventListener('click', fn); }
+    on('dcm-fab', function () { root.classList.add('open'); });
+    on('dcm-close', function () { root.classList.remove('open'); });
+    on('dcm-save', actSaveWh);
+    on('dcm-test', function () { guard(actTest); });
+    on('dcm-txt', function () { guard(actTxt); });
+    on('dcm-orig', function () { guard(actOriginal); });
+    on('dcm-json', function () { guard(actJson); });
+    on('dcm-img', function () { guard(actImage); });
+    on('dcm-dtxt', function () { guard(actDlTxt); });
+    on('dcm-dpng', function () { guard(actDlPng); });
+    document.getElementById('dcm-wh').addEventListener('change', function () { var v = this.value.trim(); if (v && WH_RE.test(v)) lsSet(LS_KEY, v); });
+    /* billentyűk ne menjenek a szerkesztőbe a panel használata közben */
+    ['keydown', 'keyup', 'keypress'].forEach(function (ev) { root.addEventListener(ev, function (e) { e.stopPropagation(); }); });
+  }
+
+  /* ---------- régi függvénynevek (visszafelé kompatibilitás) ---------- */
+  window.getDiscordWebhook = getWebhook;
+  window.saveWebhook = actSaveWh;
+  window.dataURLtoBlob = dataUrlToBlob;
+  window.uploadToDiscordBlob = function (blob, filename, content) { return sendFiles([{ blob: blob, name: filename }], content); };
+  window.sendTextToDiscord = function (text) { return sendFiles(splitText(String(text || ''), 'szoveg_' + stamp()).slice(0, 1), '📝 Szöveg'); };
+  window.uploadJsonToDiscord = function () { return guard(actJson); };
+  window.uploadCurrentToDiscord = function () { return guard(actImage); };
+  window.uploadOriginalFormatToDiscord = function () { return guard(actOriginal); };
+  window.downloadCurrentImage = function () { return guard(async function () { var im = adapter().image ? await adapter().image() : null; if (im) download(im.blob, im.name); else setStatus('⚠️ Nincs kép', 'err'); }); };
+  window.DCM = { sendFiles: sendFiles, getText: getText, txt: actTxt, original: actOriginal, json: actJson, image: actImage };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+})();
 
 </script>
 </html>
