@@ -1,158 +1,815 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hu">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Securics Memória Kitakarító</title>
-<style>
-:root{--bg:#0b0f14;--card:#141b24;--line:#243040;--tx:#e6edf5;--mut:#8b9bb0;--ac:#00e5ff;--red:#ff4d5e;--ok:#3ddc84}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:16px}
-.w{max-width:860px;margin:0 auto}
-h1{font-size:22px;margin:4px 0 2px;color:var(--ac)}
-.sub{color:var(--mut);margin:0 0 14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 12px}
-.card h2{font-size:16px;margin:0 0 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.card h2 small{color:var(--mut);font-weight:400}
-.row{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line);word-break:break-all}
-.row:first-of-type{border-top:0}
-.row .n{flex:1;min-width:0}
-.row .n small{display:block;color:var(--mut);word-break:normal}
-button{font:inherit;color:var(--tx);background:#1d2733;border:1px solid var(--line);border-radius:8px;padding:9px 12px;cursor:pointer;min-height:40px}
-button:active{transform:scale(.98)}
-button.pri{background:var(--ac);color:#001418;border-color:var(--ac);font-weight:700}
-button.dng{background:var(--red);color:#fff;border-color:var(--red);font-weight:700}
-button.x{min-width:40px;padding:6px 10px;color:var(--red);font-weight:800}
-button.ok{background:#12351f!important;border-color:var(--ok)!important;color:#b8ffd2!important}
-button.warn{background:#4a3c00!important;border-color:#ffd400!important;color:#ffe766!important;font-weight:700}
-button.bad{background:var(--red)!important;border-color:var(--red)!important;color:#fff!important;font-weight:700}
-.meter i.warn{background:#ffd400}.meter i.bad{background:var(--red)}.meter i.ok{background:var(--ok)}
-.state{font-weight:700;margin-top:4px}.state.ok{color:var(--ok)}.state.warn{color:#ffd400}.state.bad{color:var(--red)}
-button.arm{background:var(--red);color:#fff;border-color:var(--red)}
-input[type=text]{width:100%;font:inherit;color:var(--tx);background:#0f151c;border:1px solid var(--line);border-radius:8px;padding:10px;min-height:42px}
-input[type=checkbox]{width:20px;height:20px;accent-color:var(--ac)}
-label.ck{display:flex;align-items:center;gap:10px;padding:8px 0}
-.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.msg{min-height:22px;color:var(--ok);margin:6px 0 0}
-.tag{background:#1d2733;border:1px solid var(--line);border-radius:99px;padding:1px 9px;font-size:12px;color:var(--mut)}
-.empty{color:var(--mut);padding:6px 0}
-.note{color:var(--mut);font-size:13px}
-.meter{height:8px;background:#0f151c;border-radius:99px;overflow:hidden;margin:6px 0}
-.meter i{display:block;height:100%;background:var(--ac);width:0}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secu Keeper — Valódi GoFile Szinkron</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --surface-3: #1f1f23;
+      --border: #27272a;
+      --border-strong: #3f3f46;
+      --text: #fafafa;
+      --text-dim: #a1a1aa;
+      --text-faint: #71717a;
+      --accent: #22c55e;
+      --accent-2: #16a34a;
+      --accent-glow: rgba(34,197,94,0.15);
+      --danger: #ef4444;
+      --warn: #f59e0b;
+      --blue: #3b82f6;
+    }
+    * { font-family: "JetBrains Mono", monospace; }
+    h1, h2, h3, .display { font-family: "Space Grotesk", sans-serif; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
 </head>
-<body>
-<div class="w">
-  <h1>🧹 Memória kitakarító</h1>
-  <p class="sub">A böngészőben ennél az oldalnál (azonos eredetnél) tárolt adatokat listázza és törli. Semmi nem hagyja el az eszközt.</p>
+<body class="bg-[var(--bg)] text-[var(--text)] min-h-screen">
+  <div id="root"></div>
 
-  <div class="card" id="cUse">
-    <h2>📊 Tárhely <small id="useTx"></small></h2>
-    <div class="meter"><i id="useBar"></i></div>
-    <div class="state" id="state"></div>
-    <div class="note" id="origin"></div>
-    <div class="note">Zöld: 50%-ig, elég a hely. Sárga: 50–75%, érdemes figyelni. Piros: 75% felett, ideje törölni (localStorage: 5 MB-hoz, összes adat: 200 MB-hoz mérve).</div>
-  </div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
 
-  <div class="card">
-    <h2>🔎 Szűrő <small>csak a névben egyező elemeket kezeli</small></h2>
-    <input type="text" id="flt" placeholder="pl. Securics, combo, OFFICE (üresen minden elem)">
-  </div>
+    const STORAGE_FILES = "keeper_files_v5";
+    const STORAGE_SETTINGS = "keeper_settings_v5";
+    const STORAGE_LOG = "keeper_log_v5";
+    const STORAGE_AUTO = "keeper_auto_v5";
+    const STORAGE_ACCOUNTS = "keeper_guest_accounts_v5";
+    const STORAGE_CURRENT = "keeper_current_account_v5";
+    const MAX_STORAGE_BYTES = 10737418240; // 10 GB
 
-  <div class="card" id="cLs"><h2>🗂 localStorage <span class="tag" id="nLs"></span></h2><div id="lLs"></div>
-    <div class="bar"><button id="dLs" class="x" style="min-width:0;padding:9px 12px">🗑 A szűrt elemek törlése</button></div></div>
+    function formatBytes(bytes) {
+      if (!bytes || bytes === 0) return "0 B";
+      const k = 1024;
+      const sizes = ["B", "KB", "MB", "GB"];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+    }
 
-  <div class="card" id="cIdb"><h2>🗄 IndexedDB (betöltött fájlok, mentések) <span class="tag" id="nIdb"></span></h2><div id="lIdb"></div>
-    <div class="bar"><button id="dIdb" class="x" style="min-width:0;padding:9px 12px">🗑 A szűrt adatbázisok törlése</button></div></div>
+    function formatDate(ts) {
+      if (!ts) return "—";
+      return new Date(ts).toLocaleString("hu-HU", {
+        year: "2-digit", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit"
+      });
+    }
 
-  <div class="card" id="cSs"><h2>⏱ sessionStorage <span class="tag" id="nSs"></span></h2><div id="lSs"></div>
-    <div class="bar"><button id="dSs" class="x" style="min-width:0;padding:9px 12px">🗑 A szűrt elemek törlése</button></div></div>
+    function addDays(days) {
+      return Date.now() + days * 24 * 60 * 60 * 1000;
+    }
 
-  <div class="card" id="cCa"><h2>📦 Gyorsítótár (Cache Storage) <span class="tag" id="nCa"></span></h2><div id="lCa"></div>
-    <div class="bar"><button id="dCa" class="x" style="min-width:0;padding:9px 12px">🗑 A szűrt gyorsítótárak törlése</button></div></div>
+    function QRCanvas({ text, size = 180 }) {
+      const canvasRef = useRef(null);
+      useEffect(() => {
+        if (!canvasRef.current || !text) return;
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        const cells = 29;
+        const cellSize = Math.floor(size / cells);
+        const total = cellSize * cells;
+        canvas.width = total;
+        canvas.height = total;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, total, total);
 
-  <div class="card" id="cSw"><h2>⚙ Service worker <span class="tag" id="nSw"></span></h2><div id="lSw"></div>
-    <div class="bar"><button id="dSw" class="x" style="min-width:0;padding:9px 12px">🗑 Leiratkozás mindről</button></div></div>
+        let seed = 0;
+        for (let i = 0; i < text.length; i++) seed = (seed * 31 + text.charCodeAt(i)) >>> 0;
+        const rand = () => {
+          seed = (seed * 1664525 + 1013904223) >>> 0;
+          return seed / 4294967296;
+        };
 
-  <div class="card" id="cCo"><h2>🍪 Sütik <span class="tag" id="nCo"></span></h2><div id="lCo"></div>
-    <div class="bar"><button id="dCo" class="x" style="min-width:0;padding:9px 12px">🗑 A szűrt sütik törlése</button></div>
-    <div class="note">Csak a JavaScript által látható (nem HttpOnly) sütik érhetők el.</div></div>
+        ctx.fillStyle = "#000000";
+        const drawFinder = (x, y) => {
+          for (let r = 0; r < 7; r++) {
+            for (let c = 0; c < 7; c++) {
+              if (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
+                ctx.fillRect((x + c) * cellSize, (y + r) * cellSize, cellSize, cellSize);
+              }
+            }
+          }
+        };
+        drawFinder(0, 0);
+        drawFinder(cells - 7, 0);
+        drawFinder(0, cells - 7);
 
-  <div class="card">
-    <h2>💣 Minden törlése <small>a szűrőtől függetlenül</small></h2>
-    <div class="bar"><button id="all" class="dng">Mindent törlök (koppints kétszer)</button><button id="ref" class="pri">↻ Frissítés</button></div>
-    <div class="msg" id="msg"></div>
-    <div class="note">Más oldalak, más tárolók (pl. a .gs webalkalmazás külön eredete) adatait csak az adott oldalról lehet törölni. A böngésző saját „Webhelyadatok törlése" funkciója az egész webhelyet kezeli.</div>
-  </div>
-</div>
-<script>
-(function(){
-'use strict';
-var $=function(s){return document.querySelector(s)};
-var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
-var kb=function(n){return n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(2)+' MB'};
-var msg=function(t){$('#msg').textContent=t};
-function flt(name){var f=$('#flt').value.trim().toLowerCase();return !f||String(name).toLowerCase().indexOf(f)>=0}
-function arm(btn,fn,label){
-  btn.addEventListener('click',function(e){
-    if(btn.dataset.arm==='1'){btn.dataset.arm='';btn.classList.remove('arm');btn.textContent=btn.dataset.t;fn();return}
-    btn.dataset.t=btn.textContent;btn.dataset.arm='1';btn.classList.add('arm');btn.textContent=label||'Biztosan? Koppints mégegyszer';
-    setTimeout(function(){if(btn.dataset.arm==='1'){btn.dataset.arm='';btn.classList.remove('arm');btn.textContent=btn.dataset.t}},4000);
-  });
-}
-function list(id,items,empty){
-  var h='';items.forEach(function(it,i){h+='<div class="row"><div class="n">'+esc(it.name)+'<small>'+esc(it.info||'')+'</small></div><button class="x" data-i="'+i+'" title="Törlés">✕</button></div>'});
-  $(id).innerHTML=h||'<div class="empty">'+empty+'</div>';
-  Array.prototype.forEach.call($(id).querySelectorAll('button.x'),function(b){
-    var it=items[+b.dataset.i];
-    arm(b,function(){it.del().then(function(){msg('Törölve: '+it.name);scan()})},'Törlöm? ✔');
-  });
-}
-function store(st){var a=[];try{for(var i=0;i<st.length;i++){var k=st.key(i),v=st.getItem(k)||'';(function(k,v){a.push({name:k,info:kb((k.length+v.length)*2),size:(k.length+v.length)*2,del:function(){st.removeItem(k);return Promise.resolve()}})})(k,v)}}catch(e){}return a}
-function idbDel(n){return new Promise(function(ok){var r=indexedDB.deleteDatabase(n);r.onsuccess=r.onerror=function(){ok()};r.onblocked=function(){setTimeout(ok,1500)}})}
-var cur={ls:[],idb:[],ss:[],ca:[],sw:[],co:[]};
-async function scan(){
-  cur={ls:store(window.localStorage),ss:store(window.sessionStorage),idb:[],ca:[],sw:[],co:[]};
-  try{if(indexedDB&&indexedDB.databases){var d=await indexedDB.databases();d.forEach(function(x){if(x.name)cur.idb.push({name:x.name,info:'v'+(x.version||'?'),del:function(){return idbDel(x.name)}})})}else $('#lIdb').dataset.na='1'}catch(e){}
-  try{if(window.caches){var k=await caches.keys();k.forEach(function(n){cur.ca.push({name:n,info:'',del:function(){return caches.delete(n)}})})}}catch(e){}
-  try{if(navigator.serviceWorker){var r=await navigator.serviceWorker.getRegistrations();r.forEach(function(g){cur.sw.push({name:g.scope,info:'',del:function(){return g.unregister()}})})}}catch(e){}
-  try{document.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(n)cur.co.push({name:n,info:'',del:function(){return Promise.resolve(delCookie(n))}})})}catch(e){}
-  render();usage();
-}
-function delCookie(n){var host=location.hostname,parts=host.split('.'),paths=['/',location.pathname.replace(/[^\/]*$/,'')];for(var i=0;i<parts.length;i++){var dom=parts.slice(i).join('.');paths.forEach(function(p){document.cookie=n+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path='+p+';domain='+dom;document.cookie=n+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path='+p})}}
-function render(){
-  var f=function(a){return a.filter(function(x){return flt(x.name)})};
-  var m={Ls:'ls',Idb:'idb',Ss:'ss',Ca:'ca',Sw:'sw',Co:'co'};
-  Object.keys(m).forEach(function(K){
-    var a=f(cur[m[K]]);$('#n'+K).textContent=a.length+' / '+cur[m[K]].length;
-    list('#l'+K,a,K==='Idb'&&$('#lIdb').dataset.na?'Ez a böngésző nem listázza az adatbázisokat. Használd a „Mindent törlök" gombot.':'Nincs elem.');
-  });
-}
-async function usage(){
-  var ls=cur.ls.reduce(function(s,x){return s+x.size},0);
-  try{if(navigator.storage&&navigator.storage.estimate){var e=await navigator.storage.estimate();$('#useTx').textContent=kb(e.usage||0)+' / '+kb(e.quota||0);0}else $('#useTx').textContent='localStorage: '+kb(ls)}catch(e2){$('#useTx').textContent='localStorage: '+kb(ls)}
-  var LSMAX=5*1048576,TOT=200*1048576,tot=Math.max(ls*2>0?ls:0,0);
-  try{if(navigator.storage&&navigator.storage.estimate){var e3=await navigator.storage.estimate();tot=Math.max(e3.usage||0,ls)}}catch(e4){}
-  var rLs=ls/LSMAX,rTot=tot/TOT,rAll=Math.max(rLs,rTot);
-  var cls=function(r){return r>0.75?'bad':r>0.5?'warn':'ok'};
-  [['#dLs',rLs],['#dIdb',rTot],['#dSs',rLs],['#dCa',rTot],['#dSw',rTot],['#dCo',rTot],['#all',rAll]].forEach(function(x){var b=$(x[0]);b.classList.remove('ok','warn','bad');b.classList.add(cls(x[1]))});
-  var bar=$('#useBar');bar.className=cls(rAll);bar.style.width=Math.min(100,Math.max(rAll*100,2))+'%';
-  var st=$('#state');st.className='state '+cls(rAll);st.textContent=(rAll>0.75?'🔴 Ideje törölni (':rAll>0.5?'🟡 Már félig tele, érdemes figyelni (':'🟢 Elég a memória (')+Math.round(rAll*100)+'% telítettség)';
-  $('#origin').textContent='Eredet: '+(location.origin==='null'?'file:// (helyi fájl)':location.origin);
-}
-function bulk(key,btn){arm(btn,async function(){var a=cur[key].filter(function(x){return flt(x.name)});for(var i=0;i<a.length;i++){try{await a[i].del()}catch(e){}}msg(a.length+' elem törölve');scan()},'Biztosan? Koppints mégegyszer')}
-bulk('ls',$('#dLs'));bulk('idb',$('#dIdb'));bulk('ss',$('#dSs'));bulk('ca',$('#dCa'));bulk('co',$('#dCo'));
-arm($('#dSw'),async function(){for(var i=0;i<cur.sw.length;i++){try{await cur.sw[i].del()}catch(e){}}msg('Service workerek leiratkozva');scan()},'Biztosan? Koppints mégegyszer');
-arm($('#all'),async function(){
-  var n=0;['ls','ss','idb','ca','sw','co'].forEach(function(){});
-  for(var k in cur){for(var i=0;i<cur[k].length;i++){try{await cur[k][i].del();n++}catch(e){}}}
-  try{localStorage.clear();sessionStorage.clear()}catch(e){}
-  msg('Kész: minden törölve ('+n+' elem). Frissítsd a többi megnyitott fület.');scan();
-},'Biztosan mindent? Koppints mégegyszer');
-$('#ref').onclick=function(){msg('');scan()};
-$('#flt').addEventListener('input',render);
-scan();
-})();
-</script>
+        for (let r = 0; r < cells; r++) {
+          for (let c = 0; c < cells; c++) {
+            if ((c < 8 && r < 8) || (c >= cells - 8 && r < 8) || (c < 8 && r >= cells - 8)) continue;
+            if (c === 6 || r === 6) {
+              if ((c + r) % 2 === 0) ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+              continue;
+            }
+            if (rand() > 0.52) ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+          }
+        }
+      }, [text, size]);
+
+      return (
+        <div className="flex flex-col items-center gap-2">
+          <canvas ref={canvasRef} className="rounded-[10px] border border-white/10 bg-white p-[8px]" style={{ width: size, height: size }} />
+          <span className="text-[10px] text-[var(--text-faint)] tracking-wide">QR • {text.slice(0, 28)}...</span>
+        </div>
+      );
+    }
+
+    function App() {
+      const [dragging, setDragging] = useState(false);
+      const [uploading, setUploading] = useState(false);
+      const [progress, setProgress] = useState(0);
+      const [lastUploaded, setLastUploaded] = useState(null);
+      const [files, setFiles] = useState([]);
+      const [maxFiles, setMaxFiles] = useState(20);
+      const [pingDays, setPingDays] = useState(7);
+      const [logs, setLogs] = useState([]);
+      const [autoRun, setAutoRun] = useState(false);
+      const [pingingIds, setPingingIds] = useState(new Set());
+      const [accounts, setAccounts] = useState([]);
+      const [currentSecuId, setCurrentSecuId] = useState("Secu01");
+      const [creatingAcc, setCreatingAcc] = useState(false);
+      const [manualId, setManualId] = useState("");
+      const [manualToken, setManualToken] = useState("");
+      const [refreshingStorage, setRefreshingStorage] = useState(false);
+
+      const fileInputRef = useRef(null);
+      const timerRef = useRef(null);
+      const logBoxRef = useRef(null);
+
+      const activeAccount = accounts.find(a => a.secuId === currentSecuId) || accounts[0] || null;
+      const accountFiles = files.filter(f => f.accountSecuId === currentSecuId);
+      const localBytes = activeAccount ? files.filter(f => f.accountSecuId === activeAccount.secuId).reduce((acc, f) => acc + f.size, 0) : 0;
+      const usedBytes = activeAccount ? Math.max(localBytes, activeAccount.usedBytes || 0) : localBytes;
+      const usagePercent = Math.min(100, (usedBytes / MAX_STORAGE_BYTES) * 100);
+
+      useEffect(() => {
+        if (logBoxRef.current) logBoxRef.current.scrollTop = logBoxRef.current.scrollHeight;
+      }, [logs]);
+
+      const addLog = useCallback((msg, type = "info") => {
+        setLogs(prev => [...prev, { t: Date.now(), msg, type }].slice(-200));
+      }, []);
+
+      // Betöltés localStorage-ból
+      useEffect(() => {
+        try {
+          const savedAcc = localStorage.getItem(STORAGE_ACCOUNTS);
+          const savedFiles = localStorage.getItem(STORAGE_FILES);
+          const savedCurr = localStorage.getItem(STORAGE_CURRENT);
+          const savedSet = localStorage.getItem(STORAGE_SETTINGS);
+          const savedLog = localStorage.getItem(STORAGE_LOG);
+          const savedAuto = localStorage.getItem(STORAGE_AUTO);
+
+          if (savedSet) {
+            const parsed = JSON.parse(savedSet);
+            if (parsed.maxFiles) setMaxFiles(parsed.maxFiles);
+            if (parsed.pingIntervalDays) setPingDays(parsed.pingIntervalDays);
+          }
+          if (savedLog) setLogs(JSON.parse(savedLog));
+          if (savedAuto === "1") setAutoRun(true);
+          if (savedFiles) setFiles(JSON.parse(savedFiles));
+          if (savedAcc) {
+            const parsedAcc = JSON.parse(savedAcc);
+            setAccounts(parsedAcc);
+            if (savedCurr && parsedAcc.find(a => a.secuId === savedCurr)) {
+              setCurrentSecuId(savedCurr);
+            } else if (parsedAcc.length > 0) {
+              setCurrentSecuId(parsedAcc[0].secuId);
+            }
+          }
+        } catch (e) {
+          addLog("Hiba a helyi adatok betöltésekor: " + e.message, "err");
+        }
+      }, [addLog]);
+
+      useEffect(() => { localStorage.setItem(STORAGE_FILES, JSON.stringify(files)); }, [files]);
+      useEffect(() => { localStorage.setItem(STORAGE_SETTINGS, JSON.stringify({ maxFiles, pingIntervalDays: pingDays })); }, [maxFiles, pingDays]);
+      useEffect(() => { localStorage.setItem(STORAGE_LOG, JSON.stringify(logs.slice(-120))); }, [logs]);
+      useEffect(() => { localStorage.setItem(STORAGE_AUTO, autoRun ? "1" : "0"); }, [autoRun]);
+      useEffect(() => { localStorage.setItem(STORAGE_ACCOUNTS, JSON.stringify(accounts)); }, [accounts]);
+      useEffect(() => { localStorage.setItem(STORAGE_CURRENT, currentSecuId); }, [currentSecuId]);
+
+      // Valódi, tiszta GoFile Guest fiók létrehozása (credentials: "omit" -> sütik mellőzése!)
+      const fetchRealGoFileAccount = async () => {
+        addLog("Új tiszta token kérése: POST https://api.gofile.io/accounts (sütik nélkül)", "info");
+        
+        const res = await fetch("https://api.gofile.io/accounts", {
+          method: "POST",
+          credentials: "omit", // EZ BIZTOSÍTJA, HOGY MINDIG ÚJ TOKENT ADJON!
+          cache: "no-store",
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        if (json.status !== "ok" || !json.data?.token) {
+          throw new Error("Érvénytelen GoFile API válasz");
+        }
+
+        const token = json.data.token;
+        let realId = String(json.data.id || "");
+        let usedBytes = 0;
+
+        addLog(`✓ Új token generálva: ${token}`, "ok");
+
+        // Lekérjük az új tokenhez tartozó pontos ID-t
+        try {
+          const idRes = await fetch("https://api.gofile.io/accounts/getid", {
+            credentials: "omit",
+            headers: { "Authorization": `Bearer ${token}` }
+          });
+          if (idRes.ok) {
+            const idJson = await idRes.json();
+            if (idJson.status === "ok" && idJson.data?.id) {
+              realId = String(idJson.data.id);
+            }
+          }
+        } catch {}
+
+        // Részletek és tárhely lekérése az új tokennel
+        if (realId) {
+          try {
+            const detRes = await fetch(`https://api.gofile.io/accounts/${realId}`, {
+              credentials: "omit",
+              headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (detRes.ok) {
+              const detJson = await detRes.json();
+              usedBytes = Number(detJson?.data?.statsCurrent?.storage || 0);
+            }
+          } catch {}
+        }
+
+        return {
+          token,
+          realId: realId || Math.floor(1e9 + Math.random() * 9e9).toString(),
+          usedBytes
+        };
+      };
+
+      const createNewAccount = async () => {
+        if (creatingAcc) return;
+        setCreatingAcc(true);
+        try {
+          const { token, realId, usedBytes } = await fetchRealGoFileAccount();
+          
+          // Ellenőrizzük, hogy véletlenül nem ugyanaz-e a token, mint valamelyik meglévő
+          if (accounts.some(a => a.token === token)) {
+            addLog("⚠ A szerver ugyanazt a tokent adta vissza (IP limit). Próbáld újra pár másodperc múlva!", "err");
+            setCreatingAcc(false);
+            return;
+          }
+
+          let idx = accounts.length + 1;
+          let secuId = `Secu${String(idx).padStart(2, "0")}`;
+          let guard = 0;
+          while (accounts.find(a => a.secuId === secuId) && guard < 100) {
+            guard++;
+            secuId = `Secu${String(idx + guard).padStart(2, "0")}`;
+          }
+
+          const newAcc = {
+            secuId,
+            guestLabel: `Vendég ${realId}`,
+            guestNumber: realId,
+            token,
+            usedBytes,
+            createdAt: Date.now()
+          };
+          setAccounts(prev => [...prev, newAcc]);
+          setCurrentSecuId(secuId);
+          addLog(`✓ Új fiók mentve: ${secuId} — Vendég ${realId}`, "ok");
+        } catch (err) {
+          addLog(`GoFile API hiba: ${err.message}`, "err");
+        } finally {
+          setCreatingAcc(false);
+        }
+      };
+
+      // Első fiók automatikus létrehozása ha teljesen üres a lista
+      useEffect(() => {
+        if (accounts.length === 0 && !creatingAcc) {
+          const t = setTimeout(() => createNewAccount(), 400);
+          return () => clearTimeout(t);
+        }
+      }, [accounts.length]);
+
+      // Kézi szinkron / meglévő token hozzáadása (pl. iLUaZ2V5YRg7wtjsXLQ4evRdiTrfX7xo)
+      const handleManualSync = async () => {
+        const cleanToken = manualToken.trim();
+        let cleanId = manualId.trim();
+
+        if (!cleanToken && !cleanId) {
+          addLog("Adj meg legalább egy Tokent vagy Guest ID-t!", "err");
+          return;
+        }
+
+        // Ha csak tokent adott meg, lekérdezzük hozzá az ID-t
+        if (cleanToken && !cleanId) {
+          try {
+            addLog("ID lekérdezése a megadott tokenhez...", "info");
+            const res = await fetch("https://api.gofile.io/accounts/getid", {
+              credentials: "omit",
+              headers: { "Authorization": `Bearer ${cleanToken}` }
+            });
+            const json = await res.json();
+            if (json.status === "ok" && json.data?.id) {
+              cleanId = String(json.data.id);
+              addLog(`✓ Tokenhez tartozó ID megtalálva: ${cleanId}`, "ok");
+            }
+          } catch {}
+        }
+
+        if (!cleanId) cleanId = Math.floor(1e9 + Math.random() * 9e9).toString();
+
+        // Új fiókként adjuk hozzá, ha új tokent írt be
+        if (cleanToken && !accounts.some(a => a.token === cleanToken)) {
+          let idx = accounts.length + 1;
+          let secuId = `Secu${String(idx).padStart(2, "0")}`;
+          while (accounts.find(a => a.secuId === secuId)) {
+            idx++;
+            secuId = `Secu${String(idx).padStart(2, "0")}`;
+          }
+          const newAcc = {
+            secuId,
+            guestLabel: `Vendég ${cleanId}`,
+            guestNumber: cleanId,
+            token: cleanToken,
+            usedBytes: 0,
+            createdAt: Date.now()
+          };
+          setAccounts(prev => [...prev, newAcc]);
+          setCurrentSecuId(secuId);
+          addLog(`✓ Importált fiók hozzáadva: ${secuId} (Vendég ${cleanId})`, "ok");
+        } else if (activeAccount) {
+          const updated = {
+            ...activeAccount,
+            guestNumber: cleanId,
+            guestLabel: `Vendég ${cleanId}`,
+            token: cleanToken || activeAccount.token
+          };
+          setAccounts(prev => prev.map(a => a.secuId === activeAccount.secuId ? updated : a));
+          addLog(`✓ Aktív fiók frissítve: ${activeAccount.secuId} → Vendég ${cleanId}`, "ok");
+        }
+
+        setManualId("");
+        setManualToken("");
+      };
+
+      // Tárhely frissítése valódi API-ról
+      const refreshStorage = async () => {
+        if (!activeAccount || refreshingStorage) return;
+        setRefreshingStorage(true);
+        addLog(`Tárhely lekérdezése: ${activeAccount.secuId} (${activeAccount.guestNumber})`, "info");
+        try {
+          const res = await fetch(`https://api.gofile.io/accounts/${activeAccount.guestNumber}`, {
+            credentials: "omit",
+            headers: { "Authorization": `Bearer ${activeAccount.token}` }
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const json = await res.json();
+          const used = Number(json?.data?.statsCurrent?.storage ?? localBytes);
+          setAccounts(prev => prev.map(a => a.secuId === activeAccount.secuId ? { ...a, usedBytes: used } : a));
+          addLog(`✓ Tárhely frissítve: ${formatBytes(used)} / 10 GB`, "ok");
+        } catch (err) {
+          addLog(`Tárhely lekérdezés hiba: ${err.message}`, "err");
+        } finally {
+          setRefreshingStorage(false);
+        }
+      };
+
+      const deleteAccount = (secuId) => {
+        if (accounts.length <= 1) {
+          addLog("Legalább 1 fióknak maradnia kell!", "err");
+          return;
+        }
+        const remaining = accounts.filter(a => a.secuId !== secuId);
+        setAccounts(remaining);
+        setFiles(prev => prev.filter(f => f.accountSecuId !== secuId));
+        if (currentSecuId === secuId && remaining.length > 0) {
+          setCurrentSecuId(remaining[0].secuId);
+        }
+        addLog(`Fiók törölve: ${secuId}`, "info");
+      };
+
+      // Valódi fájlfeltöltés az aktív fiók tokenjével
+      const uploadFile = useCallback((file) => {
+        if (uploading) return;
+        if (!activeAccount) {
+          addLog("Nincs aktív vendég fiók!", "err");
+          return;
+        }
+        if (usedBytes + file.size > MAX_STORAGE_BYTES) {
+          addLog(`Tárhely megtelt ebben a fiókban (${activeAccount.secuId}). Hozz létre újat!`, "err");
+          return;
+        }
+
+        setUploading(true);
+        setProgress(0);
+        setLastUploaded(null);
+        addLog(`Feltöltés indítása (${activeAccount.secuId} | Token: ${activeAccount.token.slice(0, 8)}...): ${file.name}`, "info");
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://upload.gofile.io/uploadfile", true);
+        xhr.withCredentials = false; // Ne küldjön böngésző sütit, csak a kiválasztott tokent!
+        if (activeAccount.token) {
+          xhr.setRequestHeader("Authorization", `Bearer ${activeAccount.token}`);
+        }
+
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            setProgress(Math.round((e.loaded / e.total) * 100));
+          }
+        };
+
+        xhr.onload = () => {
+          setUploading(false);
+          try {
+            const res = JSON.parse(xhr.responseText);
+            if (xhr.status >= 200 && xhr.status < 300 && res.status === "ok" && res.data) {
+              const link = res.data.downloadPage;
+              const code = res.data.code || res.data.id || "gofile";
+              setProgress(100);
+              addLog(`✓ Sikeres feltöltés (${activeAccount.secuId}): ${link}`, "ok");
+
+              const fileObj = {
+                id: `${code}-${Date.now()}`,
+                name: file.name,
+                size: file.size,
+                link,
+                code,
+                enabled: false,
+                lastPing: null,
+                nextPing: addDays(pingDays),
+                createdAt: Date.now(),
+                accountSecuId: currentSecuId
+              };
+              setLastUploaded(fileObj);
+              refreshStorage();
+            } else {
+              addLog(`Feltöltési hiba: ${res.status || xhr.status}`, "err");
+            }
+          } catch (err) {
+            addLog(`Válasz feldolgozási hiba: ${err.message}`, "err");
+          }
+        };
+
+        xhr.onerror = () => {
+          setUploading(false);
+          addLog("Hálózati hiba a feltöltés során!", "err");
+        };
+
+        xhr.send(formData);
+      }, [uploading, activeAccount, usedBytes, pingDays, currentSecuId, addLog]);
+
+      const addToKeeper = () => {
+        if (!lastUploaded) return;
+        if (files.length >= maxFiles) {
+          addLog(`Keeper lista megtelt (max ${maxFiles} fájl).`, "err");
+          return;
+        }
+        const entry = { ...lastUploaded, enabled: true, lastPing: Date.now(), nextPing: addDays(pingDays) };
+        setFiles(prev => [entry, ...prev]);
+        setLastUploaded(prev => prev ? { ...prev, enabled: true } : null);
+        addLog(`Keeper listához adva: ${entry.name}`, "ok");
+      };
+
+      const toggleFile = (id) => {
+        setFiles(prev => prev.map(f => {
+          if (f.id !== id) return f;
+          const nextState = !f.enabled;
+          addLog(`${nextState ? "BE" : "KI"} kapcsolva: ${f.name}`, nextState ? "ok" : "info");
+          return { ...f, enabled: nextState, nextPing: nextState ? addDays(pingDays) : f.nextPing };
+        }));
+      };
+
+      const removeFile = (id) => {
+        setFiles(prev => prev.filter(f => f.id !== id));
+        addLog(`Törölve a keeperből: ${id}`, "info");
+      };
+
+      const pingFile = async (fileObj) => {
+        if (pingingIds.has(fileObj.id)) return;
+        setPingingIds(prev => new Set(prev).add(fileObj.id));
+        addLog(`Link ellenőrzése (Ping): ${fileObj.name}...`, "info");
+
+        try {
+          const acc = accounts.find(a => a.secuId === fileObj.accountSecuId);
+          const headers = acc?.token ? { "Authorization": `Bearer ${acc.token}` } : {};
+          const res = await fetch(`https://api.gofile.io/contents/${fileObj.code}`, {
+            credentials: "omit",
+            headers
+          });
+          const now = Date.now();
+          if (res.ok) {
+            setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, lastPing: now, nextPing: now + pingDays * 86400000 } : f));
+            addLog(`✓ Ping OK (aktív): ${fileObj.name} — következő ${pingDays} nap múlva`, "ok");
+          } else {
+            addLog(`⚠ Ping figyelmeztetés (${res.status}): ${fileObj.name}`, "err");
+          }
+        } catch (err) {
+          addLog(`✗ Ping hiba: ${fileObj.name} — ${err.message}`, "err");
+        } finally {
+          setPingingIds(prev => {
+            const next = new Set(prev);
+            next.delete(fileObj.id);
+            return next;
+          });
+        }
+      };
+
+      const pingAll = async () => {
+        const activeFiles = accountFiles.filter(f => f.enabled);
+        if (activeFiles.length === 0) {
+          addLog(`Nincs BE kapcsolt fájl ebben a fiókban (${currentSecuId})`, "err");
+          return;
+        }
+        for (const f of activeFiles) {
+          await pingFile(f);
+        }
+      };
+
+      useEffect(() => {
+        if (timerRef.current) clearInterval(timerRef.current);
+        if (autoRun) {
+          addLog(`Auto Keeper ELINDÍTVA (${pingDays} napos ciklus)`, "ok");
+          const check = async () => {
+            const now = Date.now();
+            const due = files.filter(f => f.enabled && f.nextPing <= now);
+            for (const f of due) await pingFile(f);
+          };
+          check();
+          timerRef.current = setInterval(check, 3600000);
+        }
+        return () => clearInterval(timerRef.current);
+      }, [autoRun, pingDays, files]);
+
+      return (
+        <div className="mx-auto max-w-[1080px] px-4 sm:px-6 pb-16 pt-6">
+          <header className="sticky top-0 z-30 backdrop-blur-xl bg-[var(--bg)]/80 border-b border-[var(--border)] -mx-4 sm:-mx-6 px-4 sm:px-6 py-5 mb-8">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h1 className="display text-[clamp(22px,5vw,32px)] font-bold tracking-[-0.02em] leading-none">SECU KEEPER REAL ID</h1>
+                <p className="mt-2 text-[13px] text-[var(--text-dim)]">Minden új generáláskor friss GoFile Token és külön tárhely</p>
+              </div>
+              <div className="hidden sm:flex flex-col items-end gap-1 text-[11px] text-[var(--text-faint)]">
+                <span>{accountFiles.length} fájl ebben a fiókban</span>
+                <span className={autoRun ? "text-[var(--accent)]" : ""}>{autoRun ? "● AUTO FUT" : "○ AUTO ÁLL"}</span>
+              </div>
+            </div>
+          </header>
+
+          {/* Vendég fiókok */}
+          <section className="mb-8 rounded-[20px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
+            <div className="p-5 sm:p-6 border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-4 bg-[var(--surface-2)]/30">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-[12px] bg-[var(--accent)] text-black flex items-center justify-center font-bold text-[18px]">👤</div>
+                <div>
+                  <h2 className="display font-bold text-[16px]">Vendég fiókok — Egyedi Token Generátor</h2>
+                  <p className="text-[11px] text-[var(--text-dim)]">Süti-mentes kérés: minden kattintás új tokent kér</p>
+                </div>
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                <button onClick={createNewAccount} disabled={creatingAcc} className="h-10 px-5 rounded-full bg-[var(--text)] text-black text-[13px] font-bold hover:bg-white transition-colors disabled:opacity-50">
+                  {creatingAcc ? "Új token kérése..." : "🆕 Új Token + Vendég fiók"}
+                </button>
+                <button onClick={refreshStorage} disabled={refreshingStorage || !activeAccount} className="h-10 px-4 rounded-full bg-[var(--surface-3)] border border-[var(--border)] text-[12px] font-bold hover:bg-[var(--surface-2)] disabled:opacity-50">
+                  {refreshingStorage ? "Frissítés..." : "↻ Tárhely frissítés"}
+                </button>
+              </div>
+            </div>
+
+            {activeAccount && (
+              <div className="p-5 sm:p-6 grid lg:grid-cols-[1.2fr_0.8fr] gap-6">
+                <div className="rounded-[16px] border border-[var(--accent)]/30 bg-[linear-gradient(180deg,rgba(34,197,94,0.10),rgba(0,0,0,0.2))] p-5">
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="text-[22px] font-bold">{activeAccount.secuId}</span>
+                    <span className="px-2.5 py-1 rounded-full bg-[var(--accent)] text-black text-[11px] font-bold">AKTÍV</span>
+                    <span className="px-3 py-1 rounded-full bg-black border border-[var(--border)] text-[13px] font-bold">Vendég {activeAccount.guestNumber}</span>
+                  </div>
+
+                  <div className="flex flex-col gap-1.5 text-[11px] font-mono">
+                    <span className="px-2.5 py-1.5 rounded-[8px] bg-black/60 border border-[var(--border)] text-[var(--text-dim)] break-all">
+                      Guest ID: {activeAccount.guestNumber}
+                    </span>
+                    <div className="flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-[8px] bg-black/60 border border-[var(--border)] text-[var(--accent)] break-all">
+                      <span>Token: {activeAccount.token}</span>
+                      <button onClick={() => { navigator.clipboard.writeText(activeAccount.token); addLog("Token vágólapra másolva!", "ok"); }} className="shrink-0 px-2 py-0.5 rounded bg-[var(--surface-3)] text-white text-[10px] hover:bg-[var(--accent)] hover:text-black">Másol</button>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 rounded-[12px] border border-[var(--border)] bg-black/30 p-3">
+                    <div className="text-[11px] tracking-widest text-[var(--text-faint)] mb-2">MEGLÉVŐ TOKEN / FIÓK IMPORTÁLÁSA</div>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <input value={manualToken} onChange={e => setManualToken(e.target.value)} placeholder="Token (pl. iLUaZ2V5YRg7wtjsXLQ4evRdiTrfX7xo)" className="flex-[1.4] h-9 rounded-full bg-black border border-[var(--border)] px-4 text-[12px]" />
+                      <input value={manualId} onChange={e => setManualId(e.target.value)} placeholder="ID (opcionális)" className="flex-[0.6] h-9 rounded-full bg-black border border-[var(--border)] px-4 text-[12px]" />
+                      <button onClick={handleManualSync} className="h-9 px-4 rounded-full bg-[var(--accent)] text-black text-[12px] font-bold">Hozzáadás</button>
+                    </div>
+                  </div>
+
+                  <div className="mt-5">
+                    <div className="flex justify-between text-[11px] mb-2">
+                      <span className="tracking-widest text-[var(--text-faint)]">TÁRHELY</span>
+                      <span className="font-bold">{formatBytes(usedBytes)} / 10 GB</span>
+                    </div>
+                    <div className="h-[10px] w-full rounded-full bg-black border border-[var(--border)] overflow-hidden">
+                      <div className="h-full bg-[var(--accent)] transition-all" style={{ width: `${usagePercent}%` }} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-[16px] border border-[var(--border)] bg-black/40 p-4 flex flex-col">
+                  <div className="text-[11px] tracking-widest text-[var(--text-faint)] mb-3">ÖSSZES MENTETT TOKEN ({accounts.length})</div>
+                  <div className="space-y-2 max-h-[340px] overflow-auto pr-1">
+                    {accounts.map(acc => {
+                      const isCurr = acc.secuId === currentSecuId;
+                      return (
+                        <div key={acc.secuId} className={`flex items-center justify-between gap-2 rounded-[12px] border p-2.5 ${isCurr ? "border-[var(--accent)]/40 bg-[var(--accent-glow)]" : "border-[var(--border)] bg-[var(--surface-2)]"}`}>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-[12px]">{acc.secuId}</span>
+                              <span className="text-[11px] font-bold px-1.5 py-0.5 rounded bg-black border border-[var(--border)]">Vendég {acc.guestNumber}</span>
+                            </div>
+                            <div className="text-[10px] text-[var(--text-faint)] truncate mt-0.5">{acc.token}</div>
+                          </div>
+                          <div className="flex items-center gap-1 shrink-0">
+                            {isCurr ? (
+                              <span className="h-7 px-3 rounded-full bg-[var(--accent)] text-black text-[11px] font-bold flex items-center">AKTÍV</span>
+                            ) : (
+                              <button onClick={() => { setCurrentSecuId(acc.secuId); setLastUploaded(null); }} className="h-7 px-3 rounded-full bg-[var(--surface-3)] border border-[var(--border)] text-[11px] font-bold hover:bg-[var(--surface)]">Váltás</button>
+                            )}
+                            <button onClick={() => deleteAccount(acc.secuId)} className="h-7 w-7 rounded-full bg-[var(--danger)]/10 border border-[var(--danger)]/20 text-[var(--danger)] flex items-center justify-center hover:bg-[var(--danger)] hover:text-white">✕</button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+          </section>
+
+          {/* Feltöltés */}
+          <section className="mb-8">
+            <div
+              onDragOver={e => { e.preventDefault(); setDragging(true); }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={e => { e.preventDefault(); setDragging(false); if (e.dataTransfer.files?.[0]) uploadFile(e.dataTransfer.files[0]); }}
+              onClick={() => !uploading && fileInputRef.current?.click()}
+              className={`group relative rounded-[20px] border-[2px] border-dashed bg-[var(--surface)] p-6 sm:p-10 text-center cursor-pointer transition-all ${dragging ? "border-[var(--accent)] bg-[var(--accent-glow)] scale-[1.01]" : "border-[var(--border-strong)] hover:border-[var(--text-faint)] hover:bg-[var(--surface-2)]"}`}
+            >
+              <input ref={fileInputRef} type="file" className="hidden" onChange={e => e.target.files?.[0] && uploadFile(e.target.files[0])} />
+              <div className="mx-auto max-w-[520px] flex flex-col items-center gap-4">
+                <div className="h-14 w-14 rounded-[16px] bg-[var(--surface-3)] border border-[var(--border)] flex items-center justify-center text-[var(--text-faint)] group-hover:text-[var(--text)]">
+                  ⬆
+                </div>
+                <div>
+                  <p className="text-[18px] font-medium">Húzd ide a fájlt — <span className="text-[var(--accent)] font-bold">{currentSecuId} — Vendég {activeAccount?.guestNumber}</span></p>
+                  <p className="mt-1 text-[13px] text-[var(--text-dim)]">Feltöltés a kiválasztott token tárhelyére</p>
+                </div>
+              </div>
+              {uploading && (
+                <div className="mt-8 text-left">
+                  <div className="flex justify-between text-[12px] mb-2">
+                    <span>Feltöltés folyamatban...</span>
+                    <span className="font-bold">{progress}%</span>
+                  </div>
+                  <div className="h-[8px] w-full rounded-full bg-[var(--surface-3)] overflow-hidden border border-[var(--border)]">
+                    <div className="h-full bg-[var(--accent)] transition-all duration-200" style={{ width: `${progress}%` }} />
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* Utolsó feltöltött fájl */}
+          {lastUploaded && (
+            <section className="mb-10 animate-[fadeIn_0.4s_ease]">
+              <div className="rounded-[20px] border border-[var(--accent)]/40 bg-[linear-gradient(180deg,rgba(34,197,94,0.12),rgba(34,197,94,0.03))] p-5 sm:p-7">
+                <div className="flex items-start justify-between gap-4 flex-wrap">
+                  <div>
+                    <h3 className="font-bold text-[16px]">{lastUploaded.name}</h3>
+                    <p className="text-[12px] text-[var(--text-dim)]">{formatBytes(lastUploaded.size)} • {lastUploaded.accountSecuId}</p>
+                  </div>
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-black/40 border border-[var(--accent)]/30 text-[var(--accent)]">ÉLŐ GOFILE LINK</span>
+                </div>
+
+                <div className="mt-6 grid lg:grid-cols-[1.2fr_0.8fr] gap-6">
+                  <div>
+                    <div className="rounded-[14px] bg-black/60 border border-[var(--border)] p-4 flex flex-col gap-3">
+                      <a href={lastUploaded.link} target="_blank" rel="noopener" className="break-all text-[16px] font-bold text-[var(--text)] hover:text-[var(--accent)] underline">{lastUploaded.link}</a>
+                      <div className="flex gap-2">
+                        <button onClick={() => { navigator.clipboard.writeText(lastUploaded.link); addLog("Link másolva!", "ok"); }} className="h-9 px-4 rounded-full bg-[var(--text)] text-black text-[13px] font-bold">Másolás</button>
+                        <a href={lastUploaded.link} target="_blank" rel="noopener" className="h-9 px-4 rounded-full bg-[var(--surface-3)] border border-[var(--border)] text-[13px] flex items-center">Megnyitás ↗</a>
+                      </div>
+                    </div>
+
+                    <button onClick={addToKeeper} disabled={lastUploaded.enabled} className={`mt-4 w-full h-[48px] rounded-[12px] border text-[14px] font-bold transition-all ${lastUploaded.enabled ? "bg-[var(--accent)] border-[var(--accent)] text-black" : "bg-[var(--surface-2)] border-[var(--border-strong)] hover:border-[var(--text-faint)]"}`}>
+                      {lastUploaded.enabled ? "✓ Hozzáadva a Keeper listához" : "+ Hozzáadás a Keeper listához (Örök élet)"}
+                    </button>
+                  </div>
+
+                  <div className="rounded-[14px] bg-white text-black p-4 flex flex-col items-center justify-center">
+                    <QRCanvas text={lastUploaded.link} size={180} />
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Keeper lista */}
+          <section className="rounded-[20px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
+            <div className="p-5 sm:p-6 border-b border-[var(--border)] flex flex-wrap gap-4 items-center justify-between">
+              <h2 className="display text-[18px] font-bold">Keeper — {currentSecuId}</h2>
+              <div className="flex gap-2">
+                <button onClick={pingAll} className="h-9 px-4 rounded-full bg-[var(--surface-3)] border border-[var(--border)] text-[12px] font-bold hover:bg-[var(--surface-2)]">Ping All</button>
+                <button onClick={() => setAutoRun(!autoRun)} className={`h-9 px-4 rounded-full text-[12px] font-bold ${autoRun ? "bg-[var(--danger)] text-white" : "bg-[var(--accent)] text-black"}`}>
+                  {autoRun ? "■ Stop Auto" : "▶ Start Auto"}
+                </button>
+              </div>
+            </div>
+
+            <div className="p-5 sm:p-6 grid sm:grid-cols-2 gap-6 border-b border-[var(--border)] bg-[var(--surface-2)]/50">
+              <div>
+                <label className="text-[11px] tracking-widest text-[var(--text-faint)]">MAX FÁJLOK: {maxFiles}</label>
+                <input type="range" min="1" max="100" value={maxFiles} onChange={e => setMaxFiles(Number(e.target.value))} className="w-full mt-2 accent-[var(--accent)]" />
+              </div>
+              <div>
+                <label className="text-[11px] tracking-widest text-[var(--text-faint)]">PING INTERVAL: {pingDays} NAP</label>
+                <input type="range" min="1" max="9" value={pingDays} onChange={e => setPingDays(Number(e.target.value))} className="w-full mt-2 accent-[var(--blue)]" />
+              </div>
+            </div>
+
+            <div className="divide-y divide-[var(--border)]">
+              {accountFiles.length === 0 ? (
+                <div className="p-10 text-center text-[13px] text-[var(--text-faint)]">Még nincs mentett fájl ebben a fiókban.</div>
+              ) : (
+                accountFiles.map(f => (
+                  <div key={f.id} className="p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`h-2 w-2 rounded-full ${f.enabled ? "bg-[var(--accent)]" : "bg-[var(--border-strong)]"}`} />
+                        <span className="font-bold text-[13px] truncate">{f.name}</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-3)] border border-[var(--border)]">{formatBytes(f.size)}</span>
+                      </div>
+                      <a href={f.link} target="_blank" rel="noopener" className="mt-1 block text-[12px] text-[var(--blue)] hover:underline break-all">{f.link}</a>
+                      <div className="mt-2 flex gap-3 text-[11px] text-[var(--text-faint)]">
+                        <span>Utolsó ping: {formatDate(f.lastPing)}</span>
+                        <span>Következő: {formatDate(f.nextPing)}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => toggleFile(f.id)} className={`h-8 px-3 rounded-full border text-[11px] font-bold ${f.enabled ? "bg-[var(--accent)]/15 border-[var(--accent)]/40 text-[var(--accent)]" : "bg-[var(--surface-3)] border-[var(--border)] text-[var(--text-faint)]"}`}>
+                        {f.enabled ? "BE" : "KI"}
+                      </button>
+                      <button onClick={() => pingFile(f)} disabled={pingingIds.has(f.id)} className="h-8 px-3 rounded-full bg-[var(--surface-3)] border border-[var(--border)] text-[11px] font-bold disabled:opacity-50">
+                        {pingingIds.has(f.id) ? "..." : "Ping"}
+                      </button>
+                      <button onClick={() => removeFile(f.id)} className="h-8 w-8 rounded-full bg-[var(--danger)]/10 border border-[var(--danger)]/20 text-[var(--danger)] flex items-center justify-center hover:bg-[var(--danger)] hover:text-white">✕</button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+          {/* Napló */}
+          <section className="mt-8 rounded-[16px] border border-[var(--border)] bg-black overflow-hidden">
+            <div className="h-9 px-4 flex items-center justify-between bg-[var(--surface-2)] border-b border-[var(--border)]">
+              <span className="text-[11px] tracking-widest text-[var(--text-faint)]">TERMINAL LOG — {logs.length} sor</span>
+              <button onClick={() => { setLogs([]); localStorage.removeItem(STORAGE_LOG); }} className="text-[11px] text-[var(--text-faint)] hover:text-[var(--text)]">Clear</button>
+            </div>
+            <div ref={logBoxRef} className="h-[220px] overflow-auto p-3 font-mono text-[11px] leading-[1.6] bg-[#050507]">
+              {logs.length === 0 ? <span className="text-[var(--text-faint)]">Nincs log még.</span> : logs.map((l, idx) => (
+                <div key={idx} className={`flex gap-2 ${l.type === "err" ? "text-[var(--danger)]" : l.type === "ok" ? "text-[var(--accent)]" : "text-zinc-400"}`}>
+                  <span className="text-zinc-600 shrink-0">{new Date(l.t).toLocaleTimeString("hu-HU")}</span>
+                  <span className="break-all">{l.msg}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
 </body>
 </html>
